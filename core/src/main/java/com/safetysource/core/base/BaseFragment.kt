@@ -32,13 +32,13 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(@LayoutRes lay
     private fun initObservers() {
         viewModel.errorMsgLiveData.observe(viewLifecycleOwner) { showErrorMsg(it) }
         viewModel.errorMsgResourceLiveData.observe(
-            viewLifecycleOwner,
-            { showErrorMsg(getString(it)) })
+            viewLifecycleOwner
+        ) { showErrorMsg(getString(it)) }
 
-        viewModel.successMsgLiveData.observe(viewLifecycleOwner, { showSuccessMsg(it) })
+        viewModel.successMsgLiveData.observe(viewLifecycleOwner) { showSuccessMsg(it) }
         viewModel.successMsgResourceLiveData.observe(
-            viewLifecycleOwner,
-            { showSuccessMsg(getString(it)) })
+            viewLifecycleOwner
+        ) { showSuccessMsg(getString(it)) }
 
 
         viewModel.loadingLiveData.observe(viewLifecycleOwner) {
