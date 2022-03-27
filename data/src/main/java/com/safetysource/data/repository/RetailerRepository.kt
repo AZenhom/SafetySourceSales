@@ -41,11 +41,11 @@ class RetailerRepository @Inject constructor(
         }
     }
 
-    suspend fun getCurrentSellerModel(): RetailerModel? = execute {
+    suspend fun getCurrentRetailerModel(): RetailerModel? = execute {
         return@execute userDataStore.getCurrentRetailerModel()
     }
 
-    suspend fun setCurrentSellerModel(value: RetailerModel?) = execute {
+    suspend fun setCurrentRetailerModel(value: RetailerModel?) = execute {
         userDataStore.setCurrentRetailerModel(value)
     }
 }
