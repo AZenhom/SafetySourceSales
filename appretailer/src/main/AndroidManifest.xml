@@ -17,7 +17,8 @@
         tools:replace="android:supportsRtl">
         <activity
             android:name=".ui.product_details.ProductDetailsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".ui.host.HostActivity"
             android:exported="false"
