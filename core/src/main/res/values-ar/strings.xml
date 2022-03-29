@@ -3,7 +3,7 @@
     <string name="click_twice">Please click BACK again to exit</string>
     <string name="check_your_internet_connection">Please check your internet connection</string>
     <string name="an_error_has_occured">An unxpected error has occured</string>
-    <string name="welcome_to_aladdin">Welcome To Aladdin</string>
+    <string name="welcome_to_safety_source">Welcome To Safty Source</string>
     <string name="please_enter_you_phone_number">Please enter you phone number</string>
     <string name="phone_number_hint">Ex: 012 345 678 90</string>
     <string name="country_code">Country Code</string>
@@ -25,6 +25,7 @@
     <string name="products">Products</string>
     <string name="transactions">Transactions</string>
     <string name="search">Search</string>
+    <string name="categories">Categories</string>
     <string name="product_categories">Product Categories</string>
     <string name="are_you_sure_you_want_to_log_out">Are you sure you want to log out ?</string>
     <string name="create_product_category">Create Product Category</string>
@@ -92,4 +93,6 @@
     <string name="invalid_amount_value">Invalid amount value</string>
     <string name="please_pick_category_first">Please select a product category first</string>
     <string name="product_created_successfully">Product created successfully</string>
+    <string name="teams">Teams</string>
+    <string name="retailers">Retailers</string>
 </resources>

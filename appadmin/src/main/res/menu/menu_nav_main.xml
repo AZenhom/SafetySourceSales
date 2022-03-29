@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/productCategoriesFragment"
+        android:icon="@drawable/ic_categories"
+        android:title="@string/categories" />
+
+    <item
+        android:id="@+id/transactionsFragment"
+        android:icon="@drawable/ic_transactions"
+        android:title="@string/transactions" />
+
+    <item
+        android:id="@+id/teamsFragment"
+        android:icon="@drawable/ic_team"
+        android:title="@string/teams" />
+
+    <item
+        android:id="@+id/retailersFragment"
+        android:icon="@drawable/ic_retailer"
+        android:title="@string/retailers" />
+
+</menu>

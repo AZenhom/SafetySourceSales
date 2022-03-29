@@ -20,6 +20,7 @@ data class TransactionModel(
     companion object {
         const val RETAILER_ID = "retailerId"
         const val TEAM_ID = "teamId"
+        const val PRODUCT_ID = "productId"
         const val TYPE = "type"
     }
 }
