@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/transactionsFragment"
-        android:name="com.safetysource.appadmin.ui.transactions.TransactionsFragment"
+        android:name="com.safetysource.appretailer.ui.transactions.TransactionsFragment"
         android:label="@string/transactions"
         tools:layout="@layout/fragment_transactions" />
 
