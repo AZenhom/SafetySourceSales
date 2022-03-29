@@ -101,7 +101,7 @@ class PhoneAuthViewModel @Inject constructor(
                 if (task.isSuccessful && task.result?.user != null) {
                     Log.d(TAG, "startSigningInUsingCredentials Success")
                     val user = task.result!!.user!!
-                    saveUserCredentialsAndCheckIfRegistered(user)
+                    saveUserCredentialsIfAny(user)
                 } else { // Wrong Code
                     Log.d(TAG, "startSigningInUsingCredentials Failure" + task.exception.toString())
                     hideLoading()
@@ -110,7 +110,7 @@ class PhoneAuthViewModel @Inject constructor(
             }
     }
 
-    private fun saveUserCredentialsAndCheckIfRegistered(user: FirebaseUser) = safeLauncher {
+    private fun saveUserCredentialsIfAny(user: FirebaseUser) = safeLauncher {
         Log.d(TAG, "saveUserCredentialsAndCheckIfRegistered User: " + user.uid)
         userRepository.setSignedIn(true)
         userRepository.setUserId(user.uid)

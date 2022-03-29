@@ -19,6 +19,7 @@
     <string name="logout">Logout</string>
     <string name="confirm">Confirm</string>
     <string name="admin_not_registered">This phone number is not assigned to any admin account, please contact management for further support</string>
+    <string name="retailer_not_registered">This phone number is not assigned to any retailer account, please contact management for further support</string>
     <string name="close_app">Close App</string>
     <string name="more">More</string>
     <string name="products">Products</string>
