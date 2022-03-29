@@ -15,27 +15,27 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
         tools:replace="android:supportsRtl">
-
+        <activity
+            android:name=".ui.product_details.ProductDetailsActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.host.HostActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".ui.splash.SplashActivity"
             android:exported="true"
             android:theme="@style/SplashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="com.safetysource.core.ui.phoneAuth.PhoneAuthActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
-
     </application>
 
 </manifest>

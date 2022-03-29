@@ -16,6 +16,7 @@
         <entry key="appadmin/src/main/res/menu/menu_nav_main.xml" value="0.34427083333333336" />
         <entry key="appretailer/src/main/res/layout/activity_host.xml" value="0.34427083333333336" />
         <entry key="appretailer/src/main/res/layout/activity_main.xml" value="0.3302083333333333" />
+        <entry key="appretailer/src/main/res/layout/activity_product_details.xml" value="0.25" />
         <entry key="appretailer/src/main/res/layout/activity_splash.xml" value="0.34427083333333336" />
         <entry key="appretailer/src/main/res/layout/fragment_products_scan.xml" value="0.34427083333333336" />
         <entry key="appretailer/src/main/res/layout/fragment_profile.xml" value="0.34427083333333336" />

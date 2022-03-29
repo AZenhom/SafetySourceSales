@@ -98,4 +98,5 @@
     <string name="scan">Scan</string>
     <string name="profile">Profile</string>
     <string name="scan_products">Scan Products</string>
+    <string name="product_details">Product Details</string>
 </resources>

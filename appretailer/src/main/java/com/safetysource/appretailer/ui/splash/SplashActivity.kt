@@ -12,6 +12,7 @@ import androidx.activity.viewModels
 
 import com.safetysource.core.R
 import com.safetysource.appretailer.databinding.ActivitySplashBinding
+import com.safetysource.appretailer.ui.host.HostActivity
 import com.safetysource.core.base.BaseActivity
 import com.safetysource.core.ui.InfoDialog
 import com.safetysource.core.ui.phoneAuth.PhoneAuthActivity
@@ -66,7 +67,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
     }
 
     private fun openMainScreen() {
-        //startActivity(HostActivity.getIntent(this))
+        startActivity(HostActivity.getIntent(this))
         finish()
     }
 
