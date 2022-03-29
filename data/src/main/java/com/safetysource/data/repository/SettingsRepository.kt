@@ -8,11 +8,11 @@ class SettingsRepository @Inject constructor(
     private val settingsDataStore: SettingsDataStore
 ) : BaseRepository() {
 
-    suspend fun showOnBoarding(): Boolean = execute {
-        return@execute settingsDataStore.showOnBoarding()
+    suspend fun getCurrentLanguage(): String = execute {
+        return@execute settingsDataStore.getLanguage()
     }
 
-    suspend fun setShowOnBoarding(value: Boolean) = execute {
-        settingsDataStore.setShowOnBoarding(value)
+    suspend fun setCurrentLanguage(value: String) = execute {
+        settingsDataStore.setLanguage(value)
     }
 }

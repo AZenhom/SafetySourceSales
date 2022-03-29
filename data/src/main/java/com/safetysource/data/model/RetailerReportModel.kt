@@ -5,7 +5,7 @@ import java.io.Serializable
 import java.util.*
 
 data class RetailerReportModel(
-    val seller: String? = null,
+    val retailerId: String? = null,
     val totalCommissionValue: Float? = null,
     val totalRedeemed: Float? = null,
     @ServerTimestamp

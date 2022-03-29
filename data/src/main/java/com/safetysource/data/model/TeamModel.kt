@@ -9,4 +9,8 @@ data class TeamModel(
     val name: String? = null,
     @ServerTimestamp
     val created: Date? = null,
-) : Serializable
+) : Serializable {
+    companion object {
+        const val NAME = "name"
+    }
+}

@@ -17,20 +17,7 @@ private val Context.settingsDataStore: DataStore<Preferences> by preferencesData
 
 class SettingsDataStore @Inject constructor(@ApplicationContext val context: Context) {
 
-    private val onBoardingPref = booleanPreferencesKey("showOnBoarding")
     private val languagePref = stringPreferencesKey("language")
-
-    suspend fun setShowOnBoarding(value: Boolean) {
-        context.settingsDataStore.edit {
-            it[onBoardingPref] = value
-        }
-    }
-
-    suspend fun showOnBoarding(): Boolean {
-        return context.settingsDataStore.data.map {
-            it[onBoardingPref] ?: true
-        }.first()
-    }
 
     suspend fun setLanguage(value: String) {
         context.settingsDataStore.edit {

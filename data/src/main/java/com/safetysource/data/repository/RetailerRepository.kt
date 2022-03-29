@@ -1,9 +1,11 @@
 package com.safetysource.data.repository
 
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.safetysource.data.Constants
 import com.safetysource.data.base.BaseRepository
 import com.safetysource.data.cache.UserDataStore
+import com.safetysource.data.model.ProductModel
 import com.safetysource.data.model.RetailerModel
 import com.safetysource.data.model.response.ErrorModel
 import com.safetysource.data.model.response.StatefulResult
@@ -26,7 +28,22 @@ class RetailerRepository @Inject constructor(
         }
     }
 
-    suspend fun registerRetailer(retailerModel: RetailerModel): StatefulResult<RetailerModel> {
+    suspend fun getTeamRetailers(teamId: String): StatefulResult<List<RetailerModel>> {
+        return try {
+            val documents =
+                fireStoreDB.collection(Constants.COLLECTION_RETAILER)
+                    .whereEqualTo(RetailerModel.TEAM_ID, teamId)
+                    .orderBy(Constants.CREATED_AT, Query.Direction.DESCENDING)
+                    .get().await()
+            val products = documents.toObjects(RetailerModel::class.java)
+            StatefulResult.Success(products)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            StatefulResult.Error(ErrorModel.Unknown)
+        }
+    }
+
+    suspend fun createUpdateRetailer(retailerModel: RetailerModel): StatefulResult<RetailerModel> {
         if (retailerModel.id.isNullOrEmpty())
             return StatefulResult.Error(ErrorModel.Unknown)
         return try {

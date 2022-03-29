@@ -12,4 +12,8 @@ data class RetailerModel(
     val contactNo: String? = null,
     @ServerTimestamp
     val createdAt: Date? = null,
-) : Serializable
+) : Serializable{
+    companion object {
+        const val TEAM_ID = "teamId"
+    }
+}

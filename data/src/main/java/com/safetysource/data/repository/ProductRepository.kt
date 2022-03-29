@@ -7,6 +7,7 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
 import com.safetysource.data.Constants
 import com.safetysource.data.base.BaseRepository
+import com.safetysource.data.model.AdminModel
 import com.safetysource.data.model.ProductModel
 import com.safetysource.data.model.response.ErrorModel
 import com.safetysource.data.model.response.StatefulResult
@@ -45,7 +46,7 @@ class ProductRepository @Inject constructor(
         }
     }
 
-    suspend fun createProduct(productModel: ProductModel): StatefulResult<Unit> {
+    suspend fun createUpdateProduct(productModel: ProductModel): StatefulResult<Unit> {
         if (productModel.id.isNullOrEmpty())
             return StatefulResult.Error(ErrorModel.Unknown)
         return try {
@@ -69,6 +70,17 @@ class ProductRepository @Inject constructor(
                     .get().await()
             val products = documents.toObjects(ProductModel::class.java)
             StatefulResult.Success(products)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            StatefulResult.Error(ErrorModel.Unknown)
+        }
+    }
+
+    suspend fun getProductById(productId: String): StatefulResult<ProductModel> {
+        return try {
+            val document =
+                fireStoreDB.collection(Constants.COLLECTION_PRODUCT).document(productId).get().await()
+            StatefulResult.Success(document.toObject(ProductModel::class.java))
         } catch (e: Exception) {
             e.printStackTrace()
             StatefulResult.Error(ErrorModel.Unknown)

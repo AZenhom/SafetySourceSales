@@ -45,7 +45,7 @@ class ProductCategoryRepository @Inject constructor(
         }
     }
 
-    suspend fun createProductCategory(productCategoryModel: ProductCategoryModel): StatefulResult<Unit> {
+    suspend fun createUpdateProductCategory(productCategoryModel: ProductCategoryModel): StatefulResult<Unit> {
         if (productCategoryModel.id.isNullOrEmpty())
             return StatefulResult.Error(ErrorModel.Unknown)
         return try {
@@ -65,9 +65,20 @@ class ProductCategoryRepository @Inject constructor(
             val documents =
                 fireStoreDB.collection(Constants.COLLECTION_PRODUCT_CATEGORY)
                     .orderBy(ProductCategoryModel.RANK, Query.Direction.DESCENDING)
-                    .orderBy(Constants.CREATED_AT, Query.Direction.ASCENDING)
+                    .orderBy(Constants.CREATED_AT, Query.Direction.DESCENDING)
                     .get().await()
             StatefulResult.Success(documents.toObjects(ProductCategoryModel::class.java))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            StatefulResult.Error(ErrorModel.Unknown)
+        }
+    }
+
+    suspend fun getProductCategoryById(categoryId: String): StatefulResult<ProductCategoryModel> {
+        return try {
+            val document =
+                fireStoreDB.collection(Constants.COLLECTION_PRODUCT_CATEGORY).document(categoryId).get().await()
+            StatefulResult.Success(document.toObject(ProductCategoryModel::class.java))
         } catch (e: Exception) {
             e.printStackTrace()
             StatefulResult.Error(ErrorModel.Unknown)
