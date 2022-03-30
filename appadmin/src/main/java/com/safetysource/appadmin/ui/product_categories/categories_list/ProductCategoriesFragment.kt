@@ -1,4 +1,4 @@
-package com.safetysource.appadmin.ui.product_categories
+package com.safetysource.appadmin.ui.product_categories.categories_list
 
 import androidx.fragment.app.viewModels
 import com.safetysource.appadmin.R

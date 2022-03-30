@@ -4,12 +4,18 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="appadmin/src/main/res/drawable/ic_retailer.xml" value="0.1675" />
+        <entry key="appadmin/src/main/res/layout/activity_create_edit_product.xml" value="0.34427083333333336" />
+        <entry key="appadmin/src/main/res/layout/activity_create_product.xml" value="0.33" />
         <entry key="appadmin/src/main/res/layout/activity_create_product_category.xml" value="0.34427083333333336" />
         <entry key="appadmin/src/main/res/layout/activity_host.xml" value="0.34427083333333336" />
         <entry key="appadmin/src/main/res/layout/activity_product_categories.xml" value="0.34427083333333336" />
+        <entry key="appadmin/src/main/res/layout/activity_product_item_details.xml" value="0.34427083333333336" />
+        <entry key="appadmin/src/main/res/layout/activity_product_itemdetails.xml" value="0.34427083333333336" />
+        <entry key="appadmin/src/main/res/layout/activity_product_items_statistics.xml" value="0.25" />
+        <entry key="appadmin/src/main/res/layout/activity_products_list.xml" value="0.34427083333333336" />
         <entry key="appadmin/src/main/res/layout/activity_splash.xml" value="0.34427083333333336" />
         <entry key="appadmin/src/main/res/layout/fragment_product_categories.xml" value="0.34427083333333336" />
-        <entry key="appadmin/src/main/res/layout/fragment_retailers.xml" value="0.34427083333333336" />
+        <entry key="appadmin/src/main/res/layout/fragment_retailers.xml" value="0.25" />
         <entry key="appadmin/src/main/res/layout/fragment_search_options.xml" value="0.34427083333333336" />
         <entry key="appadmin/src/main/res/layout/fragment_teams.xml" value="0.34427083333333336" />
         <entry key="appadmin/src/main/res/layout/fragment_transactions.xml" value="0.34427083333333336" />

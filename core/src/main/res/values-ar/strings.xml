@@ -29,10 +29,8 @@
     <string name="product_categories">Product Categories</string>
     <string name="are_you_sure_you_want_to_log_out">Are you sure you want to log out ?</string>
     <string name="create_product_category">Create Product Category</string>
-    <string name="category_name_ar">Category Name in arabic</string>
-    <string name="category_name_en">Category Name in English</string>
-    <string name="category_name_hint_en">Ex: Beauty &amp; Personal Care</string>
-    <string name="category_name_hint_ar">Ex: Beauty &amp; Personal Care</string>
+    <string name="category_name">Category Name in arabic</string>
+    <string name="category_name_hint">Ex: Networking Devices</string>
     <string name="category_image">Category Image</string>
     <string name="category_rank">Category Rank</string>
     <string name="category_rank_hint">Lowest Rank: 1</string>
@@ -78,20 +76,15 @@
     <string name="my_products">My Products</string>
     <string name="my_orders">My Orders</string>
     <string name="create_product">Create New Product</string>
-    <string name="product_images">Product Images</string>
-    <string name="product_name_ar">Product Name in Arabic</string>
-    <string name="product_name_hint_ar">Ex: Sunsilk Shampoo</string>
-    <string name="product_name_hint_en">Ex: Sunsilk Shampoo</string>
-    <string name="product_name_en">Product Name in English</string>
-    <string name="product_price_in_currency">Product Price In %1$s</string>
+    <string name="product_image">Product Image</string>
+    <string name="product_name">Product Name</string>
+    <string name="product_name_hint">Ex: Cisco MikroTik hAP</string>
+    <string name="product_price_in_currency">Product Wholesale Price In %1$s</string>
     <string name="product_price_hint">Ex: 100</string>
-    <string name="product_stock_amount">Product Stock Amount (Optional)</string>
-    <string name="product_stock_amount_hint">Ex: 10</string>
+    <string name="product_commission_value_in_currency">Product Commission Value In %1$s</string>
     <string name="product_category">Product Category</string>
-    <string name="please_pick_at_least_one_image_first">Please pick at least one image first</string>
     <string name="invalid_price_value">Invalid price value</string>
-    <string name="invalid_amount_value">Invalid amount value</string>
-    <string name="please_pick_category_first">Please select a product category first</string>
+    <string name="invalid_commission_value">Invalid commission value</string>
     <string name="product_created_successfully">Product created successfully</string>
     <string name="teams">Teams</string>
     <string name="retailers">Retailers</string>
@@ -99,4 +92,7 @@
     <string name="profile">Profile</string>
     <string name="scan_products">Scan Products</string>
     <string name="product_details">Product Details</string>
+    <string name="category_products">Category Products</string>
+    <string name="product_items">Product Items</string>
+    <string name="product_item_details">Product Item Details</string>
 </resources>

@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme"
         tools:replace="android:supportsRtl">
         <activity
-            android:name=".ui.product_details.ProductDetailsActivity"
+            android:name=".ui.product_items.ProductItemDetailsActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity

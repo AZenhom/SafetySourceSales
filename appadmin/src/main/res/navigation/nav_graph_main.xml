@@ -11,7 +11,7 @@
 
     <fragment
         android:id="@+id/productCategoriesFragment"
-        android:name="com.safetysource.appadmin.ui.product_categories.ProductCategoriesFragment"
+        android:name="com.safetysource.appadmin.ui.product_categories.categories_list.ProductCategoriesFragment"
         android:label="@string/product_categories"
         tools:layout="@layout/fragment_product_categories"/>
 

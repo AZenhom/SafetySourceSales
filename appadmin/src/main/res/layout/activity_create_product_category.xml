@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.product_categories.add_edit_category.CreateProductCategoryActivity"
+    tools:context=".ui.product_categories.create_edit_category.CreateEditProductCategoryActivity"
     android:scrollbars="none"
     android:fillViewport="true">
 
@@ -101,62 +101,32 @@
         </androidx.cardview.widget.CardView>
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/lblCategoryNameAr"
+            android:id="@+id/lblCategoryName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_16sdp"
             android:fontFamily="@font/poppins_semi_bold"
             android:gravity="center"
-            android:text="@string/category_name_ar"
+            android:text="@string/category_name"
             android:textColor="@color/grey_dark2"
             android:textSize="@dimen/_10sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cvCategoryImage" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilCategoryNameAr"
+            android:id="@+id/tilCategoryName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_6sdp"
-            app:layout_constraintTop_toBottomOf="@id/lblCategoryNameAr">
+            app:layout_constraintTop_toBottomOf="@id/lblCategoryName">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etCategoryNameAr"
+                android:id="@+id/etCategoryName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/category_name_hint_ar"
-                android:inputType="text" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/lblCategoryNameEn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/poppins_semi_bold"
-            android:gravity="center"
-            android:text="@string/category_name_en"
-            android:textColor="@color/grey_dark2"
-            android:textSize="@dimen/_10sdp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tilCategoryNameAr" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilCategoryNameEn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_16sdp"
-            android:layout_marginTop="@dimen/_6sdp"
-            app:layout_constraintTop_toBottomOf="@id/lblCategoryNameEn">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etCategoryNameEn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/category_name_hint_en"
+                android:hint="@string/category_name_hint"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -172,7 +142,7 @@
             android:textColor="@color/grey_dark2"
             android:textSize="@dimen/_10sdp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tilCategoryNameEn" />
+            app:layout_constraintTop_toBottomOf="@id/tilCategoryName" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilCategoryRank"
