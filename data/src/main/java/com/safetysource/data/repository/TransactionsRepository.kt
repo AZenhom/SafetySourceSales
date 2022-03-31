@@ -21,7 +21,7 @@ class TransactionsRepository @Inject constructor(
         return try {
             val categoryRef = fireStoreDB
                 .collection(Constants.COLLECTION_TRANSACTION)
-                .document(transactionModel.id)
+                .document(transactionModel.id!!)
             categoryRef.set(transactionModel).await()
             StatefulResult.Success(Unit)
         } catch (e: Exception) {

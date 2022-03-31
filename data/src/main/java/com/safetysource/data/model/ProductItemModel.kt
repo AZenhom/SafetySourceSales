@@ -5,12 +5,16 @@ import java.io.Serializable
 import java.util.*
 
 data class ProductItemModel(
-    val serial: String? = null,
-    val productId: String? = null,
-    val state: ProductItemState? = null,
+    var serial: String? = null,
+    var productId: String? = null,
+    var state: ProductItemState? = null,
     @ServerTimestamp
-    val updatedAt: Date? = null,
-) : Serializable
+    var updatedAt: Date? = null,
+) : Serializable{
+    companion object{
+        const val PRODUCT_ID = "productId"
+    }
+}
 
 enum class ProductItemState : Serializable {
     NOT_SOLD_YET,

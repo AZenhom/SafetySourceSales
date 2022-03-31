@@ -16,13 +16,25 @@
         android:theme="@style/AppTheme"
         tools:replace="android:supportsRtl" >
         <activity
-            android:name=".ui.product_items.item_details.ProductItemDetailsActivity"
+            android:name=".ui.retailers.retailer_details.RetailerDetailsActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
+            android:name=".ui.retailers.create_edit_retailer.CreateEditRetailerActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.retailers.retailers_list.RetailersActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.product_items.item_details.ProductItemDetailsActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".ui.product_items.items_statistics.ProductItemsStatisticsActivity"
             android:exported="false"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.products.products_List.ProductsListActivity"
             android:exported="false"

@@ -95,4 +95,7 @@
     <string name="category_products">Category Products</string>
     <string name="product_items">Product Items</string>
     <string name="product_item_details">Product Item Details</string>
+    <string name="retailer_details">Retailer Details</string>
+    <string name="register_retailer">Register a retailer</string>
+    <string name="retailer_with_phone_already_registered">Retailer with same phone number already exists</string>
 </resources>

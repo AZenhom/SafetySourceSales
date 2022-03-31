@@ -5,7 +5,6 @@ import com.google.firebase.firestore.Query
 import com.safetysource.data.Constants
 import com.safetysource.data.base.BaseRepository
 import com.safetysource.data.cache.UserDataStore
-import com.safetysource.data.model.ProductModel
 import com.safetysource.data.model.RetailerModel
 import com.safetysource.data.model.response.ErrorModel
 import com.safetysource.data.model.response.StatefulResult
@@ -17,11 +16,20 @@ class RetailerRepository @Inject constructor(
     private val fireStoreDB: FirebaseFirestore,
 ) : BaseRepository() {
 
-    suspend fun getRetailerById(retailerId: String): StatefulResult<RetailerModel> {
+    fun getNewRetailerId(): String {
+        return fireStoreDB
+            .collection(Constants.COLLECTION_RETAILER)
+            .document()
+            .id
+    }
+
+    suspend fun getRetailerByPhoneNumber(phoneNumber: String): StatefulResult<RetailerModel> {
         return try {
             val document =
-                fireStoreDB.collection(Constants.COLLECTION_RETAILER).document(retailerId).get().await()
-            StatefulResult.Success(document.toObject(RetailerModel::class.java))
+                fireStoreDB.collection(Constants.COLLECTION_RETAILER)
+                    .whereEqualTo(RetailerModel.PHONE_NUMBER, phoneNumber)
+                    .get().await().firstOrNull()
+            StatefulResult.Success(document?.toObject(RetailerModel::class.java))
         } catch (e: Exception) {
             e.printStackTrace()
             StatefulResult.Error(ErrorModel.Unknown)

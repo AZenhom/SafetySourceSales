@@ -5,19 +5,20 @@ import android.content.Intent
 import androidx.activity.viewModels
 import com.safetysource.appadmin.databinding.ActivityProductItemDetailsBinding
 import com.safetysource.core.base.BaseActivity
+import com.safetysource.data.model.ProductItemModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ProductItemDetailsActivity : BaseActivity<ActivityProductItemDetailsBinding, ProductItemDetailsViewModel>() {
 
     companion object {
-        const val SERIAL = "SERIAL"
+        const val PRODUCT_ITEM_MODEL = "PRODUCT_ITEM_MODEL"
         fun getIntent(
             context: Context,
-            serial: String
+            productItemModel: ProductItemModel
         ) =
             Intent(context, ProductItemDetailsActivity::class.java).apply {
-                putExtra(SERIAL, serial)
+                putExtra(PRODUCT_ITEM_MODEL, productItemModel)
             }
     }
 

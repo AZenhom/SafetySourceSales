@@ -14,6 +14,13 @@ class TeamRepository @Inject constructor(
     private val fireStoreDB: FirebaseFirestore,
 ) : BaseRepository() {
 
+    fun getNewTeamId(): String {
+        return fireStoreDB
+            .collection(Constants.COLLECTION_TEAM)
+            .document()
+            .id
+    }
+
     suspend fun createUpdateTeam(teamModel: TeamModel): StatefulResult<Unit> {
         if (teamModel.id.isNullOrEmpty())
             return StatefulResult.Error(ErrorModel.Unknown)

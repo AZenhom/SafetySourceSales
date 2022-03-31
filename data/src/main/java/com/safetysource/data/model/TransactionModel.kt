@@ -5,17 +5,17 @@ import java.io.Serializable
 import java.util.*
 
 data class TransactionModel(
-    val id: String? = null,
-    val type: TransactionType? = null,
-    val retailerId: String? = null,
-    val teamId: String? = null,
-    val productId: String? = null,
-    val serial: String? = null,
-    val commissionAppliedOrRemoved: Float? = null,
-    val isUnsellingApproved: Boolean? = null,
-    val unsellingApprovedByAdminId: String? = null,
+    var id: String? = null,
+    var type: TransactionType? = null,
+    var retailerId: String? = null,
+    var teamId: String? = null,
+    var productId: String? = null,
+    var serial: String? = null,
+    var commissionAppliedOrRemoved: Float? = null,
+    var isUnsellingApproved: Boolean? = null,
+    var unsellingApprovedByAdminId: String? = null,
     @ServerTimestamp
-    val updatedAt: Date? = null,
+    var updatedAt: Date? = null,
 ) : Serializable {
     companion object {
         const val RETAILER_ID = "retailerId"

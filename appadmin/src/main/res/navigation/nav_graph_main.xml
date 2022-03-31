@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/transactionsFragment"
-        android:name="com.safetysource.appretailer.ui.transactions.TransactionsFragment"
+        android:name="com.safetysource.appadmin.ui.transactions.TransactionsFragment"
         android:label="@string/transactions"
         tools:layout="@layout/fragment_transactions" />
 
@@ -28,8 +28,8 @@
         tools:layout="@layout/fragment_teams" />
 
     <fragment
-        android:id="@+id/retailersFragment"
-        android:name="com.safetysource.appadmin.ui.reatailers.RetailersFragment"
-        android:label="@string/retailers"
-        tools:layout="@layout/fragment_retailers" />
+        android:id="@+id/profileFragment"
+        android:name="com.safetysource.appadmin.ui.profile.ProfileFragment"
+        android:label="@string/profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

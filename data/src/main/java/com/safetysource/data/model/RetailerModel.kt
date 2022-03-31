@@ -15,5 +15,6 @@ data class RetailerModel(
 ) : Serializable{
     companion object {
         const val TEAM_ID = "teamId"
+        const val PHONE_NUMBER = "phoneNo"
     }
 }
