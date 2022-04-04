@@ -16,7 +16,6 @@ class ProductItemDetailsActivity :
     companion object {
 
         const val PRODUCT_ITEM_MODEL = "PRODUCT_ITEM_MODEL"
-        const val PRODUCT_MODEL = "PRODUCT_MODEL"
 
         fun getIntent(
             context: Context,
@@ -24,7 +23,6 @@ class ProductItemDetailsActivity :
             productModel: ProductModel
         ) = Intent(context, ProductItemDetailsActivity::class.java).apply {
             putExtra(PRODUCT_ITEM_MODEL, productItemModel)
-            putExtra(PRODUCT_MODEL, productModel)
         }
     }
 

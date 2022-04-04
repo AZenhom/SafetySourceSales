@@ -15,6 +15,13 @@ class TransactionsRepository @Inject constructor(
     private val fireStoreDB: FirebaseFirestore,
 ) : BaseRepository() {
 
+    fun getNewTransactionId(): String {
+        return fireStoreDB
+            .collection(Constants.COLLECTION_TRANSACTION)
+            .document()
+            .id
+    }
+
     suspend fun createUpdateTransaction(transactionModel: TransactionModel): StatefulResult<Unit> {
         if (transactionModel.id.isNullOrEmpty())
             return StatefulResult.Error(ErrorModel.Unknown)
