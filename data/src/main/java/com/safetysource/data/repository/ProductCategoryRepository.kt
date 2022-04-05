@@ -65,7 +65,7 @@ class ProductCategoryRepository @Inject constructor(
             val documents =
                 fireStoreDB.collection(Constants.COLLECTION_PRODUCT_CATEGORY)
                     .orderBy(ProductCategoryModel.RANK, Query.Direction.DESCENDING)
-                    .orderBy(Constants.CREATED_AT, Query.Direction.DESCENDING)
+                    .orderBy(Constants.UPDATED_AT, Query.Direction.DESCENDING)
                     .get().await()
             StatefulResult.Success(documents.toObjects(ProductCategoryModel::class.java))
         } catch (e: Exception) {

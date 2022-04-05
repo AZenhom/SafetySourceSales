@@ -34,3 +34,9 @@ fun getScreenWidth(fragmentActivity: FragmentActivity): Int {
         displayMetrics.widthPixels
     }
 }
+
+fun convertDpToPixel(dp: Float): Int {
+    val metrics = Resources.getSystem().displayMetrics
+    val px = dp * (metrics.densityDpi / 160f)
+    return px.roundToInt()
+}

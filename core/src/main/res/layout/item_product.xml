@@ -14,43 +14,16 @@
         android:layout_height="match_parent"
         android:padding="@dimen/_8sdp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/ivSellerImage"
-            android:layout_width="@dimen/_24sdp"
-            android:layout_height="@dimen/_24sdp"
-            app:civ_border_color="@color/grey_light2"
-            app:civ_border_width="0.5dp"
-            android:src="@color/transparent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tvSellerName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/_10sdp"
-            android:textColor="@color/grey_dark"
-            android:fontFamily="@font/poppins_semi_bold"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:textAlignment="viewStart"
-            tools:text="Ragab Sons"
-            android:layout_marginStart="@dimen/_8sdp"
-            app:layout_constraintStart_toEndOf="@id/ivSellerImage"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/ivSellerImage"
-            app:layout_constraintBottom_toBottomOf="@id/ivSellerImage"/>
-
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivProductImage"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_4sdp"
             tools:src="@drawable/ic_launcher_background"
             app:layout_constraintDimensionRatio="H,1:1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivSellerImage"/>
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvProductName"
@@ -69,21 +42,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ivProductImage"/>
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tvProductPrice"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/_12sdp"
-            android:textColor="@color/colorPrimary"
-            android:fontFamily="@font/poppins_bold"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:textAlignment="viewStart"
-            tools:text="EGP 540"
-            android:layout_marginTop="@dimen/_4sdp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvProductName"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

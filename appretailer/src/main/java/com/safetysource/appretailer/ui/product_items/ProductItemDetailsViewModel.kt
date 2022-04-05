@@ -20,7 +20,7 @@ class ProductItemDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
-    private val productItemModel: ProductItemModel? =
+    val productItemModel: ProductItemModel? =
         savedStateHandle[ProductItemDetailsActivity.PRODUCT_ITEM_MODEL]
 
     fun getProduct(): LiveData<ProductModel?> {

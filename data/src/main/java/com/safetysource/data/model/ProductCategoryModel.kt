@@ -10,7 +10,7 @@ data class ProductCategoryModel(
     val imgUrl: String? = null,
     val rank: Int? = null,
     @ServerTimestamp
-    val createdAt: Date? = null,
+    val updatedAt: Date? = null,
 ) : Serializable{
     companion object {
         const val RANK = "rank"

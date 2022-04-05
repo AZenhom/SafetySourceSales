@@ -16,7 +16,7 @@ class ProductsListViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
-    private val productCategoryId: String? =
+    val productCategoryId: String? =
         savedStateHandle[ProductsListActivity.PRODUCT_CATEGORY_ID]
 
     fun getProducts(): LiveData<List<ProductModel>> {

@@ -23,6 +23,18 @@ class RetailerRepository @Inject constructor(
             .id
     }
 
+    suspend fun getRetailerById(retailerId: String): StatefulResult<RetailerModel> {
+        return try {
+            val document =
+                fireStoreDB.collection(Constants.COLLECTION_RETAILER).document(retailerId).get()
+                    .await()
+            StatefulResult.Success(document.toObject(RetailerModel::class.java))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            StatefulResult.Error(ErrorModel.Unknown)
+        }
+    }
+
     suspend fun getRetailerByPhoneNumber(phoneNumber: String): StatefulResult<RetailerModel> {
         return try {
             val document =

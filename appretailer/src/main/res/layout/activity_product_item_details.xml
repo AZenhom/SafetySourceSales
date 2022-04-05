@@ -19,8 +19,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/product_details"
             android:fontFamily="@font/poppins_regular"
+            android:text="@string/product_details"
             android:textColor="@color/white"
             android:textSize="@dimen/_12sdp" />
 
@@ -29,8 +29,222 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/bottom_background"
         android:alpha="0.9"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:src="@drawable/bottom_background"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvProductImage"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_150sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        app:cardCornerRadius="@dimen/_5sdp"
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:strokeColor="@color/colorSecondary"
+        app:strokeWidth="2dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivProductImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/lblProductName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_32sdp"
+        android:fontFamily="@font/poppins_semi_bold"
+        android:gravity="center"
+        android:text="@string/product_name"
+        android:textColor="@color/colorSecondary"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cvProductImage" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvProductName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:fontFamily="@font/poppins_semi_bold"
+        android:gravity="start"
+        android:textAlignment="viewStart"
+        tools:text="@string/product_name_hint"
+        android:textColor="@color/grey_dark2"
+        android:textSize="@dimen/_10sdp"
+        android:lines="1"
+        android:ellipsize="end"
+        app:layout_constraintStart_toEndOf="@id/lblProductName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/lblProductName"
+        app:layout_constraintBottom_toBottomOf="@id/lblProductName"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/lblWholesomePrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:fontFamily="@font/poppins_semi_bold"
+        android:gravity="center"
+        android:text="@string/product_wholesome_price"
+        android:textColor="@color/colorSecondary"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lblProductName" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvWholesomePrice"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:fontFamily="@font/poppins_semi_bold"
+        android:gravity="start"
+        android:textAlignment="viewStart"
+        tools:text="100 EGP"
+        android:textColor="@color/grey_dark2"
+        android:textSize="@dimen/_10sdp"
+        android:lines="1"
+        android:ellipsize="end"
+        app:layout_constraintStart_toEndOf="@id/lblWholesomePrice"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/lblWholesomePrice"
+        app:layout_constraintBottom_toBottomOf="@id/lblWholesomePrice"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/lblCommission"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:fontFamily="@font/poppins_semi_bold"
+        android:gravity="center"
+        android:text="@string/product_commission"
+        android:textColor="@color/colorSecondary"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lblWholesomePrice" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvCommission"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:fontFamily="@font/poppins_semi_bold"
+        android:gravity="start"
+        android:textAlignment="viewStart"
+        android:text="@string/product_name"
+        android:textColor="@color/grey_dark2"
+        android:textSize="@dimen/_10sdp"
+        android:lines="1"
+        android:ellipsize="end"
+        app:layout_constraintStart_toEndOf="@id/lblCommission"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/lblCommission"
+        app:layout_constraintBottom_toBottomOf="@id/lblCommission"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/lblProductItemStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:fontFamily="@font/poppins_semi_bold"
+        android:gravity="center"
+        android:text="@string/product_commission"
+        android:textColor="@color/colorSecondary"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lblCommission" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvProductItemStatus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:fontFamily="@font/poppins_semi_bold"
+        android:gravity="start"
+        android:textAlignment="viewStart"
+        android:text="@string/pending_unselling"
+        android:textColor="@color/grey_dark2"
+        android:textSize="@dimen/_10sdp"
+        android:lines="1"
+        android:ellipsize="end"
+        app:layout_constraintStart_toEndOf="@id/lblProductItemStatus"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/lblProductItemStatus"
+        app:layout_constraintBottom_toBottomOf="@id/lblProductItemStatus"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/lblSerial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:fontFamily="@font/poppins_semi_bold"
+        android:gravity="center"
+        android:text="@string/serial"
+        android:textColor="@color/colorSecondary"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvProductItemStatus" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvSerial"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:fontFamily="@font/poppins_semi_bold"
+        android:gravity="start"
+        android:textAlignment="viewStart"
+        android:text="abdfiswnwo52wsde"
+        android:textColor="@color/grey_dark2"
+        android:textSize="@dimen/_10sdp"
+        android:lines="1"
+        android:ellipsize="end"
+        app:layout_constraintStart_toEndOf="@id/lblSerial"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/lblSerial"
+        app:layout_constraintBottom_toBottomOf="@id/lblSerial"
+        tools:ignore="HardcodedText" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSell"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_16sdp"
+        android:text="@string/sell_product"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnUnsell"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_16sdp"
+        android:text="@string/unsell"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

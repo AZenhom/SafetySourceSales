@@ -6,6 +6,7 @@ import com.hadilq.liveevent.LiveEvent
 import com.safetysource.core.base.BaseViewModel
 import com.safetysource.data.model.ProductItemModel
 import com.safetysource.data.model.ProductItemState
+import com.safetysource.data.model.ProductModel
 import com.safetysource.data.model.response.StatefulResult
 import com.safetysource.data.repository.ProductItemRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,8 +18,8 @@ class ProductItemStatisticsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
-    private val productId: String? =
-        savedStateHandle[ProductItemsStatisticsActivity.PRODUCT_ID]
+    val productModel: ProductModel? =
+        savedStateHandle[ProductItemsStatisticsActivity.PRODUCT_MODEL]
 
     fun createProductItem(
         serial: String,
@@ -27,7 +28,7 @@ class ProductItemStatisticsViewModel @Inject constructor(
         safeLauncher {
             showLoading()
             val productItemModel = ProductItemModel(
-                productId = productId,
+                productId = productModel?.id,
                 serial = serial,
                 state = ProductItemState.NOT_SOLD_YET
             )
@@ -61,7 +62,7 @@ class ProductItemStatisticsViewModel @Inject constructor(
         val liveData = LiveEvent<List<ProductItemModel>>()
         safeLauncher {
             val result =
-                productItemRepository.getProductItems(productId ?: "")
+                productItemRepository.getProductItems(productModel?.id ?: "")
             if (result is StatefulResult.Success)
                 liveData.value = result.data ?: listOf()
             else

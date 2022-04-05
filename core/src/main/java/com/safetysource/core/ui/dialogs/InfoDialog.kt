@@ -1,7 +1,6 @@
-package com.safetysource.core.ui
+package com.safetysource.core.ui.dialogs
 
 import android.content.Context
-import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
 import com.safetysource.core.R
 import com.safetysource.core.databinding.DialogInfoLayoutBinding
-import kotlin.math.roundToInt
+import com.safetysource.core.utils.convertDpToPixel
 
 class InfoDialog constructor(
     context: Context,
@@ -91,11 +90,5 @@ class InfoDialog constructor(
                     onCancel.invoke()
             }
         }
-    }
-
-    fun convertDpToPixel(dp: Float): Int {
-        val metrics = Resources.getSystem().displayMetrics
-        val px = dp * (metrics.densityDpi / 160f)
-        return px.roundToInt()
     }
 }

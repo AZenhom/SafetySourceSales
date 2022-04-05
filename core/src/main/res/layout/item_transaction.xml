@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_140sdp"
+    android:theme="@style/AppTheme.NoActionBar"
+    app:cardCornerRadius="@dimen/_5sdp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/grey_dark2"
+    app:strokeWidth="@dimen/_1sdp"
+    android:layout_marginTop="@dimen/_8sdp"
+    android:layout_marginStart="@dimen/_8sdp"
+    android:layout_marginEnd="@dimen/_8sdp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rootView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/lblRetailerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_7sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:gravity="center"
+            android:text="@string/retailer"
+            android:textColor="@color/colorSecondary"
+            android:textSize="@dimen/_11sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvRetailerName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_6sdp"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:gravity="start"
+            android:textAlignment="viewStart"
+            tools:text="Ahmed Alaa"
+            android:textColor="@color/grey_dark2"
+            android:textSize="@dimen/_10sdp"
+            app:layout_constraintStart_toEndOf="@id/lblRetailerName"
+            app:layout_constraintTop_toTopOf="@id/lblRetailerName"
+            app:layout_constraintBottom_toBottomOf="@id/lblRetailerName"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/lblTeamName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:gravity="center"
+            android:text="@string/team"
+            android:textColor="@color/colorSecondary"
+            android:textSize="@dimen/_11sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lblRetailerName" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvTeamName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_6sdp"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:gravity="start"
+            android:textAlignment="viewStart"
+            tools:text="Team Cairo"
+            android:textColor="@color/grey_dark2"
+            android:textSize="@dimen/_10sdp"
+            app:layout_constraintStart_toEndOf="@id/lblTeamName"
+            app:layout_constraintTop_toTopOf="@id/lblTeamName"
+            app:layout_constraintBottom_toBottomOf="@id/lblTeamName"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/lblProductName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:gravity="center"
+            android:text="@string/product"
+            android:textColor="@color/colorSecondary"
+            android:textSize="@dimen/_11sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lblTeamName" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvProductName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_6sdp"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:gravity="start"
+            android:textAlignment="viewStart"
+            tools:text="@string/product_name_hint"
+            android:textColor="@color/grey_dark2"
+            android:textSize="@dimen/_10sdp"
+            app:layout_constraintStart_toEndOf="@id/lblProductName"
+            app:layout_constraintTop_toTopOf="@id/lblProductName"
+            app:layout_constraintBottom_toBottomOf="@id/lblProductName"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/lblSerial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:gravity="center"
+            android:text="@string/serial"
+            android:textColor="@color/colorSecondary"
+            android:textSize="@dimen/_11sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lblProductName" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvSerial"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_6sdp"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:gravity="start"
+            android:textAlignment="viewStart"
+            tools:text="aschjabskjakmbkhy"
+            android:textColor="@color/grey_dark2"
+            android:textSize="@dimen/_10sdp"
+            app:layout_constraintStart_toEndOf="@id/lblSerial"
+            app:layout_constraintTop_toTopOf="@id/lblSerial"
+            app:layout_constraintBottom_toBottomOf="@id/lblSerial"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/lblAdminActionRequired"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:gravity="center"
+            android:text="@string/amin_action_required"
+            android:textColor="@color/colorSecondary"
+            android:textSize="@dimen/_11sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lblSerial" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvAdminActionRequired"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_6sdp"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:gravity="start"
+            android:textAlignment="viewStart"
+            tools:text="@string/no"
+            android:textColor="@color/grey_dark2"
+            android:textSize="@dimen/_10sdp"
+            app:layout_constraintStart_toEndOf="@id/lblAdminActionRequired"
+            app:layout_constraintTop_toTopOf="@id/lblAdminActionRequired"
+            app:layout_constraintBottom_toBottomOf="@id/lblAdminActionRequired"
+            app:layout_constraintEnd_toStartOf="@id/ivTransactionType"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/lblCommission"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:gravity="center"
+            android:text="@string/commission_removed"
+            android:textColor="@color/colorSecondary"
+            android:textSize="@dimen/_11sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lblAdminActionRequired" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvCommission"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_6sdp"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:gravity="start"
+            android:textAlignment="viewStart"
+            tools:text="500 EGP"
+            android:textColor="@color/grey_dark2"
+            android:textSize="@dimen/_10sdp"
+            app:layout_constraintStart_toEndOf="@id/lblCommission"
+            app:layout_constraintTop_toTopOf="@id/lblCommission"
+            app:layout_constraintBottom_toBottomOf="@id/lblCommission"
+            app:layout_constraintEnd_toStartOf="@id/ivTransactionType"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivTransactionType"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:src="@drawable/ic_arrow_up"
+            android:layout_marginEnd="@dimen/_6sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/lblAdminActionRequired"
+            app:layout_constraintBottom_toBottomOf="@id/lblCommission"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

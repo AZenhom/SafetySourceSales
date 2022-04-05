@@ -14,7 +14,7 @@ import com.safetysource.core.R
 import com.safetysource.appadmin.databinding.ActivitySplashBinding
 import com.safetysource.appadmin.ui.host.HostActivity
 import com.safetysource.core.base.BaseActivity
-import com.safetysource.core.ui.InfoDialog
+import com.safetysource.core.ui.dialogs.InfoDialog
 import com.safetysource.core.ui.phoneAuth.PhoneAuthActivity
 import com.safetysource.data.model.AccountType
 import dagger.hilt.android.AndroidEntryPoint
