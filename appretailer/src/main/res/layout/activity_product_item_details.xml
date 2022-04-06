@@ -160,7 +160,7 @@
         android:layout_marginTop="@dimen/_16sdp"
         android:fontFamily="@font/poppins_semi_bold"
         android:gravity="center"
-        android:text="@string/product_commission"
+        android:text="@string/product_status"
         android:textColor="@color/colorSecondary"
         android:textSize="@dimen/_12sdp"
         app:layout_constraintStart_toStartOf="parent"
@@ -208,7 +208,7 @@
         android:fontFamily="@font/poppins_semi_bold"
         android:gravity="start"
         android:textAlignment="viewStart"
-        android:text="abdfiswnwo52wsde"
+        tools:text="abdfiswnwo52wsde"
         android:textColor="@color/grey_dark2"
         android:textSize="@dimen/_10sdp"
         android:lines="1"
@@ -216,8 +216,7 @@
         app:layout_constraintStart_toEndOf="@id/lblSerial"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/lblSerial"
-        app:layout_constraintBottom_toBottomOf="@id/lblSerial"
-        tools:ignore="HardcodedText" />
+        app:layout_constraintBottom_toBottomOf="@id/lblSerial"/>
 
 
     <com.google.android.material.button.MaterialButton

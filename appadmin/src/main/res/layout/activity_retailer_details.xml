@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
@@ -31,13 +32,154 @@
         android:alpha="0.9"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scrollbars="none"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/lblRetailerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:gravity="center"
+                android:text="@string/retailer"
+                android:textColor="@color/colorSecondary"
+                android:textSize="@dimen/_13sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvRetailerName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:gravity="start"
+                android:textAlignment="viewStart"
+                tools:text="Retailer Name"
+                android:textColor="@color/grey_dark2"
+                android:textSize="@dimen/_11sdp"
+                android:lines="1"
+                android:ellipsize="end"
+                app:layout_constraintStart_toEndOf="@id/lblRetailerName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/lblRetailerName"
+                app:layout_constraintBottom_toBottomOf="@id/lblRetailerName"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/lblDueCommission"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:gravity="center"
+                android:text="@string/due_commission"
+                android:textColor="@color/colorSecondary"
+                android:textSize="@dimen/_13sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lblRetailerName" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvDueCommission"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:gravity="start"
+                android:textAlignment="viewStart"
+                tools:text="50 EGP"
+                android:textColor="@color/grey_dark2"
+                android:textSize="@dimen/_11sdp"
+                android:lines="1"
+                android:ellipsize="end"
+                app:layout_constraintStart_toEndOf="@id/lblDueCommission"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/lblDueCommission"
+                app:layout_constraintBottom_toBottomOf="@id/lblDueCommission"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/lblTotalRedeemed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:gravity="center"
+                android:text="@string/total_redeemed"
+                android:textColor="@color/colorSecondary"
+                android:textSize="@dimen/_13sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lblDueCommission" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvTotalRedeemed"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:gravity="start"
+                android:textAlignment="viewStart"
+                tools:text="1550 EGP"
+                android:textColor="@color/grey_dark2"
+                android:textSize="@dimen/_11sdp"
+                android:lines="1"
+                android:ellipsize="end"
+                app:layout_constraintStart_toEndOf="@id/lblTotalRedeemed"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/lblTotalRedeemed"
+                app:layout_constraintBottom_toBottomOf="@id/lblTotalRedeemed"/>
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/lblTransactions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:gravity="center"
+                android:text="@string/transactions"
+                android:textColor="@color/colorSecondary"
+                android:textSize="@dimen/_13sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTotalRedeemed" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvTransactions"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:paddingBottom="@dimen/_8sdp"
+                android:clipToPadding="false"
+                android:clipChildren="false"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/lblTransactions"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:listitem="@layout/item_transaction"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAdd"
+        android:id="@+id/fabRedeem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_16sdp"
         android:layout_marginEnd="@dimen/_16sdp"
-        android:src="@drawable/ic_add"
+        android:src="@drawable/ic_redeem"
         app:backgroundTint="@color/colorPrimary"
         app:tint="@color/white"
         app:fabSize="normal"

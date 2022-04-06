@@ -5,9 +5,9 @@ import java.io.Serializable
 import java.util.*
 
 data class TeamReportModel(
-    val teamId: String? = null,
-    val totalCommissionValue: Float? = null,
-    val totalRedeemed: Float? = null,
+    var teamId: String? = null,
+    var dueCommissionValue: Float? = null,
+    var totalRedeemed: Float? = null,
     @ServerTimestamp
-    val updatedAt: Date? = null,
+    var updatedAt: Date? = null,
 ) : Serializable

@@ -17,6 +17,7 @@ class ProductItemDetailsViewModel @Inject constructor(
     private val transactionsRepository: TransactionsRepository,
     private val userRepository: UserRepository,
     private val retailerRepository: RetailerRepository,
+    private val reportsRepository: ReportsRepository,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
@@ -68,9 +69,36 @@ class ProductItemDetailsViewModel @Inject constructor(
                 )
                 val transactionResponse =
                     transactionsRepository.createUpdateTransaction(transactionModel)
-                if (transactionResponse is StatefulResult.Success)
+                if (transactionResponse is StatefulResult.Success) {
+                    val teamReport =
+                        reportsRepository.getTeamReportById(transactionModel.teamId ?: "").data
+                    val retailerReport =
+                        reportsRepository.getRetailerReportById(
+                            transactionModel.retailerId ?: ""
+                        ).data
+
+                    val commission: Float =
+                        if (sellOrUnsell) (productModel.commissionValue ?: 0f)
+                        else -(productModel.commissionValue ?: 0f)
+
+                    if (teamReport != null) {
+                        teamReport.dueCommissionValue =
+                            teamReport.dueCommissionValue ?: 0f + commission
+                        teamReport.updatedAt = null
+
+                        reportsRepository.createUpdateTeamReport(teamReport)
+                    }
+
+                    if (retailerReport != null) {
+                        retailerReport.dueCommissionValue =
+                            retailerReport.dueCommissionValue ?: 0f + commission
+                        retailerReport.updatedAt = null
+
+                        reportsRepository.createUpdateRetailerReport(retailerReport)
+                    }
+
                     liveData.value = true
-                else
+                } else
                     handleError(transactionResponse.errorModel)
             } else
                 handleError(productItemResponse.errorModel)

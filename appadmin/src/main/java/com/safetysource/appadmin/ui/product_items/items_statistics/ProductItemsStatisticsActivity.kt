@@ -126,7 +126,13 @@ class ProductItemsStatisticsActivity :
             if (productItem == null)
                 showAddProductItemDialog(serial)
             else
-                startActivity(ProductItemDetailsActivity.getIntent(this, productItem))
+                startActivity(
+                    ProductItemDetailsActivity.getIntent(
+                        this,
+                        viewModel.productModel ?: return@observe,
+                        productItem
+                    )
+                )
         }
     }
 

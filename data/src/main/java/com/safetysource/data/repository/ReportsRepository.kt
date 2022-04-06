@@ -14,27 +14,13 @@ class ReportsRepository @Inject constructor(
     private val fireStoreDB: FirebaseFirestore,
 ) : BaseRepository() {
 
-    fun getNewTeamReportId(): String {
-        return fireStoreDB
-            .collection(Constants.COLLECTION_TEAM_REPORT)
-            .document()
-            .id
-    }
-
-    fun getNewRetailerReportId(): String {
-        return fireStoreDB
-            .collection(Constants.COLLECTION_RETAILER_REPORT)
-            .document()
-            .id
-    }
-
     suspend fun createUpdateTeamReport(teamReportModel: TeamReportModel): StatefulResult<Unit> {
         if (teamReportModel.teamId.isNullOrEmpty())
             return StatefulResult.Error(ErrorModel.Unknown)
         return try {
             val categoryRef = fireStoreDB
                 .collection(Constants.COLLECTION_TEAM_REPORT)
-                .document(teamReportModel.teamId)
+                .document(teamReportModel.teamId ?: "")
             categoryRef.set(teamReportModel).await()
             StatefulResult.Success(Unit)
         } catch (e: Exception) {
@@ -49,7 +35,7 @@ class ReportsRepository @Inject constructor(
         return try {
             val categoryRef = fireStoreDB
                 .collection(Constants.COLLECTION_RETAILER_REPORT)
-                .document(retailerReportModel.retailerId)
+                .document(retailerReportModel.retailerId ?: "")
             categoryRef.set(retailerReportModel).await()
             StatefulResult.Success(Unit)
         } catch (e: Exception) {

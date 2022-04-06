@@ -31,6 +31,7 @@
     <string name="create_product_category">Create Product Category</string>
     <string name="category_name">Category Name</string>
     <string name="category_name_hint">Ex: Networking Devices</string>
+    <string name="team_name_hint">Ex: Cairo Team</string>
     <string name="category_image">Category Image</string>
     <string name="category_rank">Category Rank</string>
     <string name="category_rank_hint">Lowest Rank: 1</string>
@@ -110,6 +111,7 @@
     <string name="start_scanning">Start Scanning</string>
     <string name="product_commission">Product Commission</string>
     <string name="product_wholesome_price">Product Wholesome Price</string>
+    <string name="sell_product">Sell Product</string>
     <string name="unsell">Unsell Product</string>
     <string name="sold">SOLD</string>
     <string name="not_sold_yet">NOT SOLD YET</string>
@@ -132,4 +134,20 @@
     <string name="add_product_item_text">The scanned serial is not registered, would you like to register and bind it to the current viewed product</string>
     <string name="register_serial">Register Serial</string>
     <string name="product_serial_registered_successfully">Product serial registered successfully</string>
+    <string name="product_status">Product Item Status</string>
+    <string name="last_updated">Last Updated</string>
+    <string name="create_new_team">Create New Team</string>
+    <string name="team_retailers">Team Retailers</string>
+    <string name="due_commission">Due Commissions</string>
+    <string name="total_redeemed">Total Redeemed</string>
+    <string name="redeem">Redeem</string>
+    <string name="redeem_commision_question">Are you sure you want this reatailer to redeem all the due commissions</string>
+    <string name="commission_redeemed_successfully">Commission redeemed successfully</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="retailer_name">Retailer Name</string>
+    <string name="retailer_name_hint">Please enter your retailer name</string>
+    <string name="retailer_team">Retailer Team</string>
+    <string name="retailer_phone">Retailer Phone</string>
+    <string name="retailer_registered_sucessfully">Retailer Account Registered Successfully</string>
+    <string name="admins">Administrators</string>
 </resources>

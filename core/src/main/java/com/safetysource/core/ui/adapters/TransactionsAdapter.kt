@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.safetysource.core.R
 import com.safetysource.core.databinding.ItemTransactionBinding
+import com.safetysource.core.utils.getDateText
 import com.safetysource.data.model.TransactionModel
 import com.safetysource.data.model.TransactionType
 
@@ -63,6 +64,9 @@ class TransactionsAdapter constructor(
                     if (item.type == TransactionType.SELLING) R.drawable.ic_arrow_up
                     else R.drawable.ic_arrow_down
                 )
+
+                // Last Updated
+                tvLastUpdated.text = item.updatedAt?.time?.getDateText("EE, d MMM yyyy")
 
                 // Click Listeners
                 rootView.setOnClickListener {

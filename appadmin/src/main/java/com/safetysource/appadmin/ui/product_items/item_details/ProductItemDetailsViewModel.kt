@@ -4,58 +4,101 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import com.hadilq.liveevent.LiveEvent
 import com.safetysource.core.base.BaseViewModel
-import com.safetysource.data.model.ProductItemModel
-import com.safetysource.data.model.ProductItemState
-import com.safetysource.data.model.ProductModel
+import com.safetysource.data.model.*
 import com.safetysource.data.model.response.StatefulResult
-import com.safetysource.data.repository.ProductItemRepository
-import com.safetysource.data.repository.ProductRepository
+import com.safetysource.data.repository.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import javax.inject.Inject
 
 @HiltViewModel
 class ProductItemDetailsViewModel @Inject constructor(
     private val productItemRepository: ProductItemRepository,
-    private val productRepository: ProductRepository,
+    private val transactionsRepository: TransactionsRepository,
+    private val retailerRepository: RetailerRepository,
+    private val teamRepository: TeamRepository,
+    private val userRepository: UserRepository,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
-    private val productItemModel: ProductItemModel? =
+    val productModel: ProductModel? =
+        savedStateHandle[ProductItemDetailsActivity.PRODUCT_MODEL]
+    val productItemModel: ProductItemModel? =
         savedStateHandle[ProductItemDetailsActivity.PRODUCT_ITEM_MODEL]
 
-    fun getProduct(): LiveData<ProductModel?> {
+
+    fun getTransactions(): LiveData<List<TransactionModel>> {
         showLoading()
-        val liveData = LiveEvent<ProductModel?>()
+        val liveData = LiveEvent<List<TransactionModel>>()
         safeLauncher {
-            val result =
-                productRepository.getProductById(productItemModel?.productId ?: "")
-            if (result is StatefulResult.Success)
-                liveData.value = result.data
-            else
+            val result = transactionsRepository.getTransactions(productId = productModel?.id)
+            if (result is StatefulResult.Success) {
+                val transactions = result.data ?: listOf()
+
+                // Retailers
+                val retailers = transactions
+                    .map { it.retailerId }.distinct()
+                    .map { async { retailerRepository.getRetailerById(it ?: "") } }
+                    .map { it.await() }.filterIsInstance<StatefulResult.Success<RetailerModel>>()
+                    .map { it.data }
+                transactions.forEach { transactionModel ->
+                    transactionModel.retailerModel =
+                        retailers.firstOrNull { transactionModel.retailerId == it?.id }
+                }
+
+                // Teams
+                val teams = transactions
+                    .map { it.teamId }.distinct()
+                    .map { async { teamRepository.getTeamById(it ?: "") } }
+                    .map { it.await() }.filterIsInstance<StatefulResult.Success<TeamModel>>()
+                    .map { it.data }
+                transactions.forEach { transactionModel ->
+                    transactionModel.teamModel =
+                        teams.firstOrNull { transactionModel.teamId == it?.id }
+                }
+
+                // Products
+                transactions.forEach { transactionModel ->
+                    transactionModel.productModel = productModel
+                }
+
+                liveData.value = transactions
+            } else
                 handleError(result.errorModel)
             hideLoading()
         }
         return liveData
     }
 
-    fun updateProductItemState(
-        state: ProductItemState,
-    ): LiveData<Boolean> {
+    fun approveUnsellTransaction(transactionModel: TransactionModel): LiveData<Boolean> {
+        showLoading()
         val liveData = LiveEvent<Boolean>()
         safeLauncher {
-            if(productItemModel == null)
-                return@safeLauncher
-            showLoading()
+            transactionModel.isUnsellingApproved = true
+            transactionModel.unsellingApprovedByAdminId = userRepository.getUserId()
+            transactionModel.updatedAt = null
 
-            productItemModel.state = state
-            productItemModel.updatedAt = null
+            val transactionResult = transactionsRepository.createUpdateTransaction(transactionModel)
+            if (transactionResult is StatefulResult.Success) {
+                val productItemModel =
+                    productItemRepository.getProductItemBySerial(transactionModel.serial ?: "").data
+                if (productItemModel != null) {
+                    productItemModel.state = ProductItemState.NOT_SOLD_YET
+                    productItemModel.updatedAt = null
 
-            val response = productItemRepository.createUpdateProductItem(productItemModel)
+                    val productItemResult =
+                        productItemRepository.createUpdateProductItem(productItemModel)
+
+                    if (productItemResult is StatefulResult.Success) {
+                        productItemModel.state = ProductItemState.NOT_SOLD_YET
+                        liveData.value = true
+                    } else
+                        handleError(productItemResult.errorModel)
+                }
+            } else
+                handleError(transactionResult.errorModel)
+
             hideLoading()
-            if (response is StatefulResult.Success)
-                liveData.value = true
-            else
-                handleError(response.errorModel)
         }
         return liveData
     }

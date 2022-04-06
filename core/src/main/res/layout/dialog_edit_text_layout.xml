@@ -22,7 +22,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginEnd="8dp"
             tools:text="Are you sure you want to logout"
             android:fontFamily="@font/poppins_semi_bold"
@@ -32,7 +32,7 @@
             android:textColor="@color/grey_dark2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent@+id/ivImage" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilText"

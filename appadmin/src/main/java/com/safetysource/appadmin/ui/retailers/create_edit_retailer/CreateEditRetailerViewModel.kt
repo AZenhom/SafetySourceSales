@@ -6,7 +6,10 @@ import com.hadilq.liveevent.LiveEvent
 import com.safetysource.core.R
 import com.safetysource.core.base.BaseViewModel
 import com.safetysource.data.model.RetailerModel
+import com.safetysource.data.model.RetailerReportModel
+import com.safetysource.data.model.TeamModel
 import com.safetysource.data.model.response.StatefulResult
+import com.safetysource.data.repository.ReportsRepository
 import com.safetysource.data.repository.RetailerRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -14,10 +17,11 @@ import javax.inject.Inject
 @HiltViewModel
 class CreateEditRetailerViewModel @Inject constructor(
     private val retailerRepository: RetailerRepository,
+    private val reportsRepository: ReportsRepository,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
-    private val teamId: String? = savedStateHandle[CreateEditRetailerActivity.TEAM_ID]
+    val teamModel: TeamModel? = savedStateHandle[CreateEditRetailerActivity.TEAM_MODEL]
 
     fun createNewRetailer(
         phoneNumber: String,
@@ -36,17 +40,26 @@ class CreateEditRetailerViewModel @Inject constructor(
 
             val retailer = RetailerModel(
                 id = retailerRepository.getNewRetailerId(),
-                teamId = teamId,
+                teamId = teamModel?.id,
                 name = name,
                 phoneNo = phoneNumber,
                 contactNo = contactNumber,
             )
-            val response = retailerRepository.createUpdateRetailer(retailer)
+            val retailerCreateResponse = retailerRepository.createUpdateRetailer(retailer)
+            if (retailerCreateResponse is StatefulResult.Success) {
+                val retailerReport = RetailerReportModel(
+                    retailerId = retailer.id,
+                    dueCommissionValue = 0.0f,
+                    totalRedeemed = 0.0f
+                )
+                val reportRepository = reportsRepository.createUpdateRetailerReport(retailerReport)
+                if (reportRepository is StatefulResult.Success)
+                    liveData.value = true
+                else
+                    handleError(retailerCreateResponse.errorModel)
+            } else
+                handleError(retailerCreateResponse.errorModel)
             hideLoading()
-            if (response is StatefulResult.Success)
-                liveData.value = true
-            else
-                handleError(response.errorModel)
         }
         return liveData
     }

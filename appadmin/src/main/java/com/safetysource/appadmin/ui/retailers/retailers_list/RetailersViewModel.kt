@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import com.hadilq.liveevent.LiveEvent
 import com.safetysource.core.base.BaseViewModel
-import com.safetysource.data.model.ProductCategoryModel
 import com.safetysource.data.model.RetailerModel
+import com.safetysource.data.model.TeamModel
 import com.safetysource.data.model.TeamReportModel
 import com.safetysource.data.model.response.StatefulResult
 import com.safetysource.data.repository.ReportsRepository
@@ -20,13 +20,13 @@ class RetailersViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
-    private val teamId: String? = savedStateHandle[RetailersActivity.TEAM_ID]
+    val teamModel: TeamModel? = savedStateHandle[RetailersActivity.TEAM_MODEL]
 
     fun getTeamReport(): LiveData<TeamReportModel?> {
         showLoading()
         val liveData = LiveEvent<TeamReportModel?>()
         safeLauncher {
-            val result = reportsRepository.getTeamReportById(teamId ?: "")
+            val result = reportsRepository.getTeamReportById(teamModel?.id ?: "")
             if (result is StatefulResult.Success)
                 liveData.value = result.data
             else
@@ -40,7 +40,7 @@ class RetailersViewModel @Inject constructor(
         showLoading()
         val liveData = LiveEvent<List<RetailerModel>>()
         safeLauncher {
-            val result = retailerRepository.getTeamRetailers(teamId ?: "")
+            val result = retailerRepository.getTeamRetailers(teamModel?.id ?: "")
             if (result is StatefulResult.Success)
                 liveData.value = result.data ?: listOf()
             else
