@@ -33,8 +33,9 @@ class CreateEditRetailerViewModel @Inject constructor(
             showLoading()
 
             val searchResponse = retailerRepository.getRetailerByPhoneNumber(phoneNumber)
-            if (searchResponse !is StatefulResult.Success || searchResponse.data == null) {
+            if (searchResponse !is StatefulResult.Success || searchResponse.data != null) {
                 showErrorMsg(R.string.retailer_with_phone_already_registered)
+                hideLoading()
                 return@safeLauncher
             }
 

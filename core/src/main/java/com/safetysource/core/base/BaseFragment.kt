@@ -72,7 +72,11 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(@LayoutRes lay
 
 
     fun hideLoading() {
-        loadingDialog.dismiss()
+        try {
+            loadingDialog.dismiss()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     protected open fun showKeyboard(focusedView: View) {

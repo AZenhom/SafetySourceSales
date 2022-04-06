@@ -5,11 +5,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CAMERA"/>
-
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false"/>
 
     <application
         android:name=".ApplicationClass"
@@ -19,6 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
+        android:hardwareAccelerated="true"
         tools:replace="android:supportsRtl" >
         <activity
             android:name=".ui.retailers.retailer_details.RetailerDetailsActivity"
@@ -38,6 +34,10 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.product_items.items_statistics.ProductItemsStatisticsActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.products.create_edit_product.CreateEditProductActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

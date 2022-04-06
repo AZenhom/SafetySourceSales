@@ -13,7 +13,9 @@ import com.safetysource.core.base.BaseActivity
 import com.safetysource.core.utils.PhoneNumberUtils
 import com.safetysource.core.utils.PhoneNumberUtils.PhoneNumberUtils.isNull
 import com.safetysource.data.model.TeamModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CreateEditRetailerActivity :
     BaseActivity<ActivityCreateEditRetailerBinding, CreateEditRetailerViewModel>() {
 
@@ -53,9 +55,11 @@ class CreateEditRetailerActivity :
 
     private fun initViews() {
         with(binding) {
+            toolbar.setNavigationOnClickListener { onBackPressed() }
+
             // Team Name (Not changeable)
             etRetailerTeam.inputType = InputType.TYPE_NULL
-            etRetailerName.setText(viewModel.teamModel?.name)
+            etRetailerTeam.setText(viewModel.teamModel?.name)
 
             // Phone No
             etRetailerPhone.addTextChangedListener(phoneTextWatcher)

@@ -1,5 +1,6 @@
 package com.safetysource.appretailer.ui.profile
 
+import android.annotation.SuppressLint
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.safetysource.appretailer.databinding.FragmentProfileBinding
@@ -20,6 +21,7 @@ class ProfileFragment :
     override fun onViewCreated() {
         initViews()
         getProfile()
+        getReport()
     }
 
     private fun getProfile() {
@@ -27,7 +29,17 @@ class ProfileFragment :
             binding.tvRetailerName.text = it.name
         }
         viewModel.getRetailerTeam().observe(viewLifecycleOwner){
-            binding.tvRetailerName.text = it?.name
+            binding.tvTeamName.text = it?.name
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun getReport(){
+        viewModel.getRetailerReport().observe(viewLifecycleOwner){
+            with(binding){
+                tvDueCommissions.text = "${it?.dueCommissionValue} EGP"
+                tvTotalRedeemed.text = "${it?.totalRedeemed} EGP"
+            }
         }
     }
 

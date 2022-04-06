@@ -65,10 +65,11 @@ class ProductItemDetailsViewModel @Inject constructor(
                     productId = productModel.id,
                     serial = productItemModel.serial,
                     commissionAppliedOrRemoved = productModel.commissionValue,
-                    isUnsellingApproved = if (sellOrUnsell) false else null
+                    isUnsellingApproved = false
                 )
                 val transactionResponse =
                     transactionsRepository.createUpdateTransaction(transactionModel)
+
                 if (transactionResponse is StatefulResult.Success) {
                     val teamReport =
                         reportsRepository.getTeamReportById(transactionModel.teamId ?: "").data
@@ -83,7 +84,7 @@ class ProductItemDetailsViewModel @Inject constructor(
 
                     if (teamReport != null) {
                         teamReport.dueCommissionValue =
-                            teamReport.dueCommissionValue ?: 0f + commission
+                            (teamReport.dueCommissionValue ?: 0f) + commission
                         teamReport.updatedAt = null
 
                         reportsRepository.createUpdateTeamReport(teamReport)
@@ -91,7 +92,7 @@ class ProductItemDetailsViewModel @Inject constructor(
 
                     if (retailerReport != null) {
                         retailerReport.dueCommissionValue =
-                            retailerReport.dueCommissionValue ?: 0f + commission
+                            (retailerReport.dueCommissionValue ?: 0f) + commission
                         retailerReport.updatedAt = null
 
                         reportsRepository.createUpdateRetailerReport(retailerReport)

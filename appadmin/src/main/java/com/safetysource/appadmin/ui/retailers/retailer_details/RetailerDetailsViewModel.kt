@@ -4,16 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import com.hadilq.liveevent.LiveEvent
 import com.safetysource.core.base.BaseViewModel
-import com.safetysource.data.model.ProductItemState
-import com.safetysource.data.model.RetailerModel
-import com.safetysource.data.model.RetailerReportModel
-import com.safetysource.data.model.TransactionModel
+import com.safetysource.data.model.*
 import com.safetysource.data.model.response.StatefulResult
-import com.safetysource.data.repository.ProductItemRepository
-import com.safetysource.data.repository.ReportsRepository
-import com.safetysource.data.repository.TransactionsRepository
-import com.safetysource.data.repository.UserRepository
+import com.safetysource.data.repository.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,9 +17,12 @@ class RetailerDetailsViewModel @Inject constructor(
     private val reportsRepository: ReportsRepository,
     private val userRepository: UserRepository,
     private val productItemRepository: ProductItemRepository,
+    private val productRepository: ProductRepository,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
+    private val teamModel: TeamModel? =
+        savedStateHandle[RetailerDetailsActivity.TEAM_MODEL]
     val retailerModel: RetailerModel? =
         savedStateHandle[RetailerDetailsActivity.RETAILER_MODEL]
 
@@ -48,9 +46,27 @@ class RetailerDetailsViewModel @Inject constructor(
         safeLauncher {
             val result =
                 transactionsRepository.getTransactions(retailerId = retailerModel?.id ?: "")
-            if (result is StatefulResult.Success)
+            if (result is StatefulResult.Success) {
+                val transactions = result.data ?: listOf()
+
+                // Retailer
+                transactions.forEach { it.retailerModel = retailerModel }
+
+                // Team
+                transactions.forEach { it.teamModel = teamModel }
+
+                // Products
+                val products = transactions
+                    .map { it.productId }.distinct()
+                    .map { async { productRepository.getProductById(it ?: "") } }
+                    .map { it.await() }.filterIsInstance<StatefulResult.Success<ProductModel>>()
+                    .map { it.data }
+                transactions.forEach { transactionModel ->
+                    transactionModel.productModel =
+                        products.firstOrNull { transactionModel.productId == it?.id }
+                }
                 liveData.value = result.data ?: listOf()
-            else
+            } else
                 handleError(result.errorModel)
             hideLoading()
         }

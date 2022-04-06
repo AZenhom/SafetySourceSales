@@ -76,7 +76,11 @@ abstract class BaseActivity<VB : ViewBinding, VM : BaseViewModel> : AppCompatAct
     }
 
     fun hideLoading() {
-        loadingDialog.dismiss()
+        try {
+            loadingDialog.dismiss()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     protected open fun setTitleWithBack(title: String) {

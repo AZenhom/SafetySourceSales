@@ -24,6 +24,7 @@ class TransactionsViewModel @Inject constructor(
         teamId: String? = null,
         retailerId: String? = null,
         productId: String? = null,
+        serial: String? = null,
         transactionType: TransactionType? = null
     ): LiveData<List<TransactionModel>> {
         showLoading()
@@ -33,6 +34,7 @@ class TransactionsViewModel @Inject constructor(
                 teamId,
                 retailerId,
                 productId,
+                serial,
                 transactionType
             )
             if (result is StatefulResult.Success) {

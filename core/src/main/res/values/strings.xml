@@ -150,4 +150,8 @@
     <string name="retailer_phone">Retailer Phone</string>
     <string name="retailer_registered_sucessfully">Retailer Account Registered Successfully</string>
     <string name="admins">Administrators</string>
+    <string name="scan_cancelled">Scan Cancelled</string>
+    <string name="serial_not_associated_with_any_product">Serial is not associated with any product</string>
+    <string name="product_sold_successfully">Product Sold Successfully</string>
+    <string name="product_unsold_successfully">Product Unsold Successfully</string>
 </resources>

@@ -113,16 +113,17 @@ class PhoneAuthViewModel @Inject constructor(
     private fun saveUserCredentialsIfAny(user: FirebaseUser) = safeLauncher {
         Log.d(TAG, "saveUserCredentialsAndCheckIfRegistered User: " + user.uid)
         userRepository.setSignedIn(true)
-        userRepository.setUserId(user.uid)
         userRepository.setUserSigningInPhone(user.phoneNumber ?: "")
 
         when (accountType) {
             AccountType.ADMIN -> {
+                userRepository.setUserId(user.uid)
                 val response = adminRepository.getAdminById(user.uid)
                 adminRepository.setCurrentAdminModel(response.data)
             }
             AccountType.RETAILER -> {
-                val response = retailerRepository.getRetailerByPhoneNumber(user.uid)
+                val response = retailerRepository.getRetailerByPhoneNumber(user.phoneNumber ?: "")
+                userRepository.setUserId(response.data?.id)
                 retailerRepository.setCurrentRetailerModel(response.data)
             }
             else -> Unit

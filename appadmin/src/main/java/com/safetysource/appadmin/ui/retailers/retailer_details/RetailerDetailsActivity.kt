@@ -10,19 +10,25 @@ import com.safetysource.core.base.BaseActivity
 import com.safetysource.core.ui.adapters.TransactionsAdapter
 import com.safetysource.core.ui.dialogs.InfoDialog
 import com.safetysource.data.model.RetailerModel
+import com.safetysource.data.model.TeamModel
 import com.safetysource.data.model.TransactionModel
 import com.safetysource.data.model.TransactionType
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RetailerDetailsActivity :
     BaseActivity<ActivityRetailerDetailsBinding, RetailerDetailsViewModel>() {
 
     companion object {
+        const val TEAM_MODEL = "TEAM_MODEL"
         const val RETAILER_MODEL = "RETAILER_MODEL"
         fun getIntent(
             context: Context,
+            teamModel: TeamModel,
             retailerModel: RetailerModel
         ) =
             Intent(context, RetailerDetailsActivity::class.java).apply {
+                putExtra(TEAM_MODEL, teamModel)
                 putExtra(RETAILER_MODEL, retailerModel)
             }
     }
@@ -49,6 +55,7 @@ class RetailerDetailsActivity :
         }
         with(binding) {
             rvTransactions.adapter = adapter
+            toolbar.setNavigationOnClickListener { onBackPressed() }
             fabRedeem.setOnClickListener { showRetailerRedeemDialog() }
         }
     }

@@ -19,8 +19,8 @@ class UserRepository @Inject constructor(
         return@execute userDataStore.getUserId()
     }
 
-    suspend fun setUserId(value: String) = execute {
-        userDataStore.setUserId(value)
+    suspend fun setUserId(value: String?) = execute {
+        userDataStore.setUserId(value ?: return@execute)
     }
 
     suspend fun getUserSigningInPhone(): String? = execute {

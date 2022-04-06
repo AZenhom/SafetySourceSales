@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.hadilq.liveevent.LiveEvent
 import com.safetysource.core.base.BaseViewModel
 import com.safetysource.data.repository.AdminRepository
+import com.safetysource.data.repository.RetailerRepository
 import com.safetysource.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -12,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SplashViewModel @Inject constructor(
     private val userRepository: UserRepository,
-    private val adminRepository: AdminRepository
+    private val retailerRepository: RetailerRepository
 ) : BaseViewModel() {
 
     private var waitedOnce = false
@@ -25,7 +26,7 @@ class SplashViewModel @Inject constructor(
                 waitedOnce = true
             }
             val isPhoneSignedIn = userRepository.isSignedIn()
-            val currentUser = adminRepository.getCurrentAdminModel()
+            val currentUser = retailerRepository.getCurrentRetailerModel()
             liveData.value = when {
                 isPhoneSignedIn && currentUser != null -> NavigationCases.REGISTERED
                 isPhoneSignedIn -> NavigationCases.NOT_REGISTERED

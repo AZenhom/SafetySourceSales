@@ -19,7 +19,7 @@ class ProductsListActivity : BaseActivity<ActivityProductsListBinding, ProductsL
             context: Context,
             productCategoryId: String
         ) =
-            Intent(context, CreateEditProductActivity::class.java).apply {
+            Intent(context, ProductsListActivity::class.java).apply {
                 putExtra(PRODUCT_CATEGORY_ID, productCategoryId)
             }
     }
@@ -44,6 +44,7 @@ class ProductsListActivity : BaseActivity<ActivityProductsListBinding, ProductsL
             }
             rvProducts.adapter = adapter
 
+            toolbar.setNavigationOnClickListener { onBackPressed() }
             fabAdd.setOnClickListener {
                 startActivity(
                     CreateEditProductActivity.getIntent(

@@ -41,11 +41,18 @@ class RetailersActivity : BaseActivity<ActivityRetailersBinding, RetailersViewMo
 
     private fun initViews() {
         adapter = RetailersAdapter(
-            onItemClicked = { startActivity(RetailerDetailsActivity.getIntent(this, it)) },
+            onItemClicked = {
+                startActivity(
+                    RetailerDetailsActivity.getIntent(
+                        this, viewModel.teamModel ?: return@RetailersAdapter, it
+                    )
+                )
+            },
             onEditClicked = {}
         )
         with(binding) {
             rvRetailers.adapter = adapter
+            toolbar.setNavigationOnClickListener { onBackPressed() }
             fabAdd.setOnClickListener {
                 startActivity(
                     CreateEditRetailerActivity.getIntent(

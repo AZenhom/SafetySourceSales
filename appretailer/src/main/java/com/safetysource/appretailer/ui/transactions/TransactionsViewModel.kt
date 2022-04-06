@@ -35,8 +35,8 @@ class TransactionsViewModel @Inject constructor(
                 val transactions = result.data ?: listOf()
 
                 // Retailers
-                val userId = userRepository.getUserId()
-                transactions.forEach { it.retailerId = userId }
+                val retailerModel = retailerRepository.getCurrentRetailerModel()
+                transactions.forEach { it.retailerModel = retailerModel }
 
                 // Teams
                 val teamModel = teamRepository.getTeamById(

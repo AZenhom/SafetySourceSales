@@ -23,7 +23,6 @@ class RetailersViewModel @Inject constructor(
     val teamModel: TeamModel? = savedStateHandle[RetailersActivity.TEAM_MODEL]
 
     fun getTeamReport(): LiveData<TeamReportModel?> {
-        showLoading()
         val liveData = LiveEvent<TeamReportModel?>()
         safeLauncher {
             val result = reportsRepository.getTeamReportById(teamModel?.id ?: "")
@@ -31,7 +30,6 @@ class RetailersViewModel @Inject constructor(
                 liveData.value = result.data
             else
                 handleError(result.errorModel)
-            hideLoading()
         }
         return liveData
     }

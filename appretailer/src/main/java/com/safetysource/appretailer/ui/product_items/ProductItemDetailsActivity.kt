@@ -48,9 +48,17 @@ class ProductItemDetailsActivity :
             }
             btnSell.setOnClickListener {
                 viewModel.sellUnsellProductItem(productModel ?: return@setOnClickListener, true)
+                    .observe(this@ProductItemDetailsActivity) {
+                        showSuccessMsg(getString(R.string.product_sold_successfully))
+                        finish()
+                    }
             }
             btnUnsell.setOnClickListener {
                 viewModel.sellUnsellProductItem(productModel ?: return@setOnClickListener, false)
+                    .observe(this@ProductItemDetailsActivity) {
+                        showSuccessMsg(getString(R.string.product_unsold_successfully))
+                        finish()
+                    }
             }
 
             if (viewModel.productItemModel?.state == ProductItemState.SOLD)
@@ -83,10 +91,10 @@ class ProductItemDetailsActivity :
             tvProductName.text = productModel!!.name
 
             // Price
-            tvWholesomePrice.text = "${productModel!!.wholesalePrice} + EGP"
+            tvWholesomePrice.text = "${productModel!!.wholesalePrice} EGP"
 
             // Commission
-            tvCommission.text = "${productModel!!.commissionValue} + EGP"
+            tvCommission.text = "${productModel!!.commissionValue} EGP"
 
             // Product Item Status
             tvProductItemStatus.text = when (viewModel.productItemModel?.state) {

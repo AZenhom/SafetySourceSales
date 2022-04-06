@@ -5,8 +5,10 @@ import com.hadilq.liveevent.LiveEvent
 import com.safetysource.core.base.BaseViewModel
 import com.safetysource.data.model.ProductItemModel
 import com.safetysource.data.model.RetailerModel
+import com.safetysource.data.model.RetailerReportModel
 import com.safetysource.data.model.TeamModel
 import com.safetysource.data.model.response.StatefulResult
+import com.safetysource.data.repository.ReportsRepository
 import com.safetysource.data.repository.RetailerRepository
 import com.safetysource.data.repository.TeamRepository
 import com.safetysource.data.repository.UserRepository
@@ -16,7 +18,9 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val retailerRepository: RetailerRepository,
+    private val reportsRepository: ReportsRepository,
     private val teamRepository: TeamRepository,
+    private val userRepository: UserRepository,
 ) : BaseViewModel() {
 
     fun getUserProfile(): LiveData<RetailerModel> {
@@ -40,6 +44,18 @@ class ProfileViewModel @Inject constructor(
             else
                 handleError(result.errorModel)
             hideLoading()
+        }
+        return liveData
+    }
+
+    fun getRetailerReport(): LiveData<RetailerReportModel?> {
+        val liveData = LiveEvent<RetailerReportModel?>()
+        safeLauncher {
+            val result = reportsRepository.getRetailerReportById(userRepository.getUserId() ?: "")
+            if (result is StatefulResult.Success)
+                liveData.value = result.data
+            else
+                handleError(result.errorModel)
         }
         return liveData
     }

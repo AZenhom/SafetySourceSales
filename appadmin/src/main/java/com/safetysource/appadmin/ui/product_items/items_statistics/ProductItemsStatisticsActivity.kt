@@ -2,16 +2,16 @@ package com.safetysource.appadmin.ui.product_items.items_statistics
 
 import android.content.Context
 import android.content.Intent
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.viewModels
-import com.budiyev.android.codescanner.CodeScanner
+import com.journeyapps.barcodescanner.ScanContract
+import com.journeyapps.barcodescanner.ScanIntentResult
+import com.journeyapps.barcodescanner.ScanOptions
 import com.safetysource.appadmin.databinding.ActivityProductItemsStatisticsBinding
 import com.safetysource.appadmin.ui.product_items.item_details.ProductItemDetailsActivity
 import com.safetysource.core.R
 import com.safetysource.core.base.BaseActivity
 import com.safetysource.core.ui.dialogs.InfoDialog
-import com.safetysource.core.ui.makeGone
-import com.safetysource.core.ui.makeVisible
-import com.safetysource.core.utils.registerPermissions
 import com.safetysource.data.model.ProductItemModel
 import com.safetysource.data.model.ProductItemState
 import com.safetysource.data.model.ProductModel
@@ -32,23 +32,19 @@ class ProductItemsStatisticsActivity :
     override val viewModel: ProductItemStatisticsViewModel by viewModels()
     override val binding by viewBinding(ActivityProductItemsStatisticsBinding::inflate)
 
-    private lateinit var codeScanner: CodeScanner
-
-    private val startCameraIntent = registerPermissions(
-        onPermissionGranted = { switchViews(true) },
-        onPermissionDenied = { it.forEach { error -> showErrorMsg(error) } }
-    )
+    private val barcodeLauncher: ActivityResultLauncher<ScanOptions> = registerForActivityResult(
+        ScanContract()
+    ) { result: ScanIntentResult ->
+        if (result.contents == null)
+            showErrorMsg(getString(R.string.scan_cancelled))
+        else
+            searchSerial(result.contents)
+    }
 
     private val productItemsList = mutableListOf<ProductItemModel>()
 
     override fun onActivityCreated() {
         initViews()
-        initScanner()
-    }
-
-    override fun onPause() {
-        switchViews(false)
-        super.onPause()
     }
 
     override fun onResume() {
@@ -58,33 +54,9 @@ class ProductItemsStatisticsActivity :
 
     private fun initViews() {
         with(binding) {
+            toolbar.setNavigationOnClickListener { onBackPressed() }
             fabAdd.setOnClickListener {
-
-            }
-            btnCloseScanner.setOnClickListener {
-                switchViews(false)
-            }
-        }
-    }
-
-    private fun initScanner() {
-        codeScanner = CodeScanner(this, binding.scannerView)
-        codeScanner.setDecodeCallback {
-            switchViews(false)
-            searchSerial(it.text)
-        }
-    }
-
-    private fun switchViews(openScanner: Boolean) {
-        with(binding) {
-            if (openScanner) {
-                grMainContent.makeGone()
-                grScannerContent.makeVisible()
-                codeScanner.releaseResources()
-            } else {
-                grMainContent.makeVisible()
-                grScannerContent.makeGone()
-                codeScanner.startPreview()
+                barcodeLauncher.launch(ScanOptions())
             }
         }
     }

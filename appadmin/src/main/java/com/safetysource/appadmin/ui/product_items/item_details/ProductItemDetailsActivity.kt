@@ -47,7 +47,11 @@ class ProductItemDetailsActivity :
             if (it.type == TransactionType.UNSELLING && it.isUnsellingApproved == false)
                 showUnsellingApprovalDialog(it)
         }
-        binding.rvTransactions.adapter = adapter
+        with(binding) {
+            toolbar.setNavigationOnClickListener { onBackPressed() }
+            rvTransactions.adapter = adapter
+        }
+
     }
 
     private fun showUnsellingApprovalDialog(transactionModel: TransactionModel) {
@@ -85,10 +89,10 @@ class ProductItemDetailsActivity :
             tvProductName.text = viewModel.productModel?.name
 
             // Price
-            tvWholesomePrice.text = "${viewModel.productModel?.wholesalePrice} + EGP"
+            tvWholesomePrice.text = "${viewModel.productModel?.wholesalePrice} EGP"
 
             // Commission
-            tvCommission.text = "${viewModel.productModel?.commissionValue} + EGP"
+            tvCommission.text = "${viewModel.productModel?.commissionValue} EGP"
 
             // Product Item Status
             tvProductItemStatus.text = when (viewModel.productItemModel?.state) {

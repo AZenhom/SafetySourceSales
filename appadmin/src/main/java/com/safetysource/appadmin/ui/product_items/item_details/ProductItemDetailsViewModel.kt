@@ -31,7 +31,7 @@ class ProductItemDetailsViewModel @Inject constructor(
         showLoading()
         val liveData = LiveEvent<List<TransactionModel>>()
         safeLauncher {
-            val result = transactionsRepository.getTransactions(productId = productModel?.id)
+            val result = transactionsRepository.getTransactions(serial = productItemModel?.serial, )
             if (result is StatefulResult.Success) {
                 val transactions = result.data ?: listOf()
 

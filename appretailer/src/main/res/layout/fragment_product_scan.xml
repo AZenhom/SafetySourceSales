@@ -31,42 +31,6 @@
         android:alpha="0.9"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <com.budiyev.android.codescanner.CodeScannerView
-        android:id="@+id/scannerView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:autoFocusButtonVisible="true"
-        app:flashButtonVisible="true"
-        app:frameColor="@color/colorPrimary"
-        app:frameCornersSize="50dp"
-        app:frameCornersRadius="0dp"
-        app:frameAspectRatioWidth="1"
-        app:frameAspectRatioHeight="1"
-        app:frameSize="0.75"
-        app:frameThickness="2dp"
-        app:maskColor="@color/black_dim"
-        android:visibility="visible"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/btnCloseScanner"
-        android:layout_width="@dimen/_32sdp"
-        android:layout_height="@dimen/_32sdp"
-        android:src="@drawable/ic_close"
-        android:tint="@color/red"
-        android:layout_marginBottom="@dimen/_24sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/grScannerContent"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:visibility="gone"
-        app:constraint_referenced_ids="scannerView,btnCloseScanner" />
-
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iivQrCode"
         android:layout_width="@dimen/_100sdp"
@@ -104,13 +68,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/grIllustrativeContent"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:visibility="visible"
-        app:constraint_referenced_ids="iivQrCode,lblScanHint,btnStartScanning" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

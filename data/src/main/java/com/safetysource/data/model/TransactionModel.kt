@@ -18,17 +18,18 @@ data class TransactionModel(
     @ServerTimestamp
     var updatedAt: Date? = null,
 
-    @Exclude
+    @get:Exclude
     var retailerModel: RetailerModel? = null,
-    @Exclude
+    @get:Exclude
     var teamModel: TeamModel? = null,
-    @Exclude
+    @get:Exclude
     var productModel: ProductModel? = null,
 ) : Serializable {
     companion object {
         const val RETAILER_ID = "retailerId"
         const val TEAM_ID = "teamId"
         const val PRODUCT_ID = "productId"
+        const val SERIAL = "serial"
         const val TYPE = "type"
     }
 }

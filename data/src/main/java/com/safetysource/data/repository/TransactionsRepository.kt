@@ -41,6 +41,7 @@ class TransactionsRepository @Inject constructor(
         teamId: String? = null,
         retailerId: String? = null,
         productId: String? = null,
+        serial: String? = null,
         transactionType: TransactionType? = null
     ): StatefulResult<List<TransactionModel>> {
         return try {
@@ -52,13 +53,16 @@ class TransactionsRepository @Inject constructor(
                 query = reference.whereEqualTo(TransactionModel.TEAM_ID, teamId)
             }
             retailerId?.let {
-                query = reference.whereEqualTo(TransactionModel.RETAILER_ID, retailerId)
+                query = reference.whereEqualTo(TransactionModel.RETAILER_ID, it)
             }
             productId?.let {
-                query = reference.whereEqualTo(TransactionModel.PRODUCT_ID, productId)
+                query = reference.whereEqualTo(TransactionModel.PRODUCT_ID, it)
+            }
+            serial?.let {
+                query = reference.whereEqualTo(TransactionModel.SERIAL, it)
             }
             transactionType?.let {
-                query = reference.whereEqualTo(TransactionModel.TYPE, transactionType)
+                query = reference.whereEqualTo(TransactionModel.TYPE, it)
             }
 
             val documents =

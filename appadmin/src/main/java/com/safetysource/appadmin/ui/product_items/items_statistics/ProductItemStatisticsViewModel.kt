@@ -43,7 +43,6 @@ class ProductItemStatisticsViewModel @Inject constructor(
     }
 
     fun getProductItemBySerial(serial: String): LiveData<ProductItemModel?> {
-        showLoading()
         val liveData = LiveEvent<ProductItemModel?>()
         safeLauncher {
             val result =
@@ -52,7 +51,6 @@ class ProductItemStatisticsViewModel @Inject constructor(
                 liveData.value = result.data
             else
                 handleError(result.errorModel)
-            hideLoading()
         }
         return liveData
     }
