@@ -47,6 +47,7 @@ class ProductItemStatisticsViewModel @Inject constructor(
         safeLauncher {
             val result =
                 productItemRepository.getProductItemBySerial(serial)
+            hideLoading()
             if (result is StatefulResult.Success)
                 liveData.value = result.data
             else

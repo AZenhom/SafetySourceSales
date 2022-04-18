@@ -35,10 +35,15 @@ class ProductItemsStatisticsActivity :
     private val barcodeLauncher: ActivityResultLauncher<ScanOptions> = registerForActivityResult(
         ScanContract()
     ) { result: ScanIntentResult ->
-        if (result.contents == null)
-            showErrorMsg(getString(R.string.scan_cancelled))
-        else
-            searchSerial(result.contents)
+        try {
+            if (result.contents == null)
+                showErrorMsg(getString(R.string.scan_cancelled))
+            else
+                searchSerial(result.contents)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            showErrorMsg(getString(R.string.something_went_wrong))
+        }
     }
 
     private val productItemsList = mutableListOf<ProductItemModel>()
