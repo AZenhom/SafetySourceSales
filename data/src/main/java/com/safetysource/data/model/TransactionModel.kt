@@ -10,6 +10,7 @@ data class TransactionModel(
     var type: TransactionType? = null,
     var retailerId: String? = null,
     var teamId: String? = null,
+    var categoryId: String? = null,
     var productId: String? = null,
     var serial: String? = null,
     var commissionAppliedOrRemoved: Float? = null,
@@ -28,6 +29,7 @@ data class TransactionModel(
     companion object {
         const val RETAILER_ID = "retailerId"
         const val TEAM_ID = "teamId"
+        const val CATEGORY_ID = "categoryId"
         const val PRODUCT_ID = "productId"
         const val SERIAL = "serial"
         const val TYPE = "type"

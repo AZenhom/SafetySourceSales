@@ -40,6 +40,7 @@ class TransactionsRepository @Inject constructor(
     suspend fun getTransactions(
         teamId: String? = null,
         retailerId: String? = null,
+        categoryId: String? = null,
         productId: String? = null,
         serial: String? = null,
         transactionType: TransactionType? = null
@@ -54,6 +55,9 @@ class TransactionsRepository @Inject constructor(
             }
             retailerId?.let {
                 query = reference.whereEqualTo(TransactionModel.RETAILER_ID, it)
+            }
+            categoryId?.let {
+                query = reference.whereEqualTo(TransactionModel.CATEGORY_ID, it)
             }
             productId?.let {
                 query = reference.whereEqualTo(TransactionModel.PRODUCT_ID, it)

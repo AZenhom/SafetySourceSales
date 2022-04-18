@@ -23,6 +23,7 @@ class TransactionsViewModel @Inject constructor(
     fun getTransactions(
         teamId: String? = null,
         retailerId: String? = null,
+        categoryId: String? = null,
         productId: String? = null,
         serial: String? = null,
         transactionType: TransactionType? = null
@@ -33,6 +34,7 @@ class TransactionsViewModel @Inject constructor(
             val result = transactionsRepository.getTransactions(
                 teamId,
                 retailerId,
+                categoryId,
                 productId,
                 serial,
                 transactionType

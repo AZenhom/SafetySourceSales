@@ -21,16 +21,11 @@ class TransactionsViewModel @Inject constructor(
     private val userRepository: UserRepository,
 ) : BaseViewModel() {
 
-    fun getTransactions(
-        transactionType: TransactionType? = null
-    ): LiveData<List<TransactionModel>> {
+    fun getTransactions(): LiveData<List<TransactionModel>> {
         showLoading()
         val liveData = LiveEvent<List<TransactionModel>>()
         safeLauncher {
-            val result = transactionsRepository.getTransactions(
-                retailerId = userRepository.getUserId(),
-                transactionType = transactionType,
-            )
+            val result = transactionsRepository.getTransactions(userRepository.getUserId())
             if (result is StatefulResult.Success) {
                 val transactions = result.data ?: listOf()
 
