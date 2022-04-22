@@ -11,7 +11,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 
-open class BaseViewModel: ViewModel() {
+open class BaseViewModel : ViewModel() {
 
     private val _errorMsgLiveData = LiveEvent<String>()
     val errorMsgLiveData: LiveData<String> get() = _errorMsgLiveData
@@ -34,7 +34,7 @@ open class BaseViewModel: ViewModel() {
     }
 
     fun safeLauncher(task: suspend CoroutineScope.() -> Unit) =
-            viewModelScope.launch(context = handler, block = task)
+        viewModelScope.launch(context = handler, block = task)
 
 
     fun showLoading() {
@@ -62,9 +62,10 @@ open class BaseViewModel: ViewModel() {
     }
 
     fun handleError(t: Throwable?) {
+        t?.printStackTrace()
         hideLoading()
-        if(t is ErrorModel) {
-            val msg: Any = when(t) {
+        if (t is ErrorModel) {
+            val msg: Any = when (t) {
                 is ErrorModel.Connection -> R.string.check_your_internet_connection
                 is ErrorModel.Network -> t.serverMessage ?: R.string.an_error_has_occured
                 else -> {
@@ -72,12 +73,11 @@ open class BaseViewModel: ViewModel() {
                     R.string.an_error_has_occured
                 }
             }
-            when(msg){
+            when (msg) {
                 is String -> showErrorMsg(msg)
                 is Int -> showErrorMsg(msg)
             }
-        }
-        else {
+        } else {
             showErrorMsg(R.string.an_error_has_occured)
         }
     }

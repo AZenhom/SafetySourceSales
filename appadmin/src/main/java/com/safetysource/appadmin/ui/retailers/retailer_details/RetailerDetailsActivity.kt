@@ -9,6 +9,7 @@ import com.safetysource.core.R
 import com.safetysource.core.base.BaseActivity
 import com.safetysource.core.ui.adapters.TransactionsAdapter
 import com.safetysource.core.ui.dialogs.InfoDialog
+import com.safetysource.core.utils.toString
 import com.safetysource.data.model.RetailerModel
 import com.safetysource.data.model.TeamModel
 import com.safetysource.data.model.TransactionModel
@@ -55,6 +56,8 @@ class RetailerDetailsActivity :
         }
         with(binding) {
             rvTransactions.adapter = adapter
+            tvFilterSummary.text =
+                viewModel.transactionFilterModel.toString(this@RetailerDetailsActivity)
             toolbar.setNavigationOnClickListener { onBackPressed() }
             fabRedeem.setOnClickListener { showRetailerRedeemDialog() }
         }

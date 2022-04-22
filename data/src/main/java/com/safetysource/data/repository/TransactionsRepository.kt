@@ -4,8 +4,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.safetysource.data.Constants
 import com.safetysource.data.base.BaseRepository
+import com.safetysource.data.model.TransactionFilterModel
 import com.safetysource.data.model.TransactionModel
-import com.safetysource.data.model.TransactionType
 import com.safetysource.data.model.response.ErrorModel
 import com.safetysource.data.model.response.StatefulResult
 import kotlinx.coroutines.tasks.await
@@ -37,36 +37,37 @@ class TransactionsRepository @Inject constructor(
         }
     }
 
-    suspend fun getTransactions(
-        teamId: String? = null,
-        retailerId: String? = null,
-        categoryId: String? = null,
-        productId: String? = null,
-        serial: String? = null,
-        transactionType: TransactionType? = null
-    ): StatefulResult<List<TransactionModel>> {
+    suspend fun getTransactions(transactionFilterModel: TransactionFilterModel): StatefulResult<List<TransactionModel>> {
         return try {
             val reference =
                 fireStoreDB.collection(Constants.COLLECTION_TRANSACTION)
             var query: Query? = null
 
-            teamId?.let {
-                query = reference.whereEqualTo(TransactionModel.TEAM_ID, teamId)
-            }
-            retailerId?.let {
-                query = reference.whereEqualTo(TransactionModel.RETAILER_ID, it)
-            }
-            categoryId?.let {
-                query = reference.whereEqualTo(TransactionModel.CATEGORY_ID, it)
-            }
-            productId?.let {
-                query = reference.whereEqualTo(TransactionModel.PRODUCT_ID, it)
-            }
-            serial?.let {
-                query = reference.whereEqualTo(TransactionModel.SERIAL, it)
-            }
-            transactionType?.let {
-                query = reference.whereEqualTo(TransactionModel.TYPE, it)
+            with(transactionFilterModel) {
+                teamId?.let {
+                    query = (query ?: reference).whereEqualTo(TransactionModel.TEAM_ID, teamId)
+                }
+                retailer?.let {
+                    query = (query ?: reference).whereEqualTo(TransactionModel.RETAILER_ID, it.id)
+                }
+                category?.let {
+                    query = (query ?: reference).whereEqualTo(TransactionModel.CATEGORY_ID, it.id)
+                }
+                product?.let {
+                    query = (query ?: reference).whereEqualTo(TransactionModel.PRODUCT_ID, it.id)
+                }
+                serial?.let {
+                    query = (query ?: reference).whereEqualTo(TransactionModel.SERIAL, it)
+                }
+                transactionType?.let {
+                    query = (query ?: reference).whereEqualTo(TransactionModel.TYPE, it)
+                }
+                dateFrom?.let {
+                    query = (query ?: reference).whereGreaterThanOrEqualTo(Constants.UPDATED_AT, it)
+                }
+                dateTo?.let {
+                    query = (query ?: reference).whereLessThanOrEqualTo(Constants.UPDATED_AT, it)
+                }
             }
 
             val documents =

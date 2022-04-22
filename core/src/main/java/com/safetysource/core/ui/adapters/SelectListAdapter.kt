@@ -7,15 +7,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.safetysource.core.databinding.ItemSelectListBinding
+import com.safetysource.data.model.Filterable
 
 class SelectListAdapter constructor(
-    private val selectedItemModel: SelectItemModel? = null,
-    private val onSelect: (SelectItemModel) -> Unit,
-) : ListAdapter<SelectItemModel, SelectListAdapter.ItemHolder>(Differentiator) {
+    private val selectedItemModel: Filterable? = null,
+    private val onSelect: (Filterable) -> Unit,
+) : ListAdapter<Filterable, SelectListAdapter.ItemHolder>(Differentiator) {
 
-    private var unfilteredList: List<SelectItemModel>? = null
+    private var unfilteredList: List<Filterable>? = null
 
-    fun modifyList(list: List<SelectItemModel>) {
+    fun modifyList(list: List<Filterable>) {
         unfilteredList = list
         submitList(list)
     }
@@ -24,11 +25,11 @@ class SelectListAdapter constructor(
         if (unfilteredList == null)
             return
 
-        val list = mutableListOf<SelectItemModel>()
+        val list = mutableListOf<Filterable>()
 
         if (!query.isNullOrEmpty()) {
             list.addAll(unfilteredList!!.filter {
-                it.name.lowercase().contains(query.toString().lowercase())
+                it.getFilterableName()?.lowercase()?.contains(query.toString().lowercase()) == true
             })
         } else {
             list.addAll(unfilteredList!!)
@@ -46,27 +47,26 @@ class SelectListAdapter constructor(
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         val item = getItem(position)!!
 
-        holder.binding.tvName.text = item.name
+        holder.binding.tvName.text = item.getFilterableName()
         holder.binding.ivCheck.visibility =
-            if (item.id == selectedItemModel?.id) View.VISIBLE else View.GONE
+            if (item.getFilterableId() == selectedItemModel?.getFilterableId()) View.VISIBLE else View.GONE
         holder.itemView.setOnClickListener { onSelect.invoke(item) }
     }
 
     class ItemHolder(val binding: ItemSelectListBinding) : RecyclerView.ViewHolder(binding.root)
 
-    object Differentiator : DiffUtil.ItemCallback<SelectItemModel>() {
+    object Differentiator : DiffUtil.ItemCallback<Filterable>() {
 
-        override fun areItemsTheSame(oldItem: SelectItemModel, newItem: SelectItemModel): Boolean {
-            return oldItem.id == newItem.id
+        override fun areItemsTheSame(oldItem: Filterable, newItem: Filterable): Boolean {
+            return oldItem.getFilterableId() == newItem.getFilterableId()
         }
 
         override fun areContentsTheSame(
-            oldItem: SelectItemModel,
-            newItem: SelectItemModel
+            oldItem: Filterable,
+            newItem: Filterable
         ): Boolean {
-            return oldItem == newItem
+            return oldItem.getFilterableId() == newItem.getFilterableId()
+                    && oldItem.getFilterableName() == newItem.getFilterableName()
         }
     }
 }
-
-data class SelectItemModel(val id: String, val name: String)

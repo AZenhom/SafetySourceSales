@@ -9,13 +9,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.safetysource.core.R
 import com.safetysource.core.databinding.SheetSelectListBinding
-import com.safetysource.core.ui.adapters.SelectItemModel
 import com.safetysource.core.ui.adapters.SelectListAdapter
+import com.safetysource.data.model.Filterable
 
-class SelectListSheet constructor(
-    private val itemsList: List<SelectItemModel>,
-    private val selectedItem: SelectItemModel? = null,
-    private val onSelect: (SelectItemModel?) -> Unit,
+class SelectListSheet<T : Filterable> constructor(
+    private val anyItemObjectIfApplicable: T? = null, // Used if the list logic contains a neutral (any) option
+    private var itemsList: MutableList<T> = mutableListOf(),
+    private var selectedItem: T? = null,
+    private val onSelect: (T?) -> Unit,
 ) : BottomSheetDialogFragment() {
 
     private lateinit var binding: SheetSelectListBinding
@@ -24,8 +25,11 @@ class SelectListSheet constructor(
 
     init {
         setStyle(STYLE_NORMAL, R.style.AppBottomSheetDialogTheme)
+
+        anyItemObjectIfApplicable?.let { itemsList.add(0, it) }
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,11 +38,12 @@ class SelectListSheet constructor(
         binding = SheetSelectListBinding.inflate(inflater, container, false)
 
         adapter = SelectListAdapter(selectedItem) {
-            onSelect.invoke(it)
+            selectedItem = if (it == anyItemObjectIfApplicable) null else it as T
+            onSelect.invoke(selectedItem)
             dismiss()
         }
         binding.rvBranches.adapter = adapter
-        adapter.submitList(itemsList)
+        adapter.submitList(itemsList as List<Filterable>?)
 
         val decoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
         binding.rvBranches.addItemDecoration(decoration)

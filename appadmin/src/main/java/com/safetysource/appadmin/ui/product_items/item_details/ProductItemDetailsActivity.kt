@@ -9,6 +9,7 @@ import com.safetysource.core.R
 import com.safetysource.core.base.BaseActivity
 import com.safetysource.core.ui.adapters.TransactionsAdapter
 import com.safetysource.core.ui.dialogs.InfoDialog
+import com.safetysource.core.utils.toString
 import com.safetysource.data.model.*
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,6 +51,8 @@ class ProductItemDetailsActivity :
         with(binding) {
             toolbar.setNavigationOnClickListener { onBackPressed() }
             rvTransactions.adapter = adapter
+            tvFilterSummary.text =
+                viewModel.transactionFilterModel.toString(this@ProductItemDetailsActivity)
         }
 
     }
@@ -77,7 +80,7 @@ class ProductItemDetailsActivity :
 
     @SuppressLint("SetTextI18n")
     private fun bindDataToViews() {
-        with(binding){
+        with(binding) {
             // product image
             if (!viewModel.productModel?.imgUrl.isNullOrEmpty())
                 Picasso.get()

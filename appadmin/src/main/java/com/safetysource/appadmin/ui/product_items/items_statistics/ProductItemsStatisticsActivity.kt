@@ -61,7 +61,9 @@ class ProductItemsStatisticsActivity :
         with(binding) {
             toolbar.setNavigationOnClickListener { onBackPressed() }
             fabAdd.setOnClickListener {
-                barcodeLauncher.launch(ScanOptions())
+                val scanOptions = ScanOptions()
+                scanOptions.setOrientationLocked(false)
+                barcodeLauncher.launch(scanOptions)
             }
         }
     }

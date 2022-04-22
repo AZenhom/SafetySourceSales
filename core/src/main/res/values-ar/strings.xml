@@ -154,4 +154,10 @@
     <string name="serial_not_associated_with_any_product">Serial is not associated with any product</string>
     <string name="product_sold_successfully">Product Sold Successfully</string>
     <string name="product_unsold_successfully">Product Unsold Successfully</string>
+    <string name="transactions_filter">Transactions Filter</string>
+    <string name="any">Any</string>
+    <string name="date_from">Date From</string>
+    <string name="date_to">Date To</string>
+    <string name="transactions_filtered_by">Transactions are filtered by: </string>
+    <string name="transaction_type">Transaction Type</string>
 </resources>

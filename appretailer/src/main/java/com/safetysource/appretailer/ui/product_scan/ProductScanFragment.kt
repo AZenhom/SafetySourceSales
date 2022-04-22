@@ -6,7 +6,7 @@ import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
 import com.safetysource.appretailer.databinding.FragmentProductScanBinding
-import com.safetysource.appretailer.ui.product_items.ProductItemDetailsActivity
+import com.safetysource.appretailer.ui.product_item.ProductItemDetailsActivity
 import com.safetysource.core.R
 import com.safetysource.core.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,7 +40,9 @@ class ProductScanFragment :
     private fun initViews() {
         with(binding) {
             btnStartScanning.setOnClickListener {
-                barcodeLauncher.launch(ScanOptions())
+                val scanOptions = ScanOptions()
+                scanOptions.setOrientationLocked(false)
+                barcodeLauncher.launch(scanOptions)
             }
         }
     }

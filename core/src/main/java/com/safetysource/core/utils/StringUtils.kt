@@ -1,6 +1,8 @@
 package com.safetysource.core.utils
 
 import android.content.Context
+import com.safetysource.core.R
+import com.safetysource.data.model.TransactionFilterModel
 
 
 fun getLocalizedNumbers(englishNumber: String?, context: Context): String {
@@ -45,4 +47,19 @@ fun String.getDigit(): String {
         .toMutableList()
     nonDigits.forEach { ch -> quote = quote.replace(ch.toString(), "") }
     return quote
+}
+
+fun TransactionFilterModel.toString(context: Context): String = with(context) {
+    val comma = getLocalizedComma(this)
+    var text = ""
+    teamId?.let { text += (getString(R.string.team) + comma) }
+    retailer?.let { text += (getString(R.string.retailer) + comma) }
+    category?.let { text += (getString(R.string.product_category) + comma) }
+    product?.let { text += (getString(R.string.product) + comma) }
+    serial?.let { text += (getString(R.string.serial) + comma) }
+    transactionType?.let { text += (getString(R.string.transaction_type) + comma) }
+    dateFrom?.let { text += (getString(R.string.date_from) + " " + it.time.getDateText("dd-MM-yyyy") + comma) }
+    dateTo?.let { text += (getString(R.string.date_to) + " " + it.time.getDateText("dd-MM-yyyy") + comma) }
+    return if (text.isEmpty()) text
+    else getString(R.string.transactions_filtered_by) + " " + text.substring(0, text.length - 2)
 }

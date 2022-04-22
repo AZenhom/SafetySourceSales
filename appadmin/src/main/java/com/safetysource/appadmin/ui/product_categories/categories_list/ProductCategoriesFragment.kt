@@ -55,7 +55,9 @@ class ProductCategoriesFragment :
             rvProductCategories.adapter = adapter
 
             btnQrScan.setOnClickListener {
-                barcodeLauncher.launch(ScanOptions())
+                val scanOptions = ScanOptions()
+                scanOptions.setOrientationLocked(false)
+                barcodeLauncher.launch(scanOptions)
             }
 
             fabAdd.setOnClickListener {

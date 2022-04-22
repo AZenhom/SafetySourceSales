@@ -1,4 +1,4 @@
-package com.safetysource.appadmin.ui.transactions
+package com.safetysource.appadmin.ui.transactions.transactions_list
 
 import androidx.lifecycle.LiveData
 import com.hadilq.liveevent.LiveEvent
@@ -20,25 +20,13 @@ class TransactionsViewModel @Inject constructor(
     private val productRepository: ProductRepository,
 ) : BaseViewModel() {
 
-    fun getTransactions(
-        teamId: String? = null,
-        retailerId: String? = null,
-        categoryId: String? = null,
-        productId: String? = null,
-        serial: String? = null,
-        transactionType: TransactionType? = null
-    ): LiveData<List<TransactionModel>> {
+    var transactionFilterModel: TransactionFilterModel = TransactionFilterModel()
+
+    fun getTransactions(): LiveData<List<TransactionModel>> {
         showLoading()
         val liveData = LiveEvent<List<TransactionModel>>()
         safeLauncher {
-            val result = transactionsRepository.getTransactions(
-                teamId,
-                retailerId,
-                categoryId,
-                productId,
-                serial,
-                transactionType
-            )
+            val result = transactionsRepository.getTransactions(transactionFilterModel)
             if (result is StatefulResult.Success) {
                 val transactions = result.data ?: listOf()
 

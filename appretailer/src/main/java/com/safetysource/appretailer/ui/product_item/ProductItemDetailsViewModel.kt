@@ -1,4 +1,4 @@
-package com.safetysource.appretailer.ui.product_items
+package com.safetysource.appretailer.ui.product_item
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle

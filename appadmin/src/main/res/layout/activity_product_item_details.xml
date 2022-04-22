@@ -246,6 +246,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/lblSerial" />
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvFilterSummary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="viewStart"
+                tools:text="@string/transactions_filtered_by"
+                android:textColor="@color/grey_dark"
+                android:textSize="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:paddingHorizontal="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                app:layout_constraintTop_toBottomOf="@id/lblTransactions"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvTransactions"
                 android:layout_width="match_parent"
@@ -255,7 +268,7 @@
                 android:clipChildren="false"
                 android:nestedScrollingEnabled="false"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@id/lblTransactions"
+                app:layout_constraintTop_toBottomOf="@id/tvFilterSummary"
                 tools:listitem="@layout/item_transaction"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

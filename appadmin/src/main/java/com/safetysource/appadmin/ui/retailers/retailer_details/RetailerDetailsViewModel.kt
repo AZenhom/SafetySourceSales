@@ -26,6 +26,9 @@ class RetailerDetailsViewModel @Inject constructor(
     val retailerModel: RetailerModel? =
         savedStateHandle[RetailerDetailsActivity.RETAILER_MODEL]
 
+    val transactionFilterModel =
+        TransactionFilterModel(retailer = retailerModel, dateFrom = null, dateTo = null)
+
     fun getRetailerReport(): LiveData<RetailerReportModel?> {
         showLoading()
         val liveData = LiveEvent<RetailerReportModel?>()
@@ -45,7 +48,7 @@ class RetailerDetailsViewModel @Inject constructor(
         val liveData = LiveEvent<List<TransactionModel>>()
         safeLauncher {
             val result =
-                transactionsRepository.getTransactions(retailerId = retailerModel?.id ?: "")
+                transactionsRepository.getTransactions(transactionFilterModel)
             if (result is StatefulResult.Success) {
                 val transactions = result.data ?: listOf()
 

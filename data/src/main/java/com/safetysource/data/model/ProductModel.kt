@@ -14,8 +14,12 @@ data class ProductModel(
     val lastUpdatedByAdminId: String? = null,
     @ServerTimestamp
     val updatedAt: Date? = null,
-) : Serializable{
+) : Serializable, Filterable {
     companion object {
         const val CATEGORY_ID = "productCategoryId"
     }
+
+    override fun getFilterableId(): String? = id
+
+    override fun getFilterableName(): String? = name
 }

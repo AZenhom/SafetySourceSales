@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import com.hadilq.liveevent.LiveEvent
 import com.safetysource.core.base.BaseViewModel
 import com.safetysource.data.model.ProductModel
+import com.safetysource.data.model.TransactionFilterModel
 import com.safetysource.data.model.TransactionModel
-import com.safetysource.data.model.TransactionType
 import com.safetysource.data.model.response.StatefulResult
 import com.safetysource.data.repository.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,14 +18,20 @@ class TransactionsViewModel @Inject constructor(
     private val productRepository: ProductRepository,
     private val teamRepository: TeamRepository,
     private val retailerRepository: RetailerRepository,
-    private val userRepository: UserRepository,
 ) : BaseViewModel() {
 
     fun getTransactions(): LiveData<List<TransactionModel>> {
         showLoading()
         val liveData = LiveEvent<List<TransactionModel>>()
         safeLauncher {
-            val result = transactionsRepository.getTransactions(userRepository.getUserId())
+            val result =
+                transactionsRepository.getTransactions(
+                    TransactionFilterModel(
+                        retailer = retailerRepository.getCurrentRetailerModel(),
+                        dateFrom = null,
+                        dateTo = null
+                    )
+                )
             if (result is StatefulResult.Success) {
                 val transactions = result.data ?: listOf()
 

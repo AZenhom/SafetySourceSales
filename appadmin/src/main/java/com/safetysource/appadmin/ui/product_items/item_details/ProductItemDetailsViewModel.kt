@@ -26,12 +26,15 @@ class ProductItemDetailsViewModel @Inject constructor(
     val productItemModel: ProductItemModel? =
         savedStateHandle[ProductItemDetailsActivity.PRODUCT_ITEM_MODEL]
 
+    val transactionFilterModel =
+        TransactionFilterModel(serial = productItemModel?.serial, dateFrom = null, dateTo = null)
 
     fun getTransactions(): LiveData<List<TransactionModel>> {
         showLoading()
         val liveData = LiveEvent<List<TransactionModel>>()
         safeLauncher {
-            val result = transactionsRepository.getTransactions(serial = productItemModel?.serial, )
+            val result =
+                transactionsRepository.getTransactions(transactionFilterModel)
             if (result is StatefulResult.Success) {
                 val transactions = result.data ?: listOf()
 
