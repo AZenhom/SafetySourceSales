@@ -1,5 +1,6 @@
 package com.safetysource.appadmin.ui.teams
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -27,10 +28,13 @@ class TeamsAdapter constructor(
     inner class ItemViewHolder(private val binding: ItemTeamBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        @SuppressLint("SetTextI18n")
         fun bind(item: TeamModel) {
             with(binding) {
-                // Team Name
-                tvName.text = item.name
+                // Team Data
+                tvTeamName.text = item.name
+                tvDueCommission.text = "${item.teamReportModel?.dueCommissionValue} EGP"
+                tvTotalRedeemed.text = "${item.teamReportModel?.totalRedeemed} EGP"
 
                 // Click Listeners
                 ivEdit.setOnClickListener {

@@ -36,9 +36,10 @@ class RetailersActivity : BaseActivity<ActivityRetailersBinding, RetailersViewMo
 
     override fun onResume() {
         super.onResume()
-        getData()
+        getRetailers()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initViews() {
         adapter = RetailersAdapter(
             onItemClicked = {
@@ -51,7 +52,12 @@ class RetailersActivity : BaseActivity<ActivityRetailersBinding, RetailersViewMo
             onEditClicked = {}
         )
         with(binding) {
+            tvTeamName.text = viewModel.teamModel?.name
+            tvDueCommission.text = "${viewModel.teamModel?.teamReportModel?.dueCommissionValue} EGP"
+            tvTotalRedeemed.text = "${viewModel.teamModel?.teamReportModel?.totalRedeemed} EGP"
+
             rvRetailers.adapter = adapter
+
             toolbar.setNavigationOnClickListener { onBackPressed() }
             fabAdd.setOnClickListener {
                 startActivity(
@@ -64,17 +70,10 @@ class RetailersActivity : BaseActivity<ActivityRetailersBinding, RetailersViewMo
     }
 
     @SuppressLint("SetTextI18n")
-    private fun getData() {
+    private fun getRetailers() {
         adapter.submitList(emptyList())
         viewModel.getRetailers().observe(this) {
             adapter.submitList(it)
-        }
-        viewModel.getTeamReport().observe(this) {
-            with(binding) {
-                tvTeamName.text = viewModel.teamModel?.name
-                tvDueCommission.text = "${it?.dueCommissionValue} EGP"
-                tvTotalRedeemed.text = "${it?.totalRedeemed} EGP"
-            }
         }
     }
 }

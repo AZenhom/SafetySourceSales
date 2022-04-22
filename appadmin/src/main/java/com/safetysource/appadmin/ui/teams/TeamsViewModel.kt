@@ -9,6 +9,7 @@ import com.safetysource.data.model.response.StatefulResult
 import com.safetysource.data.repository.ReportsRepository
 import com.safetysource.data.repository.TeamRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import javax.inject.Inject
 
 @HiltViewModel
@@ -46,11 +47,21 @@ class TeamsViewModel @Inject constructor(
         showLoading()
         val liveData = LiveEvent<List<TeamModel>>()
         safeLauncher {
-            val result = teamRepository.getTeams()
-            if (result is StatefulResult.Success)
-                liveData.value = result.data ?: listOf()
-            else
-                handleError(result.errorModel)
+            val teamsResult = teamRepository.getTeams()
+            if (teamsResult is StatefulResult.Success) {
+                val teams = teamsResult.data ?: listOf()
+                val teamReports = teams
+                    .map { it.id }
+                    .map { async { reportsRepository.getTeamReportById(it ?: "") } }
+                    .map { it.await() }.filterIsInstance<StatefulResult.Success<TeamReportModel>>()
+                    .map { it.data }
+                teams.forEach { teamModel ->
+                    teamModel.teamReportModel =
+                        teamReports.firstOrNull { teamModel.id == it?.teamId }
+                }
+                liveData.value = teams
+            } else
+                handleError(teamsResult.errorModel)
             hideLoading()
         }
         return liveData

@@ -2,7 +2,7 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_40sdp"
+    android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginStart="@dimen/_8sdp"
     android:layout_marginTop="@dimen/_8sdp"
@@ -19,10 +19,11 @@
         android:layout_height="match_parent"
         android:clickable="true"
         android:focusable="true"
-        android:background="?attr/selectableItemBackground">
+        android:background="?attr/selectableItemBackground"
+        android:paddingVertical="@dimen/_8sdp">
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tvName"
+            android:id="@+id/tvTeamName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_16sdp"
@@ -31,12 +32,83 @@
             android:gravity="start"
             android:textAlignment="viewStart"
             tools:text="Team Name"
-            android:textColor="@color/grey_dark2"
-            android:textSize="@dimen/_11sdp"
+            android:textColor="@color/grey_dark"
+            android:textSize="@dimen/_12sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/ivEdit"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/lblDueCommission"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:gravity="start"
+            android:textAlignment="viewStart"
+            android:text="@string/due_commission"
+            android:textColor="@color/grey_dark2"
+            android:textSize="@dimen/_11sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTeamName" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvDueCommission"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:gravity="start"
+            android:textAlignment="viewStart"
+            tools:text="50 EGP"
+            android:lines="1"
+            android:ellipsize="end"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/_11sdp"
+            app:layout_constraintStart_toEndOf="@id/lblDueCommission"
+            app:layout_constraintEnd_toStartOf="@id/ivEdit"
+            app:layout_constraintTop_toTopOf="@id/lblDueCommission"
+            app:layout_constraintBottom_toBottomOf="@id/lblDueCommission"
+            app:layout_constraintTop_toBottomOf="@id/tvTeamName" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/lblTotalRedeemed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:gravity="start"
+            android:textAlignment="viewStart"
+            android:text="@string/total_redeemed"
+            android:textColor="@color/grey_dark2"
+            android:textSize="@dimen/_11sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lblDueCommission" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvTotalRedeemed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:gravity="start"
+            android:textAlignment="viewStart"
+            tools:text="50 EGP"
+            android:lines="1"
+            android:ellipsize="end"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/_11sdp"
+            app:layout_constraintStart_toEndOf="@id/lblTotalRedeemed"
+            app:layout_constraintEnd_toStartOf="@id/ivEdit"
+            app:layout_constraintTop_toTopOf="@id/lblTotalRedeemed"
+            app:layout_constraintBottom_toBottomOf="@id/lblTotalRedeemed"
+            app:layout_constraintTop_toBottomOf="@id/tvTeamName" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivEdit"
