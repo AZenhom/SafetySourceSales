@@ -50,6 +50,9 @@ class ProductCategoriesFragment :
                             it.id ?: return@ProductCategoryAdapter
                         )
                     )
+                },
+                onEditClicked = {
+                    startActivity(CreateEditProductCategoryActivity.getIntent(requireContext(), it))
                 }
             )
             rvProductCategories.adapter = adapter

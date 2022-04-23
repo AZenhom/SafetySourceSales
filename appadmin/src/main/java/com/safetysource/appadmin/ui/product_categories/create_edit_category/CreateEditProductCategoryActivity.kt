@@ -14,10 +14,9 @@ import com.safetysource.core.base.BaseActivity
 import com.safetysource.core.utils.convertArabicNumbersIfExist
 import com.safetysource.core.utils.getDigit
 import com.safetysource.data.model.ProductCategoryModel
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
-
-// TODO: Handle edit mode
 
 @AndroidEntryPoint
 class CreateEditProductCategoryActivity :
@@ -61,6 +60,19 @@ class CreateEditProductCategoryActivity :
 
     private fun initViews() {
         with(binding) {
+
+            // Category to edit data
+            viewModel.productCategoryModel?.let {
+                etCategoryName.setText(it.name)
+                etCategoryRank.setText(it.rank.toString())
+                it.imgUrl?.let { imgUrl ->
+                    Picasso.get()
+                        .load(imgUrl)
+                        .error(R.drawable.ic_image_placeholder)
+                        .into(ivCategory)
+                }
+            }
+
             toolbar.setNavigationOnClickListener {
                 onBackPressed()
             }
@@ -80,7 +92,7 @@ class CreateEditProductCategoryActivity :
     }
 
     private fun startValidationAndPrepareData() {
-        if (chosenPhotoUri == null) {
+        if (chosenPhotoUri == null && viewModel.productCategoryModel?.imgUrl == null) {
             showErrorMsg(getString(R.string.please_pick_an_image_first))
             return
         }
@@ -104,10 +116,13 @@ class CreateEditProductCategoryActivity :
         }
 
         // Upload image if necessary
-        viewModel.uploadProductCategoryImageAndGetUrl(chosenPhotoUri!!)
-            .observe(this) { downloadLink ->
-                submitData(downloadLink, categoryName, categoryRank)
-            }
+        if (chosenPhotoUri != null)
+            viewModel.uploadProductCategoryImageAndGetUrl(chosenPhotoUri!!)
+                .observe(this) { downloadLink ->
+                    submitData(downloadLink, categoryName, categoryRank)
+                }
+        else
+            submitData(viewModel.productCategoryModel!!.imgUrl!!, categoryName, categoryRank)
     }
 
     private fun submitData(

@@ -65,7 +65,7 @@
         <entry key="core/src/main/res/layout/dialog_loading.xml" value="0.34427083333333336" />
         <entry key="core/src/main/res/layout/item_list_select.xml" value="0.25" />
         <entry key="core/src/main/res/layout/item_product.xml" value="0.34427083333333336" />
-        <entry key="core/src/main/res/layout/item_product_categroy.xml" value="0.34427083333333336" />
+        <entry key="core/src/main/res/layout/item_product_categroy.xml" value="0.25" />
         <entry key="core/src/main/res/layout/item_select_list.xml" value="0.22" />
         <entry key="core/src/main/res/layout/item_transaction.xml" value="0.25" />
         <entry key="core/src/main/res/layout/sheet_select_list.xml" value="0.25" />
