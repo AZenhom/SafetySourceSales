@@ -1,11 +1,13 @@
 package com.safetysource.appadmin.ui.profile
 
+import android.content.Intent
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.safetysource.appadmin.R
 import com.safetysource.appadmin.databinding.FragmentProfileBinding
 import com.safetysource.appadmin.ui.admins.CreateEditAdminActivity
 import com.safetysource.appadmin.ui.host.HostViewModel
+import com.safetysource.appadmin.ui.splash.SplashActivity
 import com.safetysource.core.base.BaseFragment
 import com.safetysource.core.ui.dialogs.InfoDialog
 import com.safetysource.core.ui.setIsVisible
@@ -34,13 +36,24 @@ class ProfileFragment :
 
     private fun initViews() {
         with(binding) {
+            cvChangeLanguage.setOnClickListener { showChangeLanguageSheet() }
+            btnLogout.setOnClickListener { showLogoutSheet() }
             fabAdd.setOnClickListener {
                 startActivity(CreateEditAdminActivity.getIntent(requireContext()))
             }
-            btnLogout.setOnClickListener {
-                showLogoutSheet()
-            }
         }
+    }
+
+    private fun showChangeLanguageSheet() {
+        var infoDialog: InfoDialog? = null
+        infoDialog = InfoDialog(
+            context = requireContext(),
+            imageRes = com.safetysource.core.R.drawable.warning,
+            message = getString(com.safetysource.core.R.string.are_you_sure_you_want_to_switch_language),
+            onConfirm = { infoDialog?.dismiss();switchLanguage() },
+            isCancelable = true
+        )
+        infoDialog.show(parentFragmentManager, InfoDialog.TAG)
     }
 
     private fun showLogoutSheet() {
@@ -54,6 +67,16 @@ class ProfileFragment :
             isCancelable = true
         )
         infoDialog.show(parentFragmentManager, InfoDialog.TAG)
+    }
+
+    private fun switchLanguage() {
+        viewModel.switchLanguage(requireContext()).observe(viewLifecycleOwner) {
+            val intent = SplashActivity.getIntent(requireContext())
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            requireActivity().startActivity(intent)
+            requireActivity().finish()
+        }
     }
 
     private fun logOut() {

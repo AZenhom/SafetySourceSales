@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.safetysource.appadmin.databinding.ItemTeamBinding
+import com.safetysource.core.R
 import com.safetysource.data.model.TeamModel
 
 class TeamsAdapter constructor(
@@ -33,8 +34,10 @@ class TeamsAdapter constructor(
             with(binding) {
                 // Team Data
                 tvTeamName.text = item.name
-                tvDueCommission.text = "${item.teamReportModel?.dueCommissionValue} EGP"
-                tvTotalRedeemed.text = "${item.teamReportModel?.totalRedeemed} EGP"
+                tvDueCommission.text =
+                    "${item.teamReportModel?.dueCommissionValue} ${tvDueCommission.context.getString(R.string.egyptian_pound)}"
+                tvTotalRedeemed.text =
+                    "${item.teamReportModel?.totalRedeemed} ${tvTotalRedeemed.context.getString(R.string.egyptian_pound)}"
 
                 // Click Listeners
                 ivEdit.setOnClickListener {

@@ -64,7 +64,7 @@ class CreateEditProductActivity :
 
     private fun initViews() {
         with(binding) {
-            lblProductPrice.text = getString(R.string.product_price_in_currency, "EGP")
+            lblProductPrice.text = getString(R.string.product_price_in_currency)
 
             viewModel.productModel?.let {
                 if (!it.imgUrl.isNullOrEmpty())

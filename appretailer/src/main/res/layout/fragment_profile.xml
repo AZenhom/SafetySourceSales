@@ -32,197 +32,264 @@
         android:alpha="0.9"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/lblName"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_24sdp"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
-        android:fontFamily="@font/poppins_semi_bold"
-        android:gravity="start"
-        android:textAlignment="viewStart"
-        android:text="@string/retailer"
-        android:textColor="@color/grey_dark2"
-        android:textSize="@dimen/_11sdp"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"/>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cvName"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        app:cardCornerRadius="@dimen/_5sdp"
-        app:strokeWidth="@dimen/_1sdp"
-        app:strokeColor="@color/colorSecondary"
-        android:layout_marginTop="@dimen/_4sdp"
-        android:layout_marginHorizontal="@dimen/_16sdp"
-        app:layout_constraintTop_toBottomOf="@id/lblName">
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        android:paddingBottom="@dimen/_16sdp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toTopOf="@id/btnLogout">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvRetailerName"
+                android:id="@+id/lblName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_24sdp"
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
                 android:fontFamily="@font/poppins_semi_bold"
                 android:gravity="start"
                 android:textAlignment="viewStart"
-                tools:text="Ahmed Alaa"
+                android:text="@string/retailer"
                 android:textColor="@color/grey_dark2"
-                android:textSize="@dimen/_14sdp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:textSize="@dimen/_11sdp"
+                app:layout_constraintTop_toTopOf="parent"/>
 
-    </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvName"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                app:cardCornerRadius="@dimen/_5sdp"
+                app:strokeWidth="@dimen/_1sdp"
+                app:strokeColor="@color/colorSecondary"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginHorizontal="@dimen/_16sdp"
+                app:layout_constraintTop_toBottomOf="@id/lblName">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/lblTeam"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
-        android:fontFamily="@font/poppins_semi_bold"
-        android:gravity="start"
-        android:textAlignment="viewStart"
-        android:text="@string/team"
-        android:textColor="@color/grey_dark2"
-        android:textSize="@dimen/_11sdp"
-        app:layout_constraintTop_toBottomOf="@id/cvName"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cvTeam"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        app:cardCornerRadius="@dimen/_5sdp"
-        app:strokeWidth="@dimen/_1sdp"
-        app:strokeColor="@color/colorSecondary"
-        android:layout_marginTop="@dimen/_4sdp"
-        android:layout_marginHorizontal="@dimen/_16sdp"
-        app:layout_constraintTop_toBottomOf="@id/lblTeam">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvRetailerName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_marginEnd="@dimen/_16sdp"
+                        android:fontFamily="@font/poppins_semi_bold"
+                        android:gravity="start"
+                        android:textAlignment="viewStart"
+                        tools:text="Ahmed Alaa"
+                        android:textColor="@color/grey_dark2"
+                        android:textSize="@dimen/_14sdp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvTeamName"
+                android:id="@+id/lblTeam"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
                 android:fontFamily="@font/poppins_semi_bold"
                 android:gravity="start"
                 android:textAlignment="viewStart"
-                tools:text="Team Cairo"
+                android:text="@string/team"
                 android:textColor="@color/grey_dark2"
-                android:textSize="@dimen/_14sdp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:textSize="@dimen/_11sdp"
+                app:layout_constraintTop_toBottomOf="@id/cvName"/>
 
-    </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvTeam"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                app:cardCornerRadius="@dimen/_5sdp"
+                app:strokeWidth="@dimen/_1sdp"
+                app:strokeColor="@color/colorSecondary"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginHorizontal="@dimen/_16sdp"
+                app:layout_constraintTop_toBottomOf="@id/lblTeam">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/lblDueCommissions"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
-        android:fontFamily="@font/poppins_semi_bold"
-        android:gravity="start"
-        android:textAlignment="viewStart"
-        android:text="@string/due_commission"
-        android:textColor="@color/grey_dark2"
-        android:textSize="@dimen/_11sdp"
-        app:layout_constraintTop_toBottomOf="@id/cvTeam"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cvDueCommissions"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        app:cardCornerRadius="@dimen/_5sdp"
-        app:strokeWidth="@dimen/_1sdp"
-        app:strokeColor="@color/colorSecondary"
-        android:layout_marginTop="@dimen/_4sdp"
-        android:layout_marginHorizontal="@dimen/_16sdp"
-        app:layout_constraintTop_toBottomOf="@id/lblDueCommissions">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvTeamName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_marginEnd="@dimen/_16sdp"
+                        android:fontFamily="@font/poppins_semi_bold"
+                        android:gravity="start"
+                        android:textAlignment="viewStart"
+                        tools:text="Team Cairo"
+                        android:textColor="@color/grey_dark2"
+                        android:textSize="@dimen/_14sdp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvDueCommissions"
+                android:id="@+id/lblDueCommissions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
                 android:fontFamily="@font/poppins_semi_bold"
                 android:gravity="start"
                 android:textAlignment="viewStart"
-                tools:text="500"
+                android:text="@string/due_commission"
                 android:textColor="@color/grey_dark2"
-                android:textSize="@dimen/_14sdp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:textSize="@dimen/_11sdp"
+                app:layout_constraintTop_toBottomOf="@id/cvTeam"/>
 
-    </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvDueCommissions"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                app:cardCornerRadius="@dimen/_5sdp"
+                app:strokeWidth="@dimen/_1sdp"
+                app:strokeColor="@color/colorSecondary"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginHorizontal="@dimen/_16sdp"
+                app:layout_constraintTop_toBottomOf="@id/lblDueCommissions">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/lblTotalRedeemed"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
-        android:fontFamily="@font/poppins_semi_bold"
-        android:gravity="start"
-        android:textAlignment="viewStart"
-        android:text="@string/total_redeemed"
-        android:textColor="@color/grey_dark2"
-        android:textSize="@dimen/_11sdp"
-        app:layout_constraintTop_toBottomOf="@id/cvDueCommissions"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cvTotalRedeemed"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        app:cardCornerRadius="@dimen/_5sdp"
-        app:strokeWidth="@dimen/_1sdp"
-        app:strokeColor="@color/colorSecondary"
-        android:layout_marginTop="@dimen/_4sdp"
-        android:layout_marginHorizontal="@dimen/_16sdp"
-        app:layout_constraintTop_toBottomOf="@id/lblTotalRedeemed">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvDueCommissions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_marginEnd="@dimen/_16sdp"
+                        android:fontFamily="@font/poppins_semi_bold"
+                        android:gravity="start"
+                        android:textAlignment="viewStart"
+                        tools:text="500"
+                        android:textColor="@color/grey_dark2"
+                        android:textSize="@dimen/_14sdp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvTotalRedeemed"
+                android:id="@+id/lblTotalRedeemed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
                 android:fontFamily="@font/poppins_semi_bold"
                 android:gravity="start"
                 android:textAlignment="viewStart"
-                tools:text="500"
+                android:text="@string/total_redeemed"
                 android:textColor="@color/grey_dark2"
-                android:textSize="@dimen/_14sdp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:textSize="@dimen/_11sdp"
+                app:layout_constraintTop_toBottomOf="@id/cvDueCommissions"/>
 
-    </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvTotalRedeemed"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                app:cardCornerRadius="@dimen/_5sdp"
+                app:strokeWidth="@dimen/_1sdp"
+                app:strokeColor="@color/colorSecondary"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginHorizontal="@dimen/_16sdp"
+                app:layout_constraintTop_toBottomOf="@id/lblTotalRedeemed">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvTotalRedeemed"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_marginEnd="@dimen/_16sdp"
+                        android:fontFamily="@font/poppins_semi_bold"
+                        android:gravity="start"
+                        android:textAlignment="viewStart"
+                        tools:text="500"
+                        android:textColor="@color/grey_dark2"
+                        android:textSize="@dimen/_14sdp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/lblLanguage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:gravity="start"
+                android:textAlignment="viewStart"
+                android:text="@string/language"
+                android:textColor="@color/grey_dark2"
+                android:textSize="@dimen/_11sdp"
+                app:layout_constraintTop_toBottomOf="@id/cvTotalRedeemed"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvChangeLanguage"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                app:cardCornerRadius="@dimen/_5sdp"
+                app:strokeWidth="@dimen/_1sdp"
+                app:strokeColor="@color/colorSecondary"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginHorizontal="@dimen/_16sdp"
+                app:layout_constraintTop_toBottomOf="@id/lblLanguage">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvChangeLanguage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_marginEnd="@dimen/_16sdp"
+                        android:fontFamily="@font/poppins_semi_bold"
+                        android:gravity="start"
+                        android:textAlignment="viewStart"
+                        android:text="@string/change_language"
+                        android:textColor="@color/grey_dark2"
+                        android:textSize="@dimen/_14sdp"
+                        android:drawableEnd="@drawable/ic_next"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/btnLogout"

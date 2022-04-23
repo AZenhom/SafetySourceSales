@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import com.safetysource.appadmin.databinding.ActivityRetailersBinding
 import com.safetysource.appadmin.ui.retailers.create_edit_retailer.CreateEditRetailerActivity
 import com.safetysource.appadmin.ui.retailers.retailer_details.RetailerDetailsActivity
+import com.safetysource.core.R
 import com.safetysource.core.base.BaseActivity
 import com.safetysource.data.model.TeamModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -53,8 +54,10 @@ class RetailersActivity : BaseActivity<ActivityRetailersBinding, RetailersViewMo
         )
         with(binding) {
             tvTeamName.text = viewModel.teamModel?.name
-            tvDueCommission.text = "${viewModel.teamModel?.teamReportModel?.dueCommissionValue} EGP"
-            tvTotalRedeemed.text = "${viewModel.teamModel?.teamReportModel?.totalRedeemed} EGP"
+            tvDueCommission.text =
+                "${viewModel.teamModel?.teamReportModel?.dueCommissionValue} ${getString(R.string.egyptian_pound)}"
+            tvTotalRedeemed.text =
+                "${viewModel.teamModel?.teamReportModel?.totalRedeemed} ${getString(R.string.egyptian_pound)}"
 
             rvRetailers.adapter = adapter
 

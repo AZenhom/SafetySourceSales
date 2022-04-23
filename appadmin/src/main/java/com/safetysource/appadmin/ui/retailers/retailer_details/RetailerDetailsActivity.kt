@@ -81,7 +81,7 @@ class RetailerDetailsActivity :
         infoDialog = InfoDialog(
             context = this,
             imageRes = R.drawable.warning,
-            message = getString(R.string.redeem_commision_question),
+            message = getString(R.string.redeem_commission_question),
             confirmText = getString(R.string.redeem),
             onConfirm = { infoDialog?.dismiss(); redeemCommissions() },
             isCancelable = true
@@ -94,8 +94,10 @@ class RetailerDetailsActivity :
         viewModel.getRetailerReport().observe(this) {
             with(binding) {
                 tvRetailerName.text = viewModel.retailerModel?.name
-                tvDueCommission.text = "${it?.dueCommissionValue} EGP"
-                tvTotalRedeemed.text = "${it?.totalRedeemed} EGP"
+                tvDueCommission.text =
+                    "${it?.dueCommissionValue} ${getString(R.string.egyptian_pound)}"
+                tvTotalRedeemed.text =
+                    "${it?.totalRedeemed} ${getString(R.string.egyptian_pound)}"
             }
         }
     }

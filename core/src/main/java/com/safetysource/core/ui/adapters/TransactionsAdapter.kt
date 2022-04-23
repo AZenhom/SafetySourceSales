@@ -57,7 +57,8 @@ class TransactionsAdapter constructor(
                     if (item.type == TransactionType.SELLING) R.string.commission_applied
                     else R.string.commission_removed
                 )
-                tvCommission.text = "${item.commissionAppliedOrRemoved} EGP"
+                tvCommission.text =
+                    "${item.commissionAppliedOrRemoved} ${tvCommission.context.getString(R.string.egyptian_pound)}"
 
                 // Transaction Type Image
                 ivTransactionType.setImageResource(

@@ -1,5 +1,6 @@
 package com.safetysource.appretailer.ui.profile
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import com.hadilq.liveevent.LiveEvent
 import com.safetysource.core.base.BaseViewModel
@@ -8,10 +9,8 @@ import com.safetysource.data.model.RetailerModel
 import com.safetysource.data.model.RetailerReportModel
 import com.safetysource.data.model.TeamModel
 import com.safetysource.data.model.response.StatefulResult
-import com.safetysource.data.repository.ReportsRepository
-import com.safetysource.data.repository.RetailerRepository
-import com.safetysource.data.repository.TeamRepository
-import com.safetysource.data.repository.UserRepository
+import com.safetysource.data.repository.*
+import com.yariksoffice.lingver.Lingver
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -21,6 +20,7 @@ class ProfileViewModel @Inject constructor(
     private val reportsRepository: ReportsRepository,
     private val teamRepository: TeamRepository,
     private val userRepository: UserRepository,
+    private val settingsRepository: SettingsRepository
 ) : BaseViewModel() {
 
     fun getUserProfile(): LiveData<RetailerModel> {
@@ -56,6 +56,18 @@ class ProfileViewModel @Inject constructor(
                 liveData.value = result.data
             else
                 handleError(result.errorModel)
+        }
+        return liveData
+    }
+
+    fun switchLanguage(context: Context): LiveData<Boolean> {
+        val liveData = LiveEvent<Boolean>()
+        safeLauncher {
+            val currentLanguage = settingsRepository.getCurrentLanguage()
+            val newLanguage = if (currentLanguage == "en") "ar" else "en"
+            Lingver.getInstance().setLocale(context, newLanguage)
+            settingsRepository.setCurrentLanguage(newLanguage)
+            liveData.value = true
         }
         return liveData
     }

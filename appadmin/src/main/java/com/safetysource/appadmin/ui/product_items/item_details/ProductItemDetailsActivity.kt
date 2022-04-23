@@ -92,10 +92,12 @@ class ProductItemDetailsActivity :
             tvProductName.text = viewModel.productModel?.name
 
             // Price
-            tvWholesomePrice.text = "${viewModel.productModel?.wholesalePrice} EGP"
+            tvWholesomePrice.text =
+                "${viewModel.productModel?.wholesalePrice} ${getString(R.string.egyptian_pound)}"
 
             // Commission
-            tvCommission.text = "${viewModel.productModel?.commissionValue} EGP"
+            tvCommission.text =
+                "${viewModel.productModel?.commissionValue} ${getString(R.string.egyptian_pound)}"
 
             // Product Item Status
             tvProductItemStatus.text = when (viewModel.productItemModel?.state) {
