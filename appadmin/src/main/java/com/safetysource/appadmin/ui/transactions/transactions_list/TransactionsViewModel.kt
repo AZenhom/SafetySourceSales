@@ -85,6 +85,7 @@ class TransactionsViewModel @Inject constructor(
                     productItemRepository.getProductItemBySerial(transactionModel.serial ?: "").data
                 if (productItemModel != null) {
                     productItemModel.state = ProductItemState.NOT_SOLD_YET
+                    productItemModel.lastSoldByRetailerId = null
                     productItemModel.updatedAt = null
 
                     val productItemResult =

@@ -24,6 +24,16 @@ class ProductItemDetailsViewModel @Inject constructor(
     val productItemModel: ProductItemModel? =
         savedStateHandle[ProductItemDetailsActivity.PRODUCT_ITEM_MODEL]
 
+    var isEligibleForUnsell: Boolean = false
+
+    init {
+        safeLauncher {
+            isEligibleForUnsell =
+                productItemModel?.lastSoldByRetailerId != null
+                        && productItemModel.lastSoldByRetailerId == userRepository.getUserId()
+        }
+    }
+
     fun getProduct(): LiveData<ProductModel?> {
         showLoading()
         val liveData = LiveEvent<ProductModel?>()
@@ -51,6 +61,8 @@ class ProductItemDetailsViewModel @Inject constructor(
 
             productItemModel.state =
                 if (sellOrUnsell) ProductItemState.SOLD else ProductItemState.PENDING_UNSELLING
+            productItemModel.lastSoldByRetailerId =
+                if (sellOrUnsell) userRepository.getUserId() else null
             productItemModel.updatedAt = null
 
             val productItemResponse =

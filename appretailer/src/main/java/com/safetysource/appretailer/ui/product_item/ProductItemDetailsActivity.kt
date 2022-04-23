@@ -60,11 +60,6 @@ class ProductItemDetailsActivity :
                         finish()
                     }
             }
-
-            if (viewModel.productItemModel?.state == ProductItemState.SOLD)
-                btnUnsell.makeVisible()
-            if (viewModel.productItemModel?.state == ProductItemState.NOT_SOLD_YET)
-                btnSell.makeVisible()
         }
     }
 
@@ -106,6 +101,12 @@ class ProductItemDetailsActivity :
 
             // Serial
             tvSerial.text = viewModel.productItemModel?.serial
+
+            // Sell-UnSell Status
+            if (viewModel.productItemModel?.state == ProductItemState.SOLD && viewModel.isEligibleForUnsell)
+                btnUnsell.makeVisible()
+            if (viewModel.productItemModel?.state == ProductItemState.NOT_SOLD_YET)
+                btnSell.makeVisible()
         }
     }
 }

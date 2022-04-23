@@ -125,15 +125,15 @@ class RetailerDetailsViewModel @Inject constructor(
                     productItemRepository.getProductItemBySerial(transactionModel.serial ?: "").data
                 if (productItemModel != null) {
                     productItemModel.state = ProductItemState.NOT_SOLD_YET
+                    productItemModel.lastSoldByRetailerId = null
                     productItemModel.updatedAt = null
 
                     val productItemResult =
                         productItemRepository.createUpdateProductItem(productItemModel)
 
-                    if (productItemResult is StatefulResult.Success) {
-                        productItemModel.state = ProductItemState.NOT_SOLD_YET
+                    if (productItemResult is StatefulResult.Success)
                         liveData.value = true
-                    } else
+                    else
                         handleError(productItemResult.errorModel)
                 }
             } else

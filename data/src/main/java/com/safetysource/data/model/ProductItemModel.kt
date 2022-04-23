@@ -8,6 +8,7 @@ data class ProductItemModel(
     var serial: String? = null,
     var productId: String? = null,
     var state: ProductItemState? = null,
+    var lastSoldByRetailerId: String? = null,
     @ServerTimestamp
     var updatedAt: Date? = null,
 ) : Serializable{
