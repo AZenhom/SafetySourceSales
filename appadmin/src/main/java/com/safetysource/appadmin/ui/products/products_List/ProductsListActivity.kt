@@ -37,11 +37,22 @@ class ProductsListActivity : BaseActivity<ActivityProductsListBinding, ProductsL
         with(binding) {
             val totalMargins = resources.getDimensionPixelSize(com.intuit.sdp.R.dimen._16sdp) * 3
             val leftScreenSize = getScreenWidth(this@ProductsListActivity) - totalMargins
-            adapter = ProductAdapter(leftScreenSize / 2) {
-                startActivity(
-                    ProductItemsStatisticsActivity.getIntent(this@ProductsListActivity, it)
-                )
-            }
+            adapter = ProductAdapter(leftScreenSize / 2,
+                onItemClicked = {
+                    startActivity(
+                        ProductItemsStatisticsActivity.getIntent(this@ProductsListActivity, it)
+                    )
+                },
+                onEditClicked = {
+                    startActivity(
+                        CreateEditProductActivity.getIntent(
+                            this@ProductsListActivity,
+                            it.productCategoryId ?: "",
+                            it
+                        )
+                    )
+                }
+            )
             rvProducts.adapter = adapter
 
             toolbar.setNavigationOnClickListener { onBackPressed() }

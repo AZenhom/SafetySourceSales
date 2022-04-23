@@ -41,6 +41,7 @@
     <string name="name_field_cannot_be_empty">Name field can\'t be empty</string>
     <string name="invalid_rank_value">Invalid rank value</string>
     <string name="product_category_created_successfully">Product category created successfully</string>
+    <string name="product_category_updated_successfully">Product category updated successfully</string>
     <string name="onboarding1_title1">Find</string>
     <string name="onboarding1_title2">Your favourite items</string>
     <string name="onboarding1_description">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</string>
@@ -87,6 +88,7 @@
     <string name="invalid_price_value">Invalid price value</string>
     <string name="invalid_commission_value">Invalid commission value</string>
     <string name="product_created_successfully">Product created successfully</string>
+    <string name="product_updated_successfully">Product updated successfully</string>
     <string name="teams">Teams</string>
     <string name="retailers">Retailers</string>
     <string name="scan">Scan</string>

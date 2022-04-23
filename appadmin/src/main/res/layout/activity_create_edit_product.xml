@@ -73,14 +73,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
 
-                <View
-                    android:id="@+id/vChooseImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"/>
-
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivAddImage"
                     android:layout_width="@dimen/_50sdp"
@@ -95,18 +87,16 @@
                     android:id="@+id/ivProductImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="gone"/>
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivClearImage"
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="@dimen/_50sdp"
-                    android:layout_gravity="center"
                     android:clickable="false"
-                    android:focusable="false"
-                    android:src="@drawable/ic_delete"
-                    android:tint="@color/colorSecondary"
-                    android:visibility="gone"/>
+                    android:focusable="false"/>
+
+                <View
+                    android:id="@+id/vChooseImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"/>
 
             </com.google.android.material.card.MaterialCardView>
 

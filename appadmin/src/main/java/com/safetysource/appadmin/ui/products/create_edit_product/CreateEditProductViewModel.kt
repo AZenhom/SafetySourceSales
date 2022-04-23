@@ -23,7 +23,7 @@ class CreateEditProductViewModel @Inject constructor(
 
     private val productCategoryId: String? =
         savedStateHandle[CreateEditProductActivity.PRODUCT_CATEGORY_ID]
-    private val productModel: ProductModel? =
+    val productModel: ProductModel? =
         savedStateHandle[CreateEditProductActivity.PRODUCT_TO_EDIT]
 
     private var productId: String = if (productModel != null) productModel.id ?: ""

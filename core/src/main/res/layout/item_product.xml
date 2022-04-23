@@ -25,6 +25,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivEdit"
+            android:layout_width="@dimen/_28sdp"
+            android:layout_height="@dimen/_28sdp"
+            android:src="@drawable/ic_edit_round"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            app:layout_constraintEnd_toEndOf="@id/ivProductImage"
+            app:layout_constraintBottom_toBottomOf="@id/ivProductImage"/>
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvProductName"
             android:layout_width="0dp"

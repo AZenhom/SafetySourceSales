@@ -135,7 +135,12 @@ class CreateEditProductCategoryActivity :
             categoryName,
             categoryRank
         ).observe(this) {
-            showSuccessMsg(getString(R.string.product_category_created_successfully))
+            showSuccessMsg(
+                getString(
+                    if (viewModel.productCategoryModel == null) R.string.product_category_created_successfully
+                    else R.string.product_category_updated_successfully
+                )
+            )
             finish()
         }
     }

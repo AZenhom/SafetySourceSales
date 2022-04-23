@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso
 class ProductAdapter constructor(
     private val itemWidthInPx: Int,
     private val onItemClicked: ((product: ProductModel) -> Unit)? = null,
+    private val onEditClicked: ((product: ProductModel) -> Unit)? = null,
 ) : ListAdapter<ProductModel, ProductAdapter.ProductItemViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductItemViewHolder {
@@ -51,6 +52,9 @@ class ProductAdapter constructor(
                 root.setOnClickListener {
                     onItemClicked?.invoke(item)
                 }
+                ivEdit.setOnClickListener {
+                    onEditClicked?.invoke(item)
+                }
 
             }
         }
@@ -69,7 +73,10 @@ class ProductAdapter constructor(
                 newItem: ProductModel
             ): Boolean = oldItem.id == newItem.id &&
                     oldItem.imgUrl == newItem.imgUrl &&
-                    oldItem.name == newItem.name
+                    oldItem.name == newItem.name &&
+                    oldItem.wholesalePrice == newItem.wholesalePrice &&
+                    oldItem.commissionValue == newItem.commissionValue &&
+                    oldItem.updatedAt == newItem.updatedAt
         }
     }
 

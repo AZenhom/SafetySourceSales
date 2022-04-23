@@ -1,5 +1,6 @@
 package com.safetysource.data.model
 
+import com.google.firebase.firestore.Exclude
 import com.google.firebase.firestore.ServerTimestamp
 import java.io.Serializable
 import java.util.*
@@ -19,7 +20,9 @@ data class ProductModel(
         const val CATEGORY_ID = "productCategoryId"
     }
 
+    @Exclude
     override fun getFilterableId(): String? = id
 
+    @Exclude
     override fun getFilterableName(): String? = name
 }

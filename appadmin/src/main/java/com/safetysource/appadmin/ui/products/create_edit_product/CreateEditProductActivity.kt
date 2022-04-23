@@ -11,17 +11,15 @@ import com.github.dhaval2404.imagepicker.ImagePicker
 import com.safetysource.appadmin.databinding.ActivityCreateEditProductBinding
 import com.safetysource.core.R
 import com.safetysource.core.base.BaseActivity
-import com.safetysource.core.ui.setIsVisible
 import com.safetysource.core.utils.convertArabicNumbersIfExist
 import com.safetysource.core.utils.getDigit
 import com.safetysource.data.model.ProductModel
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
-
-// Todo: handle edit mode
-
 @AndroidEntryPoint
-class CreateEditProductActivity : BaseActivity<ActivityCreateEditProductBinding, CreateEditProductViewModel>() {
+class CreateEditProductActivity :
+    BaseActivity<ActivityCreateEditProductBinding, CreateEditProductViewModel>() {
 
     companion object {
         const val PRODUCT_CATEGORY_ID = "PRODUCT_CATEGORY_ID"
@@ -50,7 +48,6 @@ class CreateEditProductActivity : BaseActivity<ActivityCreateEditProductBinding,
                 Activity.RESULT_OK -> {
                     chosenImage = data?.data!!
                     binding.ivProductImage.setImageURI(chosenImage)
-                    refreshProductImageViews()
                 }
                 ImagePicker.RESULT_ERROR -> {
                     showErrorMsg(ImagePicker.getError(data))
@@ -68,29 +65,27 @@ class CreateEditProductActivity : BaseActivity<ActivityCreateEditProductBinding,
     private fun initViews() {
         with(binding) {
             lblProductPrice.text = getString(R.string.product_price_in_currency, "EGP")
+
+            viewModel.productModel?.let {
+                if (!it.imgUrl.isNullOrEmpty())
+                    Picasso.get()
+                        .load(it.imgUrl)
+                        .error(R.drawable.ic_image_placeholder)
+                        .into(ivProductImage)
+                etProductName.setText(it.name)
+                etProductPrice.setText(it.wholesalePrice?.toInt().toString())
+                etCommission.setText(it.commissionValue?.toInt().toString())
+            }
+
             toolbar.setNavigationOnClickListener {
                 onBackPressed()
             }
             vChooseImage.setOnClickListener {
                 startImagePicking()
             }
-            ivClearImage.setOnClickListener {
-                chosenImage = null
-                refreshProductImageViews()
-            }
             btnSubmit.setOnClickListener {
                 startValidationAndPrepareData()
             }
-        }
-    }
-
-    private fun refreshProductImageViews() {
-        val chosenImageExist = chosenImage != null
-        with(binding) {
-            vChooseImage.setIsVisible(!chosenImageExist)
-            ivAddImage.setIsVisible(!chosenImageExist)
-            ivProductImage.setIsVisible(chosenImageExist)
-            ivClearImage.setIsVisible(chosenImageExist)
         }
     }
 
@@ -102,7 +97,7 @@ class CreateEditProductActivity : BaseActivity<ActivityCreateEditProductBinding,
 
     private fun startValidationAndPrepareData() {
         // Images
-        if (chosenImage == null) {
+        if (chosenImage == null && viewModel.productModel?.imgUrl == null) {
             showErrorMsg(getString(R.string.please_pick_an_image_first))
             return
         }
@@ -137,15 +132,13 @@ class CreateEditProductActivity : BaseActivity<ActivityCreateEditProductBinding,
             return
         }
 
-        viewModel.uploadProductImageAndGetUrl(chosenImage!!)
-            .observe(this) { imageUrl ->
-                createProduct(
-                    name,
-                    imageUrl ?: "",
-                    price,
-                    commission
-                )
-            }
+        if (chosenImage != null)
+            viewModel.uploadProductImageAndGetUrl(chosenImage!!)
+                .observe(this) { imageUrl ->
+                    createProduct(name, imageUrl ?: "", price, commission)
+                }
+        else
+            createProduct(name, viewModel.productModel?.imgUrl ?: "", price, commission)
 
     }
 
@@ -156,7 +149,12 @@ class CreateEditProductActivity : BaseActivity<ActivityCreateEditProductBinding,
         commissionValue: Float,
     ) {
         viewModel.createProduct(name, imgUrl, wholesalePrice, commissionValue).observe(this) {
-            showSuccessMsg(getString(R.string.product_created_successfully))
+            showSuccessMsg(
+                getString(
+                    if (viewModel.productModel == null) R.string.product_created_successfully
+                    else R.string.product_updated_successfully
+                )
+            )
             finish()
         }
     }
