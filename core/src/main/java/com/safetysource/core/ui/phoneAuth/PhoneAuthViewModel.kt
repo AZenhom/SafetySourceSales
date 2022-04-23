@@ -117,8 +117,8 @@ class PhoneAuthViewModel @Inject constructor(
 
         when (accountType) {
             AccountType.ADMIN -> {
-                userRepository.setUserId(user.uid)
-                val response = adminRepository.getAdminById(user.uid)
+                val response = adminRepository.getAdminByPhoneNumber(user.phoneNumber ?: "")
+                userRepository.setUserId(response.data?.id)
                 adminRepository.setCurrentAdminModel(response.data)
             }
             AccountType.RETAILER -> {

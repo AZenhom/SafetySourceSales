@@ -60,7 +60,9 @@ class TransactionsFilterActivity :
                 SelectListSheet(
                     itemsList = categoriesList.toMutableList(),
                     anyItemObjectIfApplicable = ProductCategoryModel("-1", anyText),
-                    selectedItem = viewModel.transactionFilterModel?.category
+                    selectedItem = viewModel.transactionFilterModel?.category,
+                    sheetTitle = getString(R.string.product_categories),
+                    sheetSubTitle = getString(R.string.please_pick_product_category)
                 ) {
                     tvCategory.text = it?.name ?: anyText
                     tvProduct.text = anyText
@@ -72,7 +74,9 @@ class TransactionsFilterActivity :
                 SelectListSheet(
                     itemsList = productsList.toMutableList(),
                     anyItemObjectIfApplicable = ProductModel("-1", anyText),
-                    selectedItem = viewModel.transactionFilterModel?.product
+                    selectedItem = viewModel.transactionFilterModel?.product,
+                    sheetTitle = getString(R.string.products),
+                    sheetSubTitle = getString(R.string.please_pick_product)
                 ) {
                     tvProduct.text = it?.name ?: anyText
                     viewModel.setProduct(it)

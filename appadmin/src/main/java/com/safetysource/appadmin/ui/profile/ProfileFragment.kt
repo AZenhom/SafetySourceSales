@@ -4,9 +4,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.safetysource.appadmin.R
 import com.safetysource.appadmin.databinding.FragmentProfileBinding
+import com.safetysource.appadmin.ui.admins.CreateEditAdminActivity
 import com.safetysource.appadmin.ui.host.HostViewModel
 import com.safetysource.core.base.BaseFragment
 import com.safetysource.core.ui.dialogs.InfoDialog
+import com.safetysource.core.ui.setIsVisible
+import com.safetysource.data.model.AdminRole
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,13 +26,17 @@ class ProfileFragment :
     }
 
     private fun getProfile() {
-        viewModel.getUserProfile().observe(viewLifecycleOwner){
+        viewModel.getUserProfile().observe(viewLifecycleOwner) {
             binding.tvAdminName.text = it.name
+            binding.fabAdd.setIsVisible(it.role == AdminRole.SUPER_ADMIN)
         }
     }
 
     private fun initViews() {
         with(binding) {
+            fabAdd.setOnClickListener {
+                startActivity(CreateEditAdminActivity.getIntent(requireContext()))
+            }
             btnLogout.setOnClickListener {
                 showLogoutSheet()
             }

@@ -11,8 +11,13 @@ data class AdminModel(
     val phoneNo: String? = null,
     @ServerTimestamp
     val createdAt: Date? = null,
-) : Serializable
+) : Serializable {
+    companion object {
+        const val PHONE_NUMBER = "phoneNo"
+    }
+}
 
 enum class AdminRole : Serializable {
-    SUPER_ADMIN
+    SUPER_ADMIN,
+    SECONDARY_ADMIN,
 }

@@ -14,8 +14,10 @@ import com.safetysource.data.model.Filterable
 
 class SelectListSheet<T : Filterable> constructor(
     private val anyItemObjectIfApplicable: T? = null, // Used if the list logic contains a neutral (any) option
-    private var itemsList: MutableList<T> = mutableListOf(),
-    private var selectedItem: T? = null,
+    private val itemsList: MutableList<T> = mutableListOf(),
+    private val selectedItem: T? = null,
+    private val sheetTitle: String? = null,
+    private val sheetSubTitle: String? = null,
     private val onSelect: (T?) -> Unit,
 ) : BottomSheetDialogFragment() {
 
@@ -37,17 +39,19 @@ class SelectListSheet<T : Filterable> constructor(
     ): View {
         binding = SheetSelectListBinding.inflate(inflater, container, false)
 
+        val decoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
         adapter = SelectListAdapter(selectedItem) {
-            selectedItem = if (it == anyItemObjectIfApplicable) null else it as T
-            onSelect.invoke(selectedItem)
+            onSelect.invoke(if (it == anyItemObjectIfApplicable) null else it as T)
             dismiss()
         }
-        binding.rvBranches.adapter = adapter
         adapter.submitList(itemsList as List<Filterable>?)
 
-        val decoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
-        binding.rvBranches.addItemDecoration(decoration)
-
-        return binding.root
+        with(binding) {
+            rvBranches.adapter = adapter
+            rvBranches.addItemDecoration(decoration)
+            tvSheetTitle.text = sheetTitle
+            tvSheetSubTitle.text = sheetSubTitle
+            return root
+        }
     }
 }
