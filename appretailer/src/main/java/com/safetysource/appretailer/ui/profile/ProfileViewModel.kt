@@ -39,11 +39,11 @@ class ProfileViewModel @Inject constructor(
                 teamRepository.getTeamById(
                     retailerRepository.getCurrentRetailerModel()?.teamId ?: ""
                 )
+            hideLoading()
             if (result is StatefulResult.Success)
                 liveData.value = result.data
             else
                 handleError(result.errorModel)
-            hideLoading()
         }
         return liveData
     }

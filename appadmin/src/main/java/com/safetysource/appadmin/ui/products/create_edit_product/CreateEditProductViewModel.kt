@@ -41,11 +41,11 @@ class CreateEditProductViewModel @Inject constructor(
             showLoading()
             val result =
                 productRepository.uploadProductImageAndGetUrl(productId, fileUri)
+            hideLoading()
             if (result is StatefulResult.Success) {
                 liveData.value = result.data
             } else
                 handleError(result.errorModel)
-            hideLoading()
         }
         return liveData
     }
@@ -69,11 +69,11 @@ class CreateEditProductViewModel @Inject constructor(
                 lastUpdatedByAdminId = adminId
             )
             val response = productRepository.createUpdateProduct(product)
+            hideLoading()
             if (response is StatefulResult.Success)
                 liveData.value = true
             else
                 handleError(response.errorModel)
-            hideLoading()
         }
         return liveData
     }

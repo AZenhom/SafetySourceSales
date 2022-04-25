@@ -24,11 +24,11 @@ class ProductsListViewModel @Inject constructor(
         val liveData = LiveEvent<List<ProductModel>>()
         safeLauncher {
             val result = productRepository.getCategoryProducts(productCategoryId ?: "")
+            hideLoading()
             if (result is StatefulResult.Success)
                 liveData.value = result.data ?: listOf()
             else
                 handleError(result.errorModel)
-            hideLoading()
         }
         return liveData
     }

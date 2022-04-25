@@ -13,6 +13,7 @@ data class ProductItemModel(
     var updatedAt: Date? = null,
 ) : Serializable{
     companion object{
+        const val SERIAL = "serial"
         const val PRODUCT_ID = "productId"
     }
 }

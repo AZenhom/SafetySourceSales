@@ -32,13 +32,13 @@ class TeamsViewModel @Inject constructor(
                     totalRedeemed = 0.0f
                 )
                 val reportRepository = reportsRepository.createUpdateTeamReport(teamReport)
+                hideLoading()
                 if (reportRepository is StatefulResult.Success)
                     liveData.value = true
                 else
                     handleError(teamCreateResponse.errorModel)
             } else
                 handleError(teamCreateResponse.errorModel)
-            hideLoading()
         }
         return liveData
     }
@@ -60,9 +60,9 @@ class TeamsViewModel @Inject constructor(
                         teamReports.firstOrNull { teamModel.id == it?.teamId }
                 }
                 liveData.value = teams
+                hideLoading()
             } else
                 handleError(teamsResult.errorModel)
-            hideLoading()
         }
         return liveData
     }

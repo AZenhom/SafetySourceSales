@@ -20,11 +20,11 @@ class ProductScanViewModel @Inject constructor(
         safeLauncher {
             val result =
                 productItemRepository.getProductItemBySerial(serial)
+            hideLoading()
             if (result is StatefulResult.Success)
                 liveData.value = result.data
             else
                 handleError(result.errorModel)
-            hideLoading()
         }
         return liveData
     }

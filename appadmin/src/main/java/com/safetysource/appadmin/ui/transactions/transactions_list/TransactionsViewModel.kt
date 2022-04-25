@@ -64,9 +64,9 @@ class TransactionsViewModel @Inject constructor(
                 }
 
                 liveData.value = transactions
+                hideLoading()
             } else
                 handleError(result.errorModel)
-            hideLoading()
         }
         return liveData
     }
@@ -90,7 +90,7 @@ class TransactionsViewModel @Inject constructor(
 
                     val productItemResult =
                         productItemRepository.createUpdateProductItem(productItemModel)
-
+                    hideLoading()
                     if (productItemResult is StatefulResult.Success)
                         liveData.value = true
                     else
@@ -98,8 +98,6 @@ class TransactionsViewModel @Inject constructor(
                 }
             } else
                 handleError(transactionResult.errorModel)
-
-            hideLoading()
         }
         return liveData
     }

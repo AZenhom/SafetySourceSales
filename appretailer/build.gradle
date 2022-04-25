@@ -14,7 +14,7 @@ android {
     defaultConfig {
         applicationId "com.safetysource.appretailer"
         minSdk 24
-        targetSdk 31
+        targetSdk 29
         versionCode 1
         versionName "1.0"
 

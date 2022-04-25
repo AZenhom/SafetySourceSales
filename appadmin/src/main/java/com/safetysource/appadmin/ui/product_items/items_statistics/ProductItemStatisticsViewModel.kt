@@ -21,9 +21,7 @@ class ProductItemStatisticsViewModel @Inject constructor(
     val productModel: ProductModel? =
         savedStateHandle[ProductItemsStatisticsActivity.PRODUCT_MODEL]
 
-    fun createProductItem(
-        serial: String,
-    ): LiveData<Boolean> {
+    fun createProductItem(serial: String): LiveData<Boolean> {
         val liveData = LiveEvent<Boolean>()
         safeLauncher {
             showLoading()
@@ -42,7 +40,29 @@ class ProductItemStatisticsViewModel @Inject constructor(
         return liveData
     }
 
+    fun createProductItems(serials: List<String>): LiveData<Boolean> {
+        val liveData = LiveEvent<Boolean>()
+        safeLauncher {
+            showLoading()
+            val productItemModels = serials.map { serial ->
+                ProductItemModel(
+                    productId = productModel?.id,
+                    serial = serial,
+                    state = ProductItemState.NOT_SOLD_YET
+                )
+            }
+            val response = productItemRepository.createUpdateMultipleProductItems(productItemModels)
+            hideLoading()
+            if (response is StatefulResult.Success)
+                liveData.value = true
+            else
+                handleError(response.errorModel)
+        }
+        return liveData
+    }
+
     fun getProductItemBySerial(serial: String): LiveData<ProductItemModel?> {
+        showLoading()
         val liveData = LiveEvent<ProductItemModel?>()
         safeLauncher {
             val result =
@@ -56,17 +76,32 @@ class ProductItemStatisticsViewModel @Inject constructor(
         return liveData
     }
 
+    fun getProductItemsBySerials(serials: List<String>): LiveData<List<ProductItemModel>> {
+        showLoading()
+        val liveData = LiveEvent<List<ProductItemModel>>()
+        safeLauncher {
+            val result =
+                productItemRepository.getProductItemsBySerials(serials)
+            hideLoading()
+            if (result is StatefulResult.Success)
+                liveData.value = result.data ?: listOf()
+            else
+                handleError(result.errorModel)
+        }
+        return liveData
+    }
+
     fun getProductItems(): LiveData<List<ProductItemModel>> {
         showLoading()
         val liveData = LiveEvent<List<ProductItemModel>>()
         safeLauncher {
             val result =
                 productItemRepository.getProductItems(productModel?.id ?: "")
+            hideLoading()
             if (result is StatefulResult.Success)
                 liveData.value = result.data ?: listOf()
             else
                 handleError(result.errorModel)
-            hideLoading()
         }
         return liveData
     }

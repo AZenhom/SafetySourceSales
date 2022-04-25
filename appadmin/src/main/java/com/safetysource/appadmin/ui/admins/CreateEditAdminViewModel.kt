@@ -37,11 +37,11 @@ class CreateEditAdminViewModel @Inject constructor(
                 role = AdminRole.SECONDARY_ADMIN
             )
             val adminCreateResponse = adminRepository.createUpdateAdmin(admin)
+            hideLoading()
             if (adminCreateResponse is StatefulResult.Success)
                 liveData.value = true
             else
                 handleError(adminCreateResponse.errorModel)
-            hideLoading()
         }
         return liveData
     }

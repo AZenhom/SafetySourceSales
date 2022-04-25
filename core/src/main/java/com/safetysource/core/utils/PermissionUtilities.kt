@@ -2,6 +2,8 @@ package com.safetysource.core.utils
 
 import android.Manifest
 import android.content.Context
+import android.os.Build
+import android.os.Environment
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -13,7 +15,7 @@ fun AppCompatActivity.registerPermissions(
 ) = registerForActivityResult(
     ActivityResultContracts.RequestMultiplePermissions()
 ) { permissions ->
-    if (permissions.entries.isPermissionsGranted(this))
+    if (permissions.entries.isPermissionsGranted())
         onPermissionGranted()
     else
         onPermissionDenied(permissions.entries.getDeniedPermissionsMessages(this))
@@ -25,16 +27,18 @@ fun Fragment.registerPermissions(
 ) = registerForActivityResult(
     ActivityResultContracts.RequestMultiplePermissions()
 ) { permissions ->
-    if (permissions.entries.isPermissionsGranted(requireContext()))
+    if (permissions.entries.isPermissionsGranted())
         onPermissionGranted()
     else
         onPermissionDenied(permissions.entries.getDeniedPermissionsMessages(requireContext()))
 }
 
-fun <K, V> Set<Map.Entry<K, V>>.isPermissionsGranted(context: Context): Boolean {
+fun <K, V> Set<Map.Entry<K, V>>.isPermissionsGranted(): Boolean {
     var granted = true
     this.forEach {
-        if (it.value == false)
+        if (it.key == Manifest.permission.MANAGE_EXTERNAL_STORAGE && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
+            granted = Environment.isExternalStorageManager()
+        else if (it.value == false)
             granted = false
     }
     return granted
@@ -50,8 +54,10 @@ fun <K, V> Set<Map.Entry<K, V>>.getDeniedPermissionsMessages(context: Context): 
                         Manifest.permission.CAMERA ->
                             getString(R.string.error_missing_camera_permission)
 
+                        Manifest.permission.MANAGE_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE ->
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        ->
                             getString(R.string.error_missing_storage_permission)
                         Manifest.permission.RECORD_AUDIO ->
                             getString(R.string.error_missing_microphone_permission)

@@ -99,7 +99,9 @@
     <string name="unsold_items_number">Number of pending unsold items</string>
     <string name="add_product_item_text">The scanned serial is not registered, would you like to register and bind it to the current viewed product</string>
     <string name="register_serial">Register Serial</string>
+    <string name="register_serials">Register Serials</string>
     <string name="product_serial_registered_successfully">Product serial registered successfully</string>
+    <string name="product_serials_registered_successfully">Product serials registered successfully</string>
     <string name="product_status">Product Item Status</string>
     <string name="last_updated">Last Updated</string>
     <string name="create_new_team">Create New Team</string>
@@ -137,4 +139,9 @@
     <string name="change_language">Change Language</string>
     <string name="are_you_sure_you_want_to_switch_language">Are you sure you want to switch language to Arabic</string>
     <string name="confirm">Confirm</string>
+    <string name="select_excel_file">Select an Excel File</string>
+    <string name="no_serials_in_excel_file">Excel file doesn\'t have any serials listed in the first column</string>
+    <string name="all_serials_exist">All serials already exist</string>
+    <string name="serials_to_be_registered">Serials to be registered: %1$d</string>
+    <string name="serials_to_be_ignored">Serials already existing to be ignored: %1$d</string>
 </resources>

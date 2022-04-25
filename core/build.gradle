@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         minSdk 24
-        targetSdk 31
+        targetSdk 29
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -107,6 +107,13 @@ dependencies {
     api 'io.michaelrocks:libphonenumber-android:8.12.37' // Phone Number Verification
     api 'com.github.dhaval2404:imagepicker:2.1' // Image Picker
     api 'com.journeyapps:zxing-android-embedded:4.3.0' // QR Scanner
+
+
+    // Apache POI
+    api group: 'org.apache.poi', name: 'poi-ooxml', version: '3.17'
+    api group: 'org.apache.xmlbeans', name: 'xmlbeans', version: '3.1.0'
+    api 'javax.xml.stream:stax-api:1.0'
+    api 'com.fasterxml:aalto-xml:1.2.2'
 
 
 

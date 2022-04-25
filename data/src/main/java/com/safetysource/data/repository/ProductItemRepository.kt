@@ -7,6 +7,7 @@ import com.safetysource.data.base.BaseRepository
 import com.safetysource.data.model.ProductItemModel
 import com.safetysource.data.model.response.ErrorModel
 import com.safetysource.data.model.response.StatefulResult
+import kotlinx.coroutines.tasks.asDeferred
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -29,11 +30,52 @@ class ProductItemRepository @Inject constructor(
         }
     }
 
+    suspend fun createUpdateMultipleProductItems(productItemModels: List<ProductItemModel>): StatefulResult<Unit> {
+        productItemModels.forEach { productItemModel ->
+            if (productItemModel.serial.isNullOrEmpty())
+                return StatefulResult.Error(ErrorModel.Unknown)
+        }
+        return try {
+            fireStoreDB.runBatch { batch ->
+                productItemModels.forEach { productItemModel ->
+                    val categoryRef = fireStoreDB
+                        .collection(Constants.COLLECTION_PRODUCT_ITEM)
+                        .document(productItemModel.serial!!)
+                    batch.set(categoryRef, productItemModel)
+                }
+            }.await()
+            StatefulResult.Success(Unit)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            StatefulResult.Error(ErrorModel.Unknown)
+        }
+    }
+
     suspend fun getProductItemBySerial(serial: String): StatefulResult<ProductItemModel> {
         return try {
             val document =
-                fireStoreDB.collection(Constants.COLLECTION_PRODUCT_ITEM).document(serial).get().await()
+                fireStoreDB.collection(Constants.COLLECTION_PRODUCT_ITEM).document(serial).get()
+                    .await()
             StatefulResult.Success(document.toObject(ProductItemModel::class.java))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            StatefulResult.Error(ErrorModel.Unknown)
+        }
+    }
+
+    suspend fun getProductItemsBySerials(serials: List<String>): StatefulResult<List<ProductItemModel>> {
+        return try {
+            val products = serials
+                .chunked(10)
+                .map {
+                    fireStoreDB.collection(Constants.COLLECTION_PRODUCT_ITEM)
+                        .whereIn(ProductItemModel.SERIAL, it)
+                        .orderBy(Constants.UPDATED_AT, Query.Direction.DESCENDING)
+                        .get().asDeferred()
+                }
+                .map { it.await().toObjects(ProductItemModel::class.java) }
+                .flatten()
+            StatefulResult.Success(products)
         } catch (e: Exception) {
             e.printStackTrace()
             StatefulResult.Error(ErrorModel.Unknown)

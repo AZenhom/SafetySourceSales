@@ -54,13 +54,13 @@ class CreateEditRetailerViewModel @Inject constructor(
                     totalRedeemed = 0.0f
                 )
                 val reportRepository = reportsRepository.createUpdateRetailerReport(retailerReport)
+                hideLoading()
                 if (reportRepository is StatefulResult.Success)
                     liveData.value = true
                 else
                     handleError(retailerCreateResponse.errorModel)
             } else
                 handleError(retailerCreateResponse.errorModel)
-            hideLoading()
         }
         return liveData
     }

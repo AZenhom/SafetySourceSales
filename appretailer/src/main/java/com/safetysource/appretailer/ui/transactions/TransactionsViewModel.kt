@@ -59,9 +59,9 @@ class TransactionsViewModel @Inject constructor(
                 }
 
                 liveData.value = transactions
+                hideLoading()
             } else
                 handleError(result.errorModel)
-            hideLoading()
         }
         return liveData
     }

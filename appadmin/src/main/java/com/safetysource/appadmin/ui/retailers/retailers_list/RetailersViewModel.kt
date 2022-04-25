@@ -24,11 +24,11 @@ class RetailersViewModel @Inject constructor(
         val liveData = LiveEvent<List<RetailerModel>>()
         safeLauncher {
             val result = retailerRepository.getTeamRetailers(teamModel?.id ?: "")
+            hideLoading()
             if (result is StatefulResult.Success)
                 liveData.value = result.data ?: listOf()
             else
                 handleError(result.errorModel)
-            hideLoading()
         }
         return liveData
     }

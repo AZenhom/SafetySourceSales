@@ -34,11 +34,11 @@ class RetailerDetailsViewModel @Inject constructor(
         val liveData = LiveEvent<RetailerReportModel?>()
         safeLauncher {
             val result = reportsRepository.getRetailerReportById(retailerModel?.id ?: "")
+            hideLoading()
             if (result is StatefulResult.Success)
                 liveData.value = result.data
             else
                 handleError(result.errorModel)
-            hideLoading()
         }
         return liveData
     }
@@ -69,9 +69,9 @@ class RetailerDetailsViewModel @Inject constructor(
                         products.firstOrNull { transactionModel.productId == it?.id }
                 }
                 liveData.value = result.data ?: listOf()
+                hideLoading()
             } else
                 handleError(result.errorModel)
-            hideLoading()
         }
         return liveData
     }
@@ -131,6 +131,7 @@ class RetailerDetailsViewModel @Inject constructor(
                     val productItemResult =
                         productItemRepository.createUpdateProductItem(productItemModel)
 
+                    hideLoading()
                     if (productItemResult is StatefulResult.Success)
                         liveData.value = true
                     else
@@ -138,8 +139,6 @@ class RetailerDetailsViewModel @Inject constructor(
                 }
             } else
                 handleError(transactionResult.errorModel)
-
-            hideLoading()
         }
         return liveData
     }

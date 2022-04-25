@@ -40,11 +40,11 @@ class ProductItemDetailsViewModel @Inject constructor(
         safeLauncher {
             val result =
                 productRepository.getProductById(productItemModel?.productId ?: "")
+            hideLoading()
             if (result is StatefulResult.Success)
                 liveData.value = result.data
             else
                 handleError(result.errorModel)
-            hideLoading()
         }
         return liveData
     }
@@ -111,12 +111,11 @@ class ProductItemDetailsViewModel @Inject constructor(
                     }
 
                     liveData.value = true
+                    hideLoading()
                 } else
                     handleError(transactionResponse.errorModel)
             } else
                 handleError(productItemResponse.errorModel)
-
-            hideLoading()
         }
         return liveData
     }
