@@ -5,6 +5,9 @@ import com.google.firebase.firestore.Query
 import com.safetysource.data.Constants
 import com.safetysource.data.base.BaseRepository
 import com.safetysource.data.model.ProductItemModel
+import com.safetysource.data.model.RetailerReportModel
+import com.safetysource.data.model.TeamReportModel
+import com.safetysource.data.model.TransactionModel
 import com.safetysource.data.model.response.ErrorModel
 import com.safetysource.data.model.response.StatefulResult
 import kotlinx.coroutines.tasks.asDeferred
@@ -91,6 +94,47 @@ class ProductItemRepository @Inject constructor(
                     .get().await()
             val products = documents.toObjects(ProductItemModel::class.java)
             StatefulResult.Success(products)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            StatefulResult.Error(ErrorModel.Unknown)
+        }
+    }
+
+    suspend fun sellUnsellProductItem(
+        productItemModel: ProductItemModel,
+        transactionModel: TransactionModel,
+        retailerReportModel: RetailerReportModel,
+        teamReportModel: TeamReportModel
+    ): StatefulResult<Unit> {
+        if (productItemModel.serial.isNullOrEmpty())
+            return StatefulResult.Error(ErrorModel.Unknown)
+        return try {
+            fireStoreDB.runBatch {
+                // Product Item
+                val categoryRef = fireStoreDB
+                    .collection(Constants.COLLECTION_PRODUCT_ITEM)
+                    .document(productItemModel.serial!!)
+                it.set(categoryRef, productItemModel)
+
+                // Transaction
+                val transactionRef = fireStoreDB
+                    .collection(Constants.COLLECTION_TRANSACTION)
+                    .document(transactionModel.id!!)
+                it.set(transactionRef, transactionModel)
+
+                // Retailer Report
+                val retailerReportRef = fireStoreDB
+                    .collection(Constants.COLLECTION_RETAILER_REPORT)
+                    .document(retailerReportModel.retailerId!!)
+                it.set(retailerReportRef, retailerReportModel)
+
+                // Team Report
+                val teamReportRef = fireStoreDB
+                    .collection(Constants.COLLECTION_TEAM_REPORT)
+                    .document(teamReportModel.teamId!!)
+                it.set(teamReportRef, teamReportModel)
+            }.await()
+            StatefulResult.Success(Unit)
         } catch (e: Exception) {
             e.printStackTrace()
             StatefulResult.Error(ErrorModel.Unknown)

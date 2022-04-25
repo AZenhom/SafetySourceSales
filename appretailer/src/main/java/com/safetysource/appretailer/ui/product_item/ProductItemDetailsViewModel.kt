@@ -3,6 +3,7 @@ package com.safetysource.appretailer.ui.product_item
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import com.hadilq.liveevent.LiveEvent
+import com.safetysource.core.R
 import com.safetysource.core.base.BaseViewModel
 import com.safetysource.data.model.*
 import com.safetysource.data.model.response.StatefulResult
@@ -55,9 +56,23 @@ class ProductItemDetailsViewModel @Inject constructor(
     ): LiveData<Boolean> {
         val liveData = LiveEvent<Boolean>()
         safeLauncher {
-            if (productItemModel == null)
-                return@safeLauncher
             showLoading()
+
+            val teamReport =
+                reportsRepository.getTeamReportById(
+                    retailerRepository.getCurrentRetailerModel()?.teamId ?: ""
+                ).data
+            val retailerReport =
+                reportsRepository.getRetailerReportById(
+                    userRepository.getUserId() ?: ""
+                ).data
+
+            if (teamReport == null || retailerReport == null || productItemModel == null) {
+                showErrorMsg(R.string.something_went_wrong)
+                hideLoading()
+                return@safeLauncher
+            }
+
 
             productItemModel.state =
                 if (sellOrUnsell) ProductItemState.SOLD else ProductItemState.PENDING_UNSELLING
@@ -65,57 +80,39 @@ class ProductItemDetailsViewModel @Inject constructor(
                 if (sellOrUnsell) userRepository.getUserId() else null
             productItemModel.updatedAt = null
 
-            val productItemResponse =
-                productItemRepository.createUpdateProductItem(productItemModel)
 
-            if (productItemResponse is StatefulResult.Success) {
-                val transactionModel = TransactionModel(
-                    id = transactionsRepository.getNewTransactionId(),
-                    type = if (sellOrUnsell) TransactionType.SELLING else TransactionType.UNSELLING,
-                    retailerId = userRepository.getUserId(),
-                    teamId = retailerRepository.getCurrentRetailerModel()?.teamId,
-                    productId = productModel.id,
-                    serial = productItemModel.serial,
-                    commissionAppliedOrRemoved = productModel.commissionValue,
-                    isUnsellingApproved = false
-                )
-                val transactionResponse =
-                    transactionsRepository.createUpdateTransaction(transactionModel)
+            val transactionModel = TransactionModel(
+                id = transactionsRepository.getNewTransactionId(),
+                type = if (sellOrUnsell) TransactionType.SELLING else TransactionType.UNSELLING,
+                retailerId = userRepository.getUserId(),
+                teamId = retailerRepository.getCurrentRetailerModel()?.teamId,
+                productId = productModel.id,
+                serial = productItemModel.serial,
+                commissionAppliedOrRemoved = productModel.commissionValue,
+                isUnsellingApproved = false
+            )
 
-                if (transactionResponse is StatefulResult.Success) {
-                    val teamReport =
-                        reportsRepository.getTeamReportById(transactionModel.teamId ?: "").data
-                    val retailerReport =
-                        reportsRepository.getRetailerReportById(
-                            transactionModel.retailerId ?: ""
-                        ).data
+            val commission: Float =
+                if (sellOrUnsell) (productModel.commissionValue ?: 0f)
+                else -(productModel.commissionValue ?: 0f)
 
-                    val commission: Float =
-                        if (sellOrUnsell) (productModel.commissionValue ?: 0f)
-                        else -(productModel.commissionValue ?: 0f)
+            teamReport.dueCommissionValue =
+                (teamReport.dueCommissionValue ?: 0f) + commission
+            teamReport.updatedAt = null
 
-                    if (teamReport != null) {
-                        teamReport.dueCommissionValue =
-                            (teamReport.dueCommissionValue ?: 0f) + commission
-                        teamReport.updatedAt = null
 
-                        reportsRepository.createUpdateTeamReport(teamReport)
-                    }
+            retailerReport.dueCommissionValue =
+                (retailerReport.dueCommissionValue ?: 0f) + commission
+            retailerReport.updatedAt = null
 
-                    if (retailerReport != null) {
-                        retailerReport.dueCommissionValue =
-                            (retailerReport.dueCommissionValue ?: 0f) + commission
-                        retailerReport.updatedAt = null
-
-                        reportsRepository.createUpdateRetailerReport(retailerReport)
-                    }
-
-                    liveData.value = true
-                    hideLoading()
-                } else
-                    handleError(transactionResponse.errorModel)
-            } else
-                handleError(productItemResponse.errorModel)
+            productItemRepository.sellUnsellProductItem(
+                productItemModel,
+                transactionModel,
+                retailerReport,
+                teamReport
+            )
+            liveData.value = true
+            hideLoading()
         }
         return liveData
     }
