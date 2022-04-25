@@ -139,9 +139,9 @@
     <string name="change_language">تغيير اللغة</string>
     <string name="are_you_sure_you_want_to_switch_language">هل انت متأكد انك تريد تغيير اللغة إلى الإنجليزية</string>
     <string name="confirm">تأكيد</string>
-    <string name="select_excel_file">Select an Excel File</string>
-    <string name="no_serials_in_excel_file">Excel file doesn\'t have any serials listed in the first column</string>
-    <string name="all_serials_exist">All serials already exists</string>
-    <string name="serials_to_be_registered">Serials to be registered: %1$d</string>
-    <string name="serials_to_be_ignored">Serials already existing to be ignored: %1$d</string>
+    <string name="select_excel_file">اختر ملف إكسيل</string>
+    <string name="no_serials_in_excel_file">ملف الإكسيل لا يحتوي على اي سيريالات في العمود الأول</string>
+    <string name="all_serials_exist">كل السيريالات بالملف مسجلة بالفعل في قاعدة البانات</string>
+    <string name="serials_to_be_registered">عدد السيريلات الجديدة التي سيتم تسجيلها +%1$s</string>
+    <string name="serials_to_be_ignored">عدد السيريلات المسجلة بالفعل وسيتم إهمالها +%1$s</string>
 </resources>

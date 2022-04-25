@@ -19,10 +19,8 @@ class ProfileViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository
 ) : BaseViewModel() {
 
-    private lateinit var currentLanguage: String
-
-    fun getUserProfile(): LiveData<AdminModel> {
-        val liveData = LiveEvent<AdminModel>()
+    fun getUserProfile(): LiveData<AdminModel?> {
+        val liveData = LiveEvent<AdminModel?>()
         safeLauncher {
             liveData.value = adminRepository.getCurrentAdminModel()
         }

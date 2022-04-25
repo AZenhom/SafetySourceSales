@@ -29,8 +29,8 @@ class ProfileFragment :
 
     private fun getProfile() {
         viewModel.getUserProfile().observe(viewLifecycleOwner) {
-            binding.tvAdminName.text = it.name
-            binding.fabAdd.setIsVisible(it.role == AdminRole.SUPER_ADMIN)
+            binding.tvAdminName.text = it?.name
+            binding.fabAdd.setIsVisible(it?.role == AdminRole.SUPER_ADMIN)
         }
     }
 

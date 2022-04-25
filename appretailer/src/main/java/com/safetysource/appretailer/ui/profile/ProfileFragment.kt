@@ -28,7 +28,7 @@ class ProfileFragment :
 
     private fun getProfile() {
         viewModel.getUserProfile().observe(viewLifecycleOwner) {
-            binding.tvRetailerName.text = it.name
+            binding.tvRetailerName.text = it?.name
         }
         viewModel.getRetailerTeam().observe(viewLifecycleOwner) {
             binding.tvTeamName.text = it?.name

@@ -23,8 +23,8 @@ class ProfileViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository
 ) : BaseViewModel() {
 
-    fun getUserProfile(): LiveData<RetailerModel> {
-        val liveData = LiveEvent<RetailerModel>()
+    fun getUserProfile(): LiveData<RetailerModel?> {
+        val liveData = LiveEvent<RetailerModel?>()
         safeLauncher {
             liveData.value = retailerRepository.getCurrentRetailerModel()
         }
