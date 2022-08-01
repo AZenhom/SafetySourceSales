@@ -13,6 +13,7 @@ data class TransactionModel(
     var categoryId: String? = null,
     var productId: String? = null,
     var serial: String? = null,
+    var offerId: String? = null,
     var commissionAppliedOrRemoved: Float? = null,
     var isUnsellingApproved: Boolean? = null,
     var unsellingApprovedByAdminId: String? = null,
@@ -32,11 +33,13 @@ data class TransactionModel(
         const val CATEGORY_ID = "categoryId"
         const val PRODUCT_ID = "productId"
         const val SERIAL = "serial"
+        const val OFFER_ID = "offerId"
         const val TYPE = "type"
     }
 }
 
 enum class TransactionType : Serializable {
     SELLING,
-    UNSELLING
+    UNSELLING,
+    OFFER_CLAIM,
 }

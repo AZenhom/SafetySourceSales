@@ -9,6 +9,7 @@ data class TransactionFilterModel(
     var category: ProductCategoryModel? = null,
     var product: ProductModel? = null,
     var serial: String? = null,
+    var offerId: String? = null,
     var transactionType: TransactionType? = null,
     var dateFrom: Date? = Calendar.getInstance().apply {
         set(Calendar.HOUR_OF_DAY, 0)

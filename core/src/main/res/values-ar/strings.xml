@@ -27,7 +27,7 @@
     <string name="product_categories">فئات المنتجات</string>
     <string name="are_you_sure_you_want_to_log_out">هل أنت متأكد أنك تريد تسجيل الخروج ؟</string>
     <string name="create_product_category">إنشاء فئة المنتج</string>
-        <string name="category_name">اسم الفئة</string>
+    <string name="category_name">اسم الفئة</string>
     <string name="category_name_hint">مثال: أجهزة الشبكات</string>
     <string name="team_name_hint">مثال: فريق القاهرة</string>
     <string name="category_image">صورة الفئة</string>
@@ -84,9 +84,11 @@
     <string name="pending_unselling">في انتظار الموافقة على إلغاء البيع</string>
     <string name="serial">سيريال</string>
     <string name="retailer">بائع تجزئة</string>
-        <string name="product">المنتج</string>
+    <string name="product">المنتج</string>
     <string name="commission_applied">العمولة المطبقة</string>
     <string name="commission_removed">العمولة المخصومة</string>
+    <string name="offer_claimed">قيمة العرض</string>
+    <string name="offer_comision_claimed_successfully">تم إضافة قيمة العرض</string>
     <string name="team">فريق</string>
     <string name="amin_action_required">مطلوب إجراء إداري</string>
     <string name="yes">نعم</string>
@@ -94,7 +96,7 @@
     <string name="approve">موافقة</string>
     <string name="approve_unselling_question">هل أنت متأكد أنك تريد الموافقة على عملية إلغاء هذه</string>
     <string name="admin">Admin</string>
-    <string name="total_serials">Total number of registered serials</string>
+    <string name="total_serials">العدد الإجمالي للسيريالات المسجلة</string>
     <string name="sold_items_number">عدد العناصر المباعة</string>
     <string name="unsold_items_number">عدد العناصر المرتجعة المعلقة</string>
     <string name="add_product_item_text">السيريال الممسوح ضوئيًا غير مسجل ، هل ترغب في التسجيل وربطه بالمنتج المعروض حاليًا</string>

@@ -1,4 +1,5 @@
 <resources>
+    <string name="empty" translatable="false" />
     <string name="click_twice">Please click BACK again to exit</string>
     <string name="check_your_internet_connection">Please check your internet connection</string>
     <string name="an_error_has_occurred">An unexpected error has occurred</string>
@@ -87,6 +88,8 @@
     <string name="product">Product</string>
     <string name="commission_applied">Commission Applied</string>
     <string name="commission_removed">Commission Removed</string>
+    <string name="offer_claimed">Offer Claimed</string>
+    <string name="offer_comision_claimed_successfully">Offer Commission Claimed</string>
     <string name="team">Team</string>
     <string name="amin_action_required">Admin Action Required</string>
     <string name="yes">Yes</string>

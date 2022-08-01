@@ -52,18 +52,26 @@ class TransactionsAdapter constructor(
                         else R.string.no
                     )
 
-                // Commission
+                // Commission or Offer
                 lblCommission.text = lblCommission.context.getString(
-                    if (item.type == TransactionType.SELLING) R.string.commission_applied
-                    else R.string.commission_removed
+                    when (item.type) {
+                        TransactionType.SELLING -> R.string.commission_applied
+                        TransactionType.UNSELLING -> R.string.commission_removed
+                        TransactionType.OFFER_CLAIM -> R.string.offer_claimed
+                        else -> R.string.empty
+                    }
                 )
                 tvCommission.text =
                     "${item.commissionAppliedOrRemoved} ${tvCommission.context.getString(R.string.egyptian_pound)}"
 
                 // Transaction Type Image
                 ivTransactionType.setImageResource(
-                    if (item.type == TransactionType.SELLING) R.drawable.ic_arrow_up
-                    else R.drawable.ic_arrow_down
+                    when (item.type) {
+                        TransactionType.SELLING -> R.drawable.ic_arrow_up
+                        TransactionType.UNSELLING -> R.drawable.ic_arrow_down
+                        TransactionType.OFFER_CLAIM -> R.drawable.ic_offer
+                        else -> R.drawable.ic_question_mark
+                    }
                 )
 
                 // Last Updated

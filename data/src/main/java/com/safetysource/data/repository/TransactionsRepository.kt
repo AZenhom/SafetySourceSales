@@ -59,6 +59,9 @@ class TransactionsRepository @Inject constructor(
                 serial?.let {
                     query = (query ?: reference).whereEqualTo(TransactionModel.SERIAL, it)
                 }
+                offerId?.let {
+                    query = (query ?: reference).whereEqualTo(TransactionModel.OFFER_ID, it)
+                }
                 transactionType?.let {
                     query = (query ?: reference).whereEqualTo(TransactionModel.TYPE, it)
                 }

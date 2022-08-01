@@ -1,8 +1,7 @@
 package com.safetysource.data
 
 class Constants {
-    companion object{
-
+    companion object {
 
         // Firestore Collections
         const val COLLECTION_ADMIN = BuildConfig.COLLECTION_ADMIN
@@ -14,10 +13,13 @@ class Constants {
         const val COLLECTION_TEAM = BuildConfig.COLLECTION_TEAM
         const val COLLECTION_TEAM_REPORT = BuildConfig.COLLECTION_TEAM_REPORT
         const val COLLECTION_TRANSACTION = BuildConfig.COLLECTION_TRANSACTION
+        const val COLLECTION_OFFER = BuildConfig.COLLECTION_OFFER
+        const val COLLECTION_SUBSCRIBED_OFFER = BuildConfig.COLLECTION_SUBSCRIBED_OFFER
 
         // Firebase Storage Folders
         const val FOLDER_PRODUCT_CATEGORIES = BuildConfig.FOLDER_PRODUCT_CATEGORIES
         const val FOLDER_PRODUCTS = BuildConfig.FOLDER_PRODUCTS
+        const val FOLDER_OFFERS = BuildConfig.FOLDER_OFFERS
 
         // Firestore document attributes
         const val CREATED_AT = "createdAt"
