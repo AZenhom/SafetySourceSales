@@ -1,5 +1,6 @@
 package com.safetysource.data.model
 
+import com.google.firebase.firestore.Exclude
 import com.google.firebase.firestore.ServerTimestamp
 import java.io.Serializable
 import java.util.*
@@ -12,11 +13,14 @@ data class OfferModel(
     var productId: String? = null,
     val neededSellCount: Int? = null,
     val canRepeat: Boolean? = null,
-    val valPerRepeat :Float? = null,
+    val valPerRepeat: Float? = null,
     var startsAt: Date? = null,
     var expiresAt: Date? = null,
     @ServerTimestamp
     val updatedAt: Date? = null,
+
+    @get:Exclude
+    var subscribedOfferModel: SubscribedOfferModel? = null,
 ) : Serializable {
     companion object {
         const val STARTS_AT = "startsAt"

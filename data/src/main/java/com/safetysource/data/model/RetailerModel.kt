@@ -6,13 +6,14 @@ import java.util.*
 
 data class RetailerModel(
     val id: String? = null,
-    val teamId: String? = null,
+    var teamId: String? = null,
     val name: String? = null,
     val phoneNo: String? = null,
     val contactNo: String? = null,
+    val allowedProductIds: List<String>? = null,
     @ServerTimestamp
     val createdAt: Date? = null,
-) : Serializable{
+) : Serializable {
     companion object {
         const val TEAM_ID = "teamId"
         const val PHONE_NUMBER = "phoneNo"

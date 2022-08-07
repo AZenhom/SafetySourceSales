@@ -9,9 +9,11 @@ data class SubscribedOfferModel(
     val offerId: String? = null,
     val retailerId: String? = null,
     val teamId: String? = null,
-    val claimedOrRemoved: Boolean? = null,
+    var claimedOrRemoved: Boolean? = null,
     @ServerTimestamp
-    val updatedAt: Date? = null,
+    val subscribedAt: Date? = null,
+    @ServerTimestamp
+    var updatedAt: Date? = null,
 ) : Serializable {
     companion object {
         const val RETAILER_ID = "retailerId"

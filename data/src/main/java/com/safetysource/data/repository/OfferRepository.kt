@@ -26,6 +26,18 @@ class OfferRepository @Inject constructor(
             .id
     }
 
+    suspend fun getOfferById(offerId: String): StatefulResult<OfferModel> {
+        return try {
+            val document =
+                fireStoreDB.collection(Constants.COLLECTION_OFFER).document(offerId).get()
+                    .await()
+            StatefulResult.Success(document.toObject(OfferModel::class.java))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            StatefulResult.Error(ErrorModel.Unknown)
+        }
+    }
+
     suspend fun uploadOfferImageAndGetUrl(
         offerId: String,
         fileUri: Uri

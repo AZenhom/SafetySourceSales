@@ -64,6 +64,7 @@
     <string name="retailer_details">تفاصيل بائع التجزئة</string>
     <string name="register_retailer">تسجيل بائع تجزئة</string>
     <string name="retailer_with_phone_already_registered">يوجد بائع تجزئة بنفس رقم الهاتف بالفعل</string>
+    <string name="retailer_with_phone_does_not_exist">لا يوجد بائع تجزئة بنفس رقم الهاتف</string>
     <string name="admin_with_phone_already_registered">يوجد Admin تجزئة بنفس رقم الهاتف بالفعل</string>
     <string name="plus_count_more">.. +%1$s أخرى</string>
     <string name="error_missing_camera_permission">برجاء إتاحة الكاميرا لاستخدام هذه الخاصية</string>
@@ -119,6 +120,8 @@
     <string name="retailer_team">فريق بائع التجزئة</string>
     <string name="retailer_phone">هاتف بائع التجزئة</string>
     <string name="retailer_registered_successfully">تم تسجيل حساب بائع التجزئة بنجاح</string>
+    <string name="retailer_updated_successfully">تم تعديل بيانات حساب بائع التجزئة بنجاح</string>
+    <string name="retailer_added_to_team_successfully">تم إضافة بائع التجزئة للفريق بنجاح</string>
     <string name="admin_registered_successfully">تم تسجيل حساب ال Admin بنجاح</string>
     <string name="scan_cancelled">تم إلغاء المسح</string>
     <string name="serial_not_associated_with_any_product">السيريال غير مرتبط بأي منتج</string>

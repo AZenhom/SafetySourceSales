@@ -10,8 +10,10 @@ import androidx.activity.viewModels
 import com.safetysource.appadmin.databinding.ActivityCreateEditRetailerBinding
 import com.safetysource.core.R
 import com.safetysource.core.base.BaseActivity
+import com.safetysource.core.ui.makeGone
 import com.safetysource.core.utils.PhoneNumberUtils
 import com.safetysource.core.utils.PhoneNumberUtils.PhoneNumberUtils.isNull
+import com.safetysource.data.model.RetailerModel
 import com.safetysource.data.model.TeamModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,9 +23,15 @@ class CreateEditRetailerActivity :
 
     companion object {
         const val TEAM_MODEL = "TEAM_MODEL"
-        fun getIntent(context: Context, teamModel: TeamModel) =
+        const val RETAILER_TO_EDIT = "RETAILER_TO_EDIT"
+        fun getIntent(
+            context: Context,
+            teamModel: TeamModel,
+            retailerToEdit: RetailerModel? = null
+        ) =
             Intent(context, CreateEditRetailerActivity::class.java).apply {
                 putExtra(TEAM_MODEL, teamModel)
+                putExtra(RETAILER_TO_EDIT, retailerToEdit)
             }
     }
 
@@ -54,10 +62,20 @@ class CreateEditRetailerActivity :
     }
 
     private fun initViews() {
+        val isEditMode = viewModel.retailerToEdit != null
         with(binding) {
             toolbar.setNavigationOnClickListener { onBackPressed() }
 
-            // Team Name (Not changeable)
+            if (isEditMode) {
+                etRetailerPhone.inputType = InputType.TYPE_NULL
+                lblCountry.makeGone()
+                countryPicker.makeGone()
+
+                etRetailerName.setText(viewModel.retailerToEdit?.name)
+                etRetailerPhone.setText(viewModel.retailerToEdit?.phoneNo)
+            }
+
+            // Team Name (Not changeable in both cases)
             etRetailerTeam.inputType = InputType.TYPE_NULL
             etRetailerTeam.setText(viewModel.teamModel?.name)
 
@@ -66,8 +84,16 @@ class CreateEditRetailerActivity :
 
             // Submit
             btnSubmit.setOnClickListener {
-                validateAndRegister()
+                if (isEditMode) updateRetailer()
+                else validateAndRegister()
             }
+        }
+    }
+
+    private fun updateRetailer() {
+        viewModel.updateRetailer().observe(this) {
+            showSuccessMsg(getString(R.string.retailer_updated_successfully))
+            finish()
         }
     }
 
@@ -80,7 +106,7 @@ class CreateEditRetailerActivity :
 
         val phoneNo = validatePhoneNumber() ?: return
 
-        viewModel.createNewRetailer(phoneNo, phoneNo, retailerName).observe(this){
+        viewModel.createNewRetailer(phoneNo, phoneNo, retailerName).observe(this) {
             showSuccessMsg(getString(R.string.retailer_registered_successfully))
             finish()
         }

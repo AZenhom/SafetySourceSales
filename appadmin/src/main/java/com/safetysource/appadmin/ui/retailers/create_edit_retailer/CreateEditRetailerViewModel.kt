@@ -5,10 +5,12 @@ import androidx.lifecycle.SavedStateHandle
 import com.hadilq.liveevent.LiveEvent
 import com.safetysource.core.R
 import com.safetysource.core.base.BaseViewModel
+import com.safetysource.data.model.ProductModel
 import com.safetysource.data.model.RetailerModel
 import com.safetysource.data.model.RetailerReportModel
 import com.safetysource.data.model.TeamModel
 import com.safetysource.data.model.response.StatefulResult
+import com.safetysource.data.repository.ProductRepository
 import com.safetysource.data.repository.ReportsRepository
 import com.safetysource.data.repository.RetailerRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,10 +20,16 @@ import javax.inject.Inject
 class CreateEditRetailerViewModel @Inject constructor(
     private val retailerRepository: RetailerRepository,
     private val reportsRepository: ReportsRepository,
+    private val productRepository: ProductRepository,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
     val teamModel: TeamModel? = savedStateHandle[CreateEditRetailerActivity.TEAM_MODEL]
+    val retailerToEdit: RetailerModel? =
+        savedStateHandle[CreateEditRetailerActivity.RETAILER_TO_EDIT]
+
+    private val _productsLiveData = LiveEvent<List<ProductModel>>()
+    val productsLiveData: LiveData<List<ProductModel>> get() = _productsLiveData
 
     fun createNewRetailer(
         phoneNumber: String,
@@ -63,5 +71,31 @@ class CreateEditRetailerViewModel @Inject constructor(
                 handleError(retailerCreateResponse.errorModel)
         }
         return liveData
+    }
+
+    fun updateRetailer(): LiveData<Boolean> {
+        val liveData = LiveEvent<Boolean>()
+        safeLauncher {
+            if (retailerToEdit == null) {
+                showErrorMsg(R.string.something_went_wrong)
+                return@safeLauncher
+            }
+            showLoading()
+            val result = retailerRepository.createUpdateRetailer(retailerToEdit)
+            if (result is StatefulResult.Success)
+                liveData.value = true
+            else
+                handleError(result.errorModel)
+            hideLoading()
+        }
+        return liveData
+    }
+
+    private suspend fun getProducts() {
+        val result = productRepository.getAllProducts()
+        if (result is StatefulResult.Success)
+            _productsLiveData.value = result.data ?: listOf()
+        else
+            handleError(result.errorModel)
     }
 }

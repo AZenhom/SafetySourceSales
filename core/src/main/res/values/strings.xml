@@ -65,6 +65,7 @@
     <string name="retailer_details">Retailer Details</string>
     <string name="register_retailer">Register a retailer</string>
     <string name="retailer_with_phone_already_registered">Retailer with same phone number already exists</string>
+    <string name="retailer_with_phone_does_not_exist">Retailer with provided phone number doesn\'t exists</string>
     <string name="admin_with_phone_already_registered">Admin with same phone number already exists</string>
     <string name="plus_count_more">.. +%1$s more</string>
     <string name="error_missing_camera_permission">Please allow camera to be able to use this feature</string>
@@ -120,6 +121,8 @@
     <string name="retailer_team">Retailer Team</string>
     <string name="retailer_phone">Retailer Phone</string>
     <string name="retailer_registered_successfully">Retailer Account Registered Successfully</string>
+    <string name="retailer_updated_successfully">Retailer Account Updated Successfully</string>
+    <string name="retailer_added_to_team_successfully">Retailer Added to Team Successfully</string>
     <string name="admin_registered_successfully">Admin Account Registered Successfully</string>
     <string name="scan_cancelled">Scan Cancelled</string>
     <string name="serial_not_associated_with_any_product">Serial is not associated with any product</string>

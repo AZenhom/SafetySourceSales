@@ -61,6 +61,20 @@ class ProductRepository @Inject constructor(
         }
     }
 
+    suspend fun getAllProducts(): StatefulResult<List<ProductModel>> {
+        return try {
+            val documents =
+                fireStoreDB.collection(Constants.COLLECTION_PRODUCT)
+                    .orderBy(Constants.UPDATED_AT, Query.Direction.DESCENDING)
+                    .get().await()
+            val products = documents.toObjects(ProductModel::class.java)
+            StatefulResult.Success(products)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            StatefulResult.Error(ErrorModel.Unknown)
+        }
+    }
+
     suspend fun getCategoryProducts(categoryId: String): StatefulResult<List<ProductModel>> {
         return try {
             val documents =
@@ -79,7 +93,8 @@ class ProductRepository @Inject constructor(
     suspend fun getProductById(productId: String): StatefulResult<ProductModel> {
         return try {
             val document =
-                fireStoreDB.collection(Constants.COLLECTION_PRODUCT).document(productId).get().await()
+                fireStoreDB.collection(Constants.COLLECTION_PRODUCT).document(productId).get()
+                    .await()
             StatefulResult.Success(document.toObject(ProductModel::class.java))
         } catch (e: Exception) {
             e.printStackTrace()

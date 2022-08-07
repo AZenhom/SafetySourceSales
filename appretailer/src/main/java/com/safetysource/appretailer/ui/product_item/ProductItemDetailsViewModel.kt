@@ -87,6 +87,7 @@ class ProductItemDetailsViewModel @Inject constructor(
                 retailerId = userRepository.getUserId(),
                 teamId = retailerRepository.getCurrentRetailerModel()?.teamId,
                 productId = productModel.id,
+                categoryId = productModel.productCategoryId,
                 serial = productItemModel.serial,
                 commissionAppliedOrRemoved = productModel.commissionValue,
                 isUnsellingApproved = false

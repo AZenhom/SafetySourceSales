@@ -24,7 +24,7 @@ class CreateEditOfferViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
     var offerModel: OfferModel? =
-        savedStateHandle[CreateEditOfferActivity.OFFER_TO_EDIT] /////////
+        savedStateHandle[CreateEditOfferActivity.OFFER_TO_EDIT]
 
     private var offerId: String = if (offerModel != null) offerModel!!.id ?: ""
     else {
@@ -88,13 +88,6 @@ class CreateEditOfferViewModel @Inject constructor(
         return liveData
     }
 
-    fun getInitialData() = safeLauncher {
-        showLoading()
-        getProductCategories()
-        getProducts()
-        hideLoading()
-    }
-
     fun setCategory(category: ProductCategoryModel?) {
         offerModel?.productCategoryId = category?.id
         offerModel?.productId = null
@@ -108,6 +101,13 @@ class CreateEditOfferViewModel @Inject constructor(
 
     fun setProduct(product: ProductModel?) {
         offerModel?.productId = product?.id
+    }
+
+    fun getInitialData() = safeLauncher {
+        showLoading()
+        getProductCategories()
+        getProducts()
+        hideLoading()
     }
 
     private suspend fun getProductCategories() {
