@@ -35,9 +35,26 @@ class CreateEditOfferViewModel @Inject constructor(
 
     private val _categoriesLiveData = LiveEvent<List<ProductCategoryModel>>()
     val categoriesLiveData: LiveData<List<ProductCategoryModel>> get() = _categoriesLiveData
+    private val _selectedCategoryLiveData = LiveEvent<ProductCategoryModel?>()
+    val selectedCategoryLiveData: LiveData<ProductCategoryModel?> get() = _selectedCategoryLiveData
 
     private val _productsLiveData = LiveEvent<List<ProductModel>>()
     val productsLiveData: LiveData<List<ProductModel>> get() = _productsLiveData
+    private val _selectedProductLiveData = LiveEvent<ProductModel?>()
+    val selectedProductLiveData: LiveData<ProductModel?> get() = _selectedProductLiveData
+
+    var startsAt: Date = offerModel?.startsAt ?: Calendar.getInstance().apply {
+        set(Calendar.HOUR_OF_DAY, 0)
+        set(Calendar.MINUTE, 0)
+        set(Calendar.SECOND, 0)
+        set(Calendar.MILLISECOND, 0)
+    }.time
+    var expiresAt: Date = offerModel?.expiresAt ?: Calendar.getInstance().apply {
+        set(Calendar.HOUR_OF_DAY, 23)
+        set(Calendar.MINUTE, 59)
+        set(Calendar.SECOND, 59)
+        set(Calendar.MILLISECOND, 999)
+    }.time
 
     fun uploadOfferImageAndGetUrl(fileUri: Uri): LiveData<String> {
         val liveData = LiveEvent<String>()
@@ -60,8 +77,6 @@ class CreateEditOfferViewModel @Inject constructor(
         neededSellCount: Int,
         canRepeat: Boolean,
         valPerRepeat: Float,
-        startsAt: Date,
-        expiresAt: Date
     ): LiveData<Boolean> {
         val liveData = LiveEvent<Boolean>()
         safeLauncher {
@@ -70,8 +85,8 @@ class CreateEditOfferViewModel @Inject constructor(
                 id = offerId,
                 imgUrl = imageUrl,
                 text = text,
-                productCategoryId = offerModel?.productCategoryId,
-                productId = offerModel?.productId,
+                productCategoryId = selectedCategoryLiveData.value?.id,
+                productId = selectedProductLiveData.value?.id,
                 neededSellCount = neededSellCount,
                 canRepeat = canRepeat,
                 valPerRepeat = valPerRepeat,
@@ -92,6 +107,7 @@ class CreateEditOfferViewModel @Inject constructor(
         offerModel?.productCategoryId = category?.id
         offerModel?.productId = null
         _productsLiveData.value = emptyList()
+        _selectedCategoryLiveData.value = category
         safeLauncher {
             showLoading()
             getProducts()
@@ -101,6 +117,7 @@ class CreateEditOfferViewModel @Inject constructor(
 
     fun setProduct(product: ProductModel?) {
         offerModel?.productId = product?.id
+        _selectedProductLiveData.value = product
     }
 
     fun getInitialData() = safeLauncher {
@@ -112,18 +129,26 @@ class CreateEditOfferViewModel @Inject constructor(
 
     private suspend fun getProductCategories() {
         val result = productCategoryRepository.getProductCategories()
-        if (result is StatefulResult.Success)
+        if (result is StatefulResult.Success) {
             _categoriesLiveData.value = result.data ?: listOf()
-        else
+            if (selectedCategoryLiveData.value == null && offerModel?.productCategoryId != null) {
+                _selectedCategoryLiveData.value =
+                    result.data?.firstOrNull { it.id == offerModel?.productCategoryId }
+            }
+        } else
             handleError(result.errorModel)
     }
 
     private suspend fun getProducts() {
-        offerModel?.productCategoryId?.let {
-            val result = productRepository.getCategoryProducts(it)
-            if (result is StatefulResult.Success)
+        offerModel?.productCategoryId?.let { categoryId ->
+            val result = productRepository.getCategoryProducts(categoryId)
+            if (result is StatefulResult.Success) {
                 _productsLiveData.value = result.data ?: listOf()
-            else
+                if (selectedProductLiveData.value == null && offerModel?.productId != null) {
+                    _selectedProductLiveData.value =
+                        result.data?.firstOrNull { it.id == offerModel?.productId }
+                }
+            } else
                 handleError(result.errorModel)
         }
     }

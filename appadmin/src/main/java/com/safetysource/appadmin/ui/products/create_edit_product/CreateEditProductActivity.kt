@@ -73,8 +73,8 @@ class CreateEditProductActivity :
                         .error(R.drawable.ic_image_placeholder)
                         .into(ivProductImage)
                 etProductName.setText(it.name)
-                etProductPrice.setText(it.wholesalePrice?.toInt().toString())
-                etCommission.setText(it.commissionValue?.toInt().toString())
+                etProductPrice.setText(it.wholesalePrice?.toString())
+                etCommission.setText(it.commissionValue?.toString())
             }
 
             toolbar.setNavigationOnClickListener {
@@ -96,7 +96,7 @@ class CreateEditProductActivity :
     }
 
     private fun startValidationAndPrepareData() {
-        // Images
+        // Image
         if (chosenImage == null && viewModel.productModel?.imgUrl == null) {
             showErrorMsg(getString(R.string.please_pick_an_image_first))
             return

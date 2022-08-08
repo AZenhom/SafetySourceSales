@@ -149,4 +149,17 @@
     <string name="all_serials_exist">كل السيريالات بالملف مسجلة بالفعل في قاعدة البانات</string>
     <string name="serials_to_be_registered">عدد السيريلات الجديدة التي سيتم تسجيلها +%1$s</string>
     <string name="serials_to_be_ignored">عدد السيريلات المسجلة بالفعل وسيتم إهمالها +%1$s</string>
+    <string name="create_offer">Create Offer</string>
+    <string name="offer_image">Offer Image</string>
+    <string name="offer_text">Offer Text</string>
+    <string name="offer_text_hint">Ex: Sell 10 Cameras and get 50 EGP Bonus</string>
+    <string name="offer_claim_value">Offer Claim Value</string>
+    <string name="can_repeat">Can Repeat</string>
+    <string name="needed_sell_count">Sell Count</string>
+    <string name="starts_at">Starts At</string>
+    <string name="expires_at">Expires At</string>
+    <string name="text_field_cannot_be_empty">Text field can\'t be empty</string>
+    <string name="invalid_claim_value">Invalid Claim Value</string>
+    <string name="offer_created_successfully">Offer Created Successfully</string>
+    <string name="offer_updated_successfully">Offer Updated Successfully</string>
 </resources>

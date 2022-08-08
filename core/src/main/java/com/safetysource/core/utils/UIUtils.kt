@@ -2,18 +2,13 @@ package com.safetysource.core.utils
 
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.Insets
+import android.os.Build
 import android.util.DisplayMetrics
 import android.view.View
+import android.view.WindowInsets
 import androidx.fragment.app.FragmentActivity
 import kotlin.math.roundToInt
-import android.view.WindowInsets
-
-import android.view.WindowMetrics
-
-import android.os.Build
-
-import android.app.Activity
-import android.graphics.Insets
 
 
 fun Context.isRTL(): Boolean {
