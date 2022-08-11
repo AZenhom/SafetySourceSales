@@ -162,4 +162,5 @@
     <string name="invalid_claim_value">Invalid Claim Value</string>
     <string name="offer_created_successfully">Offer Created Successfully</string>
     <string name="offer_updated_successfully">Offer Updated Successfully</string>
+    <string name="to">To</string>
 </resources>

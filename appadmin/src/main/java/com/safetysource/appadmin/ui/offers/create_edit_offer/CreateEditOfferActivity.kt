@@ -42,7 +42,7 @@ class CreateEditOfferActivity :
     private var categoriesList: List<ProductCategoryModel> = emptyList()
     private var productsList: List<ProductModel> = emptyList()
 
-    val anyText = getString(R.string.any)
+    private val anyText = getString(R.string.any)
     private var chosenImage: Uri? = null
 
     private val startForImagePickingResult =

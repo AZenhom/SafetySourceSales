@@ -22,7 +22,7 @@
         <entry key="appadmin/src/main/res/layout/activity_retailers.xml" value="0.25" />
         <entry key="appadmin/src/main/res/layout/activity_splash.xml" value="0.34427083333333336" />
         <entry key="appadmin/src/main/res/layout/activity_transactions_filter.xml" value="0.25" />
-        <entry key="appadmin/src/main/res/layout/fragment_offer_list.xml" value="0.34322916666666664" />
+        <entry key="appadmin/src/main/res/layout/fragment_offer_list.xml" value="0.33" />
         <entry key="appadmin/src/main/res/layout/fragment_product_categories.xml" value="0.25" />
         <entry key="appadmin/src/main/res/layout/fragment_profile.xml" value="0.22" />
         <entry key="appadmin/src/main/res/layout/fragment_retailers.xml" value="0.25" />
@@ -73,6 +73,7 @@
         <entry key="core/src/main/res/layout/dialog_info_layout.xml" value="0.34427083333333336" />
         <entry key="core/src/main/res/layout/dialog_loading.xml" value="0.34427083333333336" />
         <entry key="core/src/main/res/layout/item_list_select.xml" value="0.25" />
+        <entry key="core/src/main/res/layout/item_offer.xml" value="0.25" />
         <entry key="core/src/main/res/layout/item_product.xml" value="0.34427083333333336" />
         <entry key="core/src/main/res/layout/item_product_categroy.xml" value="0.25" />
         <entry key="core/src/main/res/layout/item_select_list.xml" value="0.22" />
