@@ -3,7 +3,7 @@ package com.safetysource.appadmin.ui.offers.offers_lists
 import android.os.Bundle
 import androidx.fragment.app.activityViewModels
 import com.safetysource.appadmin.R
-import com.safetysource.appadmin.databinding.FragmentOfferListBinding
+import com.safetysource.appadmin.databinding.FragmentOffersListModeBinding
 import com.safetysource.core.base.BaseFragment
 import com.safetysource.core.ui.adapters.OffersAdapters
 import com.safetysource.data.model.OfferModel
@@ -11,7 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class OffersListFragment :
-    BaseFragment<FragmentOfferListBinding, OffersListsViewModel>(R.layout.fragment_offer_list) {
+    BaseFragment<FragmentOffersListModeBinding, OffersListsViewModel>(R.layout.fragment_offers_list_mode) {
 
     enum class OffersFragmentMode(val index: Int) {
         UPCOMING_OFFERS(0),
@@ -36,7 +36,7 @@ class OffersListFragment :
     }
 
     override val viewModel: OffersListsViewModel by activityViewModels()
-    override val binding by viewBinding(FragmentOfferListBinding::bind)
+    override val binding by viewBinding(FragmentOffersListModeBinding::bind)
 
     private lateinit var fragmentMode: OffersFragmentMode
     private lateinit var offersAdapters: OffersAdapters

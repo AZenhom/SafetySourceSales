@@ -29,11 +29,6 @@
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
             tools:replace="screenOrientation" />
-
-        <activity
-            android:name=".ui.offers.offers_lists.OffersListsActivity"
-            android:exported="false"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.offers.create_edit_offer.CreateEditOfferActivity"
             android:exported="false"

@@ -23,6 +23,7 @@
         <entry key="appadmin/src/main/res/layout/activity_splash.xml" value="0.34427083333333336" />
         <entry key="appadmin/src/main/res/layout/activity_transactions_filter.xml" value="0.25" />
         <entry key="appadmin/src/main/res/layout/fragment_offer_list.xml" value="0.33" />
+        <entry key="appadmin/src/main/res/layout/fragment_offers_lists.xml" value="0.34427083333333336" />
         <entry key="appadmin/src/main/res/layout/fragment_product_categories.xml" value="0.25" />
         <entry key="appadmin/src/main/res/layout/fragment_profile.xml" value="0.22" />
         <entry key="appadmin/src/main/res/layout/fragment_retailers.xml" value="0.25" />

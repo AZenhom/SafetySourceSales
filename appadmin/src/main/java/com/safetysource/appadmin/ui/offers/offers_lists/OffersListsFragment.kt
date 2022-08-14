@@ -1,22 +1,23 @@
 package com.safetysource.appadmin.ui.offers.offers_lists
 
-import androidx.activity.viewModels
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.tabs.TabLayoutMediator
-import com.safetysource.appadmin.databinding.ActivityOffersListsBinding
+import com.safetysource.appadmin.databinding.FragmentOffersListBinding
 import com.safetysource.appadmin.ui.offers.create_edit_offer.CreateEditOfferActivity
 import com.safetysource.core.R
-import com.safetysource.core.base.BaseActivity
+import com.safetysource.core.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class OffersListsActivity : BaseActivity<ActivityOffersListsBinding, OffersListsViewModel>() {
+class OffersListsFragment :
+    BaseFragment<FragmentOffersListBinding, OffersListsViewModel>(com.safetysource.appadmin.R.layout.fragment_offers_list) {
 
-    override val viewModel: OffersListsViewModel by viewModels()
-    override val binding by viewBinding(ActivityOffersListsBinding::inflate)
+    override val viewModel: OffersListsViewModel by activityViewModels()
+    override val binding by viewBinding(FragmentOffersListBinding::bind)
 
     private lateinit var adapter: OffersViewPagerAdapter
 
-    override fun onActivityCreated() {
+    override fun onViewCreated() {
         initViews()
     }
 
@@ -28,7 +29,7 @@ class OffersListsActivity : BaseActivity<ActivityOffersListsBinding, OffersLists
     private fun initViews() {
         setUpViewPager()
         binding.fabAdd.setOnClickListener {
-            startActivity(CreateEditOfferActivity.getIntent(this))
+            startActivity(CreateEditOfferActivity.getIntent(requireContext()))
         }
     }
 

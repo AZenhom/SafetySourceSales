@@ -28,6 +28,12 @@
         tools:layout="@layout/fragment_teams" />
 
     <fragment
+        android:id="@+id/offersFragment"
+        android:name="com.safetysource.appadmin.ui.offers.offers_lists.OffersListsFragment"
+        android:label="@string/offers"
+        tools:layout="@layout/fragment_offers_list" />
+
+    <fragment
         android:id="@+id/profileFragment"
         android:name="com.safetysource.appadmin.ui.profile.ProfileFragment"
         android:label="@string/profile"
