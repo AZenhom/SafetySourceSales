@@ -163,4 +163,8 @@
     <string name="offer_created_successfully">Offer Created Successfully</string>
     <string name="offer_updated_successfully">Offer Updated Successfully</string>
     <string name="to">To</string>
+    <string name="offers">Offers</string>
+    <string name="history_offers">History</string>
+    <string name="upcoming_offers">Upcoming</string>
+    <string name="available_offers">Available</string>
 </resources>

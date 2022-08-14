@@ -1,10 +1,10 @@
 package com.safetysource.appadmin.ui.offers.offers_lists
 
 import androidx.activity.viewModels
-import androidx.core.widget.NestedScrollView
-import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.safetysource.appadmin.databinding.ActivityOffersListsBinding
+import com.safetysource.appadmin.ui.offers.create_edit_offer.CreateEditOfferActivity
+import com.safetysource.core.R
 import com.safetysource.core.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -14,51 +14,42 @@ class OffersListsActivity : BaseActivity<ActivityOffersListsBinding, OffersLists
     override val viewModel: OffersListsViewModel by viewModels()
     override val binding by viewBinding(ActivityOffersListsBinding::inflate)
 
-    private lateinit var adapter: PricingViewPagerAdapter
+    private lateinit var adapter: OffersViewPagerAdapter
 
     override fun onActivityCreated() {
         initViews()
-        initObservers()
+    }
+
+    override fun onResume() {
+        super.onResume()
         viewModel.getData()
     }
 
     private fun initViews() {
-
-    }
-
-    private fun initObservers() {
-
+        setUpViewPager()
+        binding.fabAdd.setOnClickListener {
+            startActivity(CreateEditOfferActivity.getIntent(this))
+        }
     }
 
     private fun setUpViewPager() {
-        adapter = PricingViewPagerAdapter(this)
+        adapter = OffersViewPagerAdapter(this)
         binding.viewPager.adapter = adapter
-        TabLayoutMediator(binding.tabsLayout, binding.viewPager) { tab, position ->
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = when (position) {
-                0 -> getString(R.string.online_visit)
-                else -> getString(R.string.clinic_visit)
+                OffersListFragment.OffersFragmentMode.AVAILABLE_OFFERS.index -> getString(R.string.available_offers)
+                OffersListFragment.OffersFragmentMode.UPCOMING_OFFERS.index -> getString(R.string.upcoming_offers)
+                OffersListFragment.OffersFragmentMode.HISTORY_OFFERS.index -> getString(R.string.history_offers)
+                else -> ""
             }
         }.attach()
         binding.viewPager.isUserInputEnabled = false
         binding.viewPager.offscreenPageLimit = 1
-        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        /*binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 binding.nScrollView.fullScroll(NestedScrollView.FOCUS_UP)
                 super.onPageSelected(position)
             }
-        })
-    }
-
-    fun isChanged(): Boolean {
-        val currentItem = binding.viewPager.currentItem
-        val currentPage = childFragmentManager.findFragmentByTag("f${currentItem}")
-        return when (currentItem) {
-            PricingViewPagerAdapter.CLINIC_VISITS ->
-                (currentPage as ClinicVisitPricingFragment).isChanged()
-            PricingViewPagerAdapter.ONLINE_VISITS ->
-                (currentPage as OnlineVisitPricingFragment).isChanged()
-            else ->
-                throw Exception("current item = $currentItem not found")
-        }
+        })*/
     }
 }
