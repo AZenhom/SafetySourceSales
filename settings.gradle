@@ -14,7 +14,7 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "SafetySourceSales"
-include ':appadmin'
-include ':appretailer'
+include ':admin'
+include ':retailer'
 include ':core'
 include ':data'
