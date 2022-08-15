@@ -148,8 +148,8 @@
     <string name="select_excel_file">Select an Excel File</string>
     <string name="no_serials_in_excel_file">Excel file doesn\'t have any serials listed in the first column</string>
     <string name="all_serials_exist">All serials already registered before</string>
-    <string name="serials_to_be_registered">Serials to be registered: %1$d</string>
-    <string name="serials_to_be_ignored">Serials already existing to be ignored: %1$d</string>
+    <string name="serials_to_be_registered">Serials to be registered: %1$s</string>
+    <string name="serials_to_be_ignored">Serials already existing to be ignored: %1$s</string>
     <string name="create_offer">Create Offer</string>
     <string name="offer_image">Offer Image</string>
     <string name="offer_text">Offer Text</string>
