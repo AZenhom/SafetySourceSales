@@ -79,10 +79,13 @@ class OfferRepository @Inject constructor(
             val documents =
                 fireStoreDB.collection(Constants.COLLECTION_OFFER)
                     .whereLessThan(OfferModel.STARTS_AT, dateNow)
-                    .whereGreaterThan(OfferModel.EXPIRES_AT, dateNow)
+                    .orderBy(OfferModel.STARTS_AT, Query.Direction.ASCENDING)
                     .orderBy(Constants.UPDATED_AT, Query.Direction.DESCENDING)
                     .get().await()
-            StatefulResult.Success(documents.toObjects(OfferModel::class.java))
+            StatefulResult.Success(
+                documents.toObjects(OfferModel::class.java).filterNotNull().filter {
+                    it.expiresAt?.after(dateNow) == true
+                })
         } catch (e: Exception) {
             e.printStackTrace()
             StatefulResult.Error(ErrorModel.Unknown)
@@ -94,7 +97,8 @@ class OfferRepository @Inject constructor(
             val dateNow = Calendar.getInstance().time
             val documents =
                 fireStoreDB.collection(Constants.COLLECTION_OFFER)
-                    .whereGreaterThan(OfferModel.STARTS_AT, dateNow)
+                    .whereGreaterThanOrEqualTo(OfferModel.STARTS_AT, dateNow)
+                    .orderBy(OfferModel.STARTS_AT, Query.Direction.ASCENDING)
                     .orderBy(Constants.UPDATED_AT, Query.Direction.DESCENDING)
                     .get().await()
             StatefulResult.Success(documents.toObjects(OfferModel::class.java))
@@ -109,7 +113,8 @@ class OfferRepository @Inject constructor(
             val dateNow = Calendar.getInstance().time
             val documents =
                 fireStoreDB.collection(Constants.COLLECTION_OFFER)
-                    .whereLessThan(OfferModel.EXPIRES_AT, dateNow)
+                    .whereLessThanOrEqualTo(OfferModel.EXPIRES_AT, dateNow)
+                    .orderBy(OfferModel.EXPIRES_AT, Query.Direction.DESCENDING)
                     .orderBy(Constants.UPDATED_AT, Query.Direction.DESCENDING)
                     .get().await()
             StatefulResult.Success(documents.toObjects(OfferModel::class.java))

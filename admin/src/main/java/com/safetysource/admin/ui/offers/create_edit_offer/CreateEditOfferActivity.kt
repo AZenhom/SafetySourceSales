@@ -10,7 +10,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.safetysource.admin.databinding.ActivityCreateEditOfferBinding
-import com.safetysource.admin.ui.product_categories.create_edit_category.CreateEditProductCategoryActivity
 import com.safetysource.core.R
 import com.safetysource.core.base.BaseActivity
 import com.safetysource.core.ui.sheets.SelectListSheet
@@ -31,7 +30,7 @@ class CreateEditOfferActivity :
     companion object {
         const val OFFER_TO_EDIT = "OFFER_TO_EDIT"
         fun getIntent(context: Context, offerToEdit: OfferModel? = null) =
-            Intent(context, CreateEditProductCategoryActivity::class.java).apply {
+            Intent(context, CreateEditOfferActivity::class.java).apply {
                 putExtra(OFFER_TO_EDIT, offerToEdit)
             }
     }
@@ -42,7 +41,7 @@ class CreateEditOfferActivity :
     private var categoriesList: List<ProductCategoryModel> = emptyList()
     private var productsList: List<ProductModel> = emptyList()
 
-    private val anyText = getString(R.string.any)
+    private lateinit var anyText: String
     private var chosenImage: Uri? = null
 
     private val startForImagePickingResult =
@@ -64,6 +63,7 @@ class CreateEditOfferActivity :
         }
 
     override fun onActivityCreated() {
+        anyText = getString(R.string.any)
         initViews()
         initObservers()
         viewModel.getInitialData()
@@ -72,6 +72,8 @@ class CreateEditOfferActivity :
     private fun initViews() {
         with(binding) {
             // TextViews text initialization
+            binding.tvCategory.text = anyText
+            binding.tvProduct.text = anyText
             viewModel.offerModel?.let {
                 it.imgUrl?.let { imgUrl ->
                     Picasso.get().load(imgUrl).error(R.drawable.ic_image_placeholder).into(ivOffer)
@@ -167,7 +169,7 @@ class CreateEditOfferActivity :
     }
 
     private fun startImagePicking() {
-        ImagePicker.with(this).crop(1f, 1f).compress(1024).createIntent {
+        ImagePicker.with(this).crop(5f, 2f).compress(1024).createIntent {
             startForImagePickingResult.launch(it)
         }
     }

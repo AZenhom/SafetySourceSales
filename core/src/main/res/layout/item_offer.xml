@@ -23,7 +23,7 @@
             android:layout_height="0dp"
             android:src="@drawable/ic_image_placeholder"
             android:foreground="@color/black_dim"
-            app:layout_constraintDimensionRatio="H,5:2.5"
+            app:layout_constraintDimensionRatio="H,5:2"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -36,7 +36,6 @@
             android:ellipsize="end"
             android:fontFamily="@font/poppins_semi_bold"
             android:gravity="center"
-            android:textAlignment="viewStart"
             android:textColor="@color/white2"
             android:textSize="@dimen/_12sdp"
             app:layout_constraintTop_toTopOf="@id/ivOffer"
@@ -54,7 +53,6 @@
             android:lines="2"
             android:fontFamily="@font/poppins_semi_bold"
             android:gravity="center"
-            android:textAlignment="viewStart"
             android:textColor="@color/white2"
             android:textSize="@dimen/_10sdp"
             app:layout_constraintBottom_toBottomOf="@id/ivOffer"
