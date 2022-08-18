@@ -161,13 +161,15 @@
     <string name="expires_at">Expires At</string>
     <string name="text_field_cannot_be_empty">Text field can\'t be empty</string>
     <string name="invalid_claim_value">Invalid Claim Value</string>
+    <string name="invalid_sell_count">Invalid Sell Count</string>
     <string name="offer_created_successfully">Offer Created Successfully</string>
     <string name="offer_updated_successfully">Offer Updated Successfully</string>
     <string name="to">To</string>
     <string name="offers">Offers</string>
-    <string name="history_offers">History</string>
-    <string name="upcoming_offers">Upcoming</string>
-    <string name="available_offers">Available</string>
+    <string name="history">History</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="available">Available</string>
+    <string name="available_offers">Available Offers</string>
     <string name="subscribed_offers">Subscribed Offers</string>
     <string name="offer_details">Offer Details</string>
     <string name="exclusive_category">Exclusive Category</string>
@@ -177,9 +179,10 @@
     <string name="claim_a_value_of">claim a value of</string>
     <string name="and"><![CDATA[&]]></string>
     <string name="claim">Claim %1$s</string>
-    <string name="subscribed_in_offer_successfully">Subscribed in offer successfully</string>
+    <string name="subscribed_in_offer_successfully">Subscribed to offer successfully</string>
     <string name="you_can_claim_after_expiry">You can only claim offer after expiration date</string>
     <string name="insufficient_sell_count">Insufficient sell count during the offer time</string>
     <string name="remove_offer">Remove offer</string>
     <string name="offer_subscription_deleted_successfully">Offer subscription deleted successfully</string>
+    <string name="subscribe_to_offer">Subscribe to Offer</string>
 </resources>

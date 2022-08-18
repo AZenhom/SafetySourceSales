@@ -27,7 +27,8 @@
 
         <activity
             android:name="com.safetysource.retailer.ui.offers.offer_details.OfferDetailsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name="com.safetysource.retailer.ui.product_item.ProductItemDetailsActivity"
             android:exported="false"

@@ -1,6 +1,7 @@
 package com.safetysource.admin.ui.offers.offers_lists
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.hadilq.liveevent.LiveEvent
 import com.safetysource.core.base.BaseViewModel
 import com.safetysource.data.model.OfferModel
@@ -15,13 +16,13 @@ class OffersListsViewModel @Inject constructor(
     private val offerRepository: OfferRepository,
 ) : BaseViewModel() {
 
-    private val _availableOffersLiveData = LiveEvent<List<OfferModel>>()
+    private val _availableOffersLiveData = MutableLiveData<List<OfferModel>>()
     val availableOffersLiveData: LiveData<List<OfferModel>> get() = _availableOffersLiveData
 
-    private val _upcomingOffersLiveData = LiveEvent<List<OfferModel>>()
+    private val _upcomingOffersLiveData = MutableLiveData<List<OfferModel>>()
     val upcomingOffersLiveData: LiveData<List<OfferModel>> get() = _upcomingOffersLiveData
 
-    private val _historyOffersLiveData = LiveEvent<List<OfferModel>>()
+    private val _historyOffersLiveData = MutableLiveData<List<OfferModel>>()
     val historyOffersLiveData: LiveData<List<OfferModel>> get() = _historyOffersLiveData
 
     fun getData() {

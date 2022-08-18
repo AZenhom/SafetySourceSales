@@ -82,7 +82,7 @@
                 android:layout_marginTop="@dimen/_8sdp"
                 android:fontFamily="@font/poppins_semi_bold"
                 android:gravity="center"
-                android:text="@string/subscribed_offers"
+                android:text="@string/available_offers"
                 android:textColor="@color/colorSecondary"
                 android:textSize="@dimen/_13sdp"
                 app:layout_constraintStart_toStartOf="parent"

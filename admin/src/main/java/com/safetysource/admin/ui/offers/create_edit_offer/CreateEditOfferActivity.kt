@@ -214,12 +214,12 @@ class CreateEditOfferActivity :
 
         // Sell Count
         val sellCount = try {
-            binding.etOfferClaimValue.text.toString().trim()
+            binding.etSellCount.text.toString().trim()
                 .convertArabicNumbersIfExist().getDigit().toInt()
         } catch (e: Exception) {
             e.printStackTrace(); -1
         }
-        if (claimValue <= 0) {
+        if (sellCount <= 0) {
             showErrorMsg(getString(R.string.invalid_claim_value))
             return
         }

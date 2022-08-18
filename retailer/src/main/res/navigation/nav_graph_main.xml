@@ -22,6 +22,12 @@
         tools:layout="@layout/fragment_transactions" />
 
     <fragment
+        android:id="@+id/offersFragment"
+        android:name="com.safetysource.retailer.ui.offers.offers_list.OffersListFragment"
+        android:label="@string/offers"
+        tools:layout="@layout/fragment_offers_list" />
+
+    <fragment
         android:id="@+id/profileFragment"
         android:name="com.safetysource.retailer.ui.profile.ProfileFragment"
         android:label="@string/profile"

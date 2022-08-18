@@ -38,9 +38,9 @@ class OffersListsFragment :
         binding.viewPager.adapter = adapter
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = when (position) {
-                OffersListFragment.OffersFragmentMode.AVAILABLE_OFFERS.index -> getString(R.string.available_offers)
-                OffersListFragment.OffersFragmentMode.UPCOMING_OFFERS.index -> getString(R.string.upcoming_offers)
-                OffersListFragment.OffersFragmentMode.HISTORY_OFFERS.index -> getString(R.string.history_offers)
+                OffersListFragment.OffersFragmentMode.AVAILABLE_OFFERS.index -> getString(R.string.available)
+                OffersListFragment.OffersFragmentMode.UPCOMING_OFFERS.index -> getString(R.string.upcoming)
+                OffersListFragment.OffersFragmentMode.HISTORY_OFFERS.index -> getString(R.string.history)
                 else -> ""
             }
         }.attach()

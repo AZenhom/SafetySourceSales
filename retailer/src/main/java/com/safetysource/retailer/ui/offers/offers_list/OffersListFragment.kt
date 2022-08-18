@@ -11,7 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class OffersListFragment :
-    BaseFragment<FragmentOffersListBinding, OffersListViewModel>(R.layout.fragment_transactions) {
+    BaseFragment<FragmentOffersListBinding, OffersListViewModel>(R.layout.fragment_offers_list) {
 
     override val viewModel: OffersListViewModel by viewModels()
     override val binding by viewBinding(FragmentOffersListBinding::bind)
@@ -51,7 +51,7 @@ class OffersListFragment :
             availableOffersLiveData.observe(viewLifecycleOwner) {
                 availableOffersAdapter.submitList(it)
                 binding.lblAvailableOffers.setIsVisible(it.isNotEmpty())
-                binding.lblSubscribedOffers.setIsVisible(it.isNotEmpty())
+                binding.rvAvailableOffers.setIsVisible(it.isNotEmpty())
             }
         }
     }

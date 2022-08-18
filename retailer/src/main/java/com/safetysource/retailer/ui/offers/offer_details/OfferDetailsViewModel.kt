@@ -1,6 +1,7 @@
 package com.safetysource.retailer.ui.offers.offer_details
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import com.hadilq.liveevent.LiveEvent
 import com.safetysource.core.R
@@ -27,13 +28,13 @@ class OfferDetailsViewModel @Inject constructor(
 
     private var retailerModel: RetailerModel? = null
 
-    private val _sellingCountLiveData = LiveEvent<Int>()
+    private val _sellingCountLiveData = MutableLiveData<Int>()
     val sellingCountLiveData: LiveData<Int> get() = _sellingCountLiveData
 
-    private val _exclusiveCategoryLiveData = LiveEvent<ProductCategoryModel?>()
+    private val _exclusiveCategoryLiveData = MutableLiveData<ProductCategoryModel?>()
     val exclusiveCategoryLiveData: LiveData<ProductCategoryModel?> get() = _exclusiveCategoryLiveData
 
-    private val _exclusiveProductLiveData = LiveEvent<ProductModel?>()
+    private val _exclusiveProductLiveData = MutableLiveData<ProductModel?>()
     val exclusiveProductLiveData: LiveData<ProductModel?> get() = _exclusiveProductLiveData
 
     init {
@@ -130,9 +131,10 @@ class OfferDetailsViewModel @Inject constructor(
             val response =
                 subscribedOfferRepository.createUpdateSubscribedOffer(subscribedOfferModel)
             hideLoading()
-            if (response is StatefulResult.Success)
+            if (response is StatefulResult.Success) {
+                offerModel?.subscribedOfferModel = subscribedOfferModel
                 liveData.value = true
-            else
+            } else
                 handleError(response.errorModel)
         }
         return liveData

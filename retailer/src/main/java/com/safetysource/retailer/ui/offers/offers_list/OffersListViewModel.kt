@@ -1,7 +1,7 @@
 package com.safetysource.retailer.ui.offers.offers_list
 
 import androidx.lifecycle.LiveData
-import com.hadilq.liveevent.LiveEvent
+import androidx.lifecycle.MutableLiveData
 import com.safetysource.core.base.BaseViewModel
 import com.safetysource.data.model.OfferModel
 import com.safetysource.data.model.response.StatefulResult
@@ -19,31 +19,13 @@ class OffersListViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : BaseViewModel() {
 
-    private val _availableOffersLiveData = LiveEvent<List<OfferModel>>()
+    private val _availableOffersLiveData = MutableLiveData<List<OfferModel>>()
     val availableOffersLiveData: LiveData<List<OfferModel>> get() = _availableOffersLiveData
 
-    private val _subscribedOffersLiveData = LiveEvent<List<OfferModel>>()
+    private val _subscribedOffersLiveData = MutableLiveData<List<OfferModel>>()
     val subscribedOffersLiveData: LiveData<List<OfferModel>> get() = _subscribedOffersLiveData
 
-    fun getData() {
-        safeLauncher {
-            showLoading()
-            val t1 = async { getAllAvailableOffers() }
-            val t2 = async { getAllSubscribedOffers() }
-            t1.await(); t2.await()
-            hideLoading()
-        }
-    }
-
-    private suspend fun getAllAvailableOffers() {
-        val result = offerRepository.getAllAvailableOffers()
-        if (result is StatefulResult.Success)
-            _availableOffersLiveData.value = result.data ?: listOf()
-        else
-            handleError(result.errorModel)
-    }
-
-    private suspend fun getAllSubscribedOffers() = safeLauncher {
+    fun getData() = safeLauncher {
         val result =
             subscribedOfferRepository.getRetailerSubscribedOffers(userRepository.getUserId() ?: "")
         if (result is StatefulResult.Success) {
@@ -59,7 +41,20 @@ class OffersListViewModel @Inject constructor(
                         subscribedOffers.firstOrNull { it.offerId == offer.id }
                 }
                 _subscribedOffersLiveData.value = offers
+                getAvailableOffers()
             }
+        } else
+            handleError(result.errorModel)
+    }
+
+    private suspend fun getAvailableOffers() {
+        val result = offerRepository.getAllAvailableOffers()
+        if (result is StatefulResult.Success) {
+            val availableOffers = result.data?.toMutableList() ?: mutableListOf()
+            availableOffers.removeIf { availableOffer ->
+                subscribedOffersLiveData.value?.find { it.id == availableOffer.id } != null
+            }
+            _availableOffersLiveData.value = availableOffers
         } else
             handleError(result.errorModel)
     }

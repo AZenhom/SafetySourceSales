@@ -160,13 +160,15 @@
     <string name="expires_at">ينتهس في</string>
     <string name="text_field_cannot_be_empty">لا يمكن ترك حقل النص فارغًا</string>
     <string name="invalid_claim_value">قيمة عرض غير صالحة</string>
+    <string name="invalid_sell_count">قيمة عدد البيع المطلوب غير صالحة</string>
     <string name="offer_created_successfully">تم إنشاء العرض بنجاح</string>
     <string name="offer_updated_successfully">تم تعديل العرض بنجاح</string>
     <string name="to">حتى</string>
     <string name="offers">العروض</string>
-    <string name="history_offers">سابقة</string>
-    <string name="upcoming_offers">قادمة</string>
-    <string name="available_offers">حالية</string>
+    <string name="history">سابقة</string>
+    <string name="upcoming">قادمة</string>
+    <string name="available">حالية</string>
+    <string name="available_offers">العروض الحالية</string>
     <string name="subscribed_offers">العروض المشترك بها</string>
     <string name="offer_details">تفاصيل العرض</string>
     <string name="exclusive_category">فئة المنتج المقتصر عليها</string>
@@ -181,4 +183,5 @@
     <string name="insufficient_sell_count">عدد عمليات البيع خلال وقت العرض غير كافية</string>
     <string name="remove_offer">حذف العرض</string>
     <string name="offer_subscription_deleted_successfully">تم حذف اشتراك العرض بنجاح</string>
+    <string name="subscribe_to_offer">اشترك في العرض</string>
 </resources>

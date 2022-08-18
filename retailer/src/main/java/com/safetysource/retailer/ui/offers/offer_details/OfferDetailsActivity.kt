@@ -44,24 +44,27 @@ class OfferDetailsActivity : BaseActivity<ActivityOfferDetailsBinding, OfferDeta
 
     private fun initViews() {
         fillUIWithData()
-        binding.btnSubscribe.setOnClickListener {
-            viewModel.createOfferSubscription().observe(this) {
-                showSuccessMsg(getString(R.string.subscribed_in_offer_successfully))
-                refreshButtonsStates()
+        with(binding) {
+            toolbar.setNavigationOnClickListener { onBackPressed() }
+            btnSubscribe.setOnClickListener {
+                viewModel.createOfferSubscription().observe(this@OfferDetailsActivity) {
+                    showSuccessMsg(getString(R.string.subscribed_in_offer_successfully))
+                    refreshButtonsStates()
+                }
             }
-        }
-        binding.btnClaimOrRemove.setOnClickListener {
-            val now = Calendar.getInstance().time
-            if (now.before(viewModel.offerModel?.expiresAt)) {
-                showWarningMsg(getString(R.string.you_can_claim_after_expiry))
-                return@setOnClickListener
-            }
-            viewModel.claimOffer().observe(this) {
-                if (it > 0f) {
-                    showSuccessMsg(getString(R.string.offer_commission_claimed_successfully))
-                    finish()
-                } else
-                    showOfferRemovalDialog()
+            btnClaimOrRemove.setOnClickListener {
+                val now = Calendar.getInstance().time
+                if (now.before(viewModel.offerModel?.expiresAt)) {
+                    showWarningMsg(getString(R.string.you_can_claim_after_expiry))
+                    return@setOnClickListener
+                }
+                viewModel.claimOffer().observe(this@OfferDetailsActivity) {
+                    if (it > 0f) {
+                        showSuccessMsg(getString(R.string.offer_commission_claimed_successfully))
+                        finish()
+                    } else
+                        showOfferRemovalDialog()
+                }
             }
         }
     }
