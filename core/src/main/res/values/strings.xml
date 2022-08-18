@@ -90,7 +90,7 @@
     <string name="commission_applied">Commission Applied</string>
     <string name="commission_removed">Commission Removed</string>
     <string name="offer_claimed">Offer Claimed</string>
-    <string name="offer_commission_claimed_successfully">Offer Commission Claimed</string>
+    <string name="offer_commission_claimed_successfully">Offer Commission Claimed Successfully</string>
     <string name="team">Team</string>
     <string name="amin_action_required">Admin Action Required</string>
     <string name="yes">Yes</string>
@@ -168,4 +168,18 @@
     <string name="history_offers">History</string>
     <string name="upcoming_offers">Upcoming</string>
     <string name="available_offers">Available</string>
+    <string name="subscribed_offers">Subscribed Offers</string>
+    <string name="offer_details">Offer Details</string>
+    <string name="exclusive_category">Exclusive Category</string>
+    <string name="exclusive_product">Exclusive Product</string>
+    <string name="sell_a_total_of">Sell a total of</string>
+    <string name="pieces_count">%1$s Pieces</string>
+    <string name="claim_a_value_of">claim a value of</string>
+    <string name="and"><![CDATA[&]]></string>
+    <string name="claim">Claim %1$s</string>
+    <string name="subscribed_in_offer_successfully">Subscribed in offer successfully</string>
+    <string name="you_can_claim_after_expiry">You can only claim offer after expiration date</string>
+    <string name="insufficient_sell_count">Insufficient sell count during the offer time</string>
+    <string name="remove_offer">Remove offer</string>
+    <string name="offer_subscription_deleted_successfully">Offer subscription deleted successfully</string>
 </resources>

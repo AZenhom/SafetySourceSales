@@ -89,7 +89,7 @@
     <string name="commission_applied">العمولة المطبقة</string>
     <string name="commission_removed">العمولة المخصومة</string>
     <string name="offer_claimed">قيمة العرض</string>
-    <string name="offer_commission_claimed_successfully">تم إضافة قيمة العرض</string>
+    <string name="offer_commission_claimed_successfully">تم إضافة قيمة العرض بنجاح</string>
     <string name="team">فريق</string>
     <string name="amin_action_required">مطلوب إجراء إداري</string>
     <string name="yes">نعم</string>
@@ -147,8 +147,8 @@
     <string name="select_excel_file">اختر ملف إكسيل</string>
     <string name="no_serials_in_excel_file">ملف الإكسيل لا يحتوي على اي سيريالات في العمود الأول</string>
     <string name="all_serials_exist">كل السيريالات بالملف مسجلة بالفعل في قاعدة البانات</string>
-    <string name="serials_to_be_registered">عدد السيريلات الجديدة التي سيتم تسجيلها +%1$s</string>
-    <string name="serials_to_be_ignored">عدد السيريلات المسجلة بالفعل وسيتم إهمالها +%1$s</string>
+    <string name="serials_to_be_registered">عدد السيريلات الجديدة التي سيتم تسجيلها %1$s</string>
+    <string name="serials_to_be_ignored">عدد السيريلات المسجلة بالفعل وسيتم إهمالها %1$s</string>
     <string name="create_offer">إنشاء عرض</string>
     <string name="offer_image">صورة العرض</string>
     <string name="offer_text">نص العرض</string>
@@ -167,4 +167,18 @@
     <string name="history_offers">سابقة</string>
     <string name="upcoming_offers">قادمة</string>
     <string name="available_offers">حالية</string>
+    <string name="subscribed_offers">العروض المشترك بها</string>
+    <string name="offer_details">تفاصيل العرض</string>
+    <string name="exclusive_category">فئة المنتج المقتصر عليها</string>
+    <string name="exclusive_product">المنتج المقتصر عليه</string>
+    <string name="sell_a_total_of">قم ببيع إجمالي</string>
+    <string name="pieces_count">عدد %1$s قطعة</string>
+    <string name="claim_a_value_of">احصل على</string>
+    <string name="and">و</string>
+    <string name="claim">حصل مكافئتك %1$s</string>
+    <string name="subscribed_in_offer_successfully">تم الاشترك في العرض بنجاح</string>
+    <string name="you_can_claim_after_expiry">يمكنك فقط تحصيل العرض بعد تاريخ انتهاء صلاحيته</string>
+    <string name="insufficient_sell_count">عدد عمليات البيع خلال وقت العرض غير كافية</string>
+    <string name="remove_offer">حذف العرض</string>
+    <string name="offer_subscription_deleted_successfully">تم حذف اشتراك العرض بنجاح</string>
 </resources>

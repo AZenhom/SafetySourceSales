@@ -4,7 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.3101851851851852" />
-        <entry key="admin/src/main/res/layout/activity_create_edit_offer.xml" value="0.34427083333333336" />
+        <entry key="admin/src/main/res/layout/activity_create_edit_admin.xml" value="0.34427083333333336" />
+        <entry key="admin/src/main/res/layout/activity_create_edit_offer.xml" value="0.25" />
+        <entry key="admin/src/main/res/layout/activity_create_product_category.xml" value="0.34427083333333336" />
+        <entry key="admin/src/main/res/layout/activity_product_item_details.xml" value="0.2606466876971609" />
+        <entry key="admin/src/main/res/layout/activity_retailer_details.xml" value="0.29801623083859335" />
+        <entry key="admin/src/main/res/layout/activity_retailers.xml" value="0.34427083333333336" />
+        <entry key="admin/src/main/res/layout/fragment_offers_list_mode.xml" value="0.34427083333333336" />
         <entry key="appadmin/src/main/res/drawable/ic_retailer.xml" value="0.1675" />
         <entry key="appadmin/src/main/res/layout/activity_create_edit_offer.xml" value="0.26359143327841844" />
         <entry key="appadmin/src/main/res/layout/activity_create_edit_product.xml" value="0.34427083333333336" />
@@ -81,6 +87,9 @@
         <entry key="core/src/main/res/layout/item_select_list.xml" value="0.22" />
         <entry key="core/src/main/res/layout/item_transaction.xml" value="0.25" />
         <entry key="core/src/main/res/layout/sheet_select_list.xml" value="0.25" />
+        <entry key="retailer/src/main/res/layout/activity_offer_details.xml" value="0.2962962962962963" />
+        <entry key="retailer/src/main/res/layout/fragment_offers_list.xml" value="0.2208486468426328" />
+        <entry key="retailer/src/main/res/layout/fragment_product_scan.xml" value="0.34427083333333336" />
       </map>
     </option>
   </component>

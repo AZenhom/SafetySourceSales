@@ -18,6 +18,8 @@ class OfferDetailsViewModel @Inject constructor(
     private val retailerRepository: RetailerRepository,
     private val reportsRepository: ReportsRepository,
     private val transactionsRepository: TransactionsRepository,
+    private val productRepository: ProductRepository,
+    private val productCategoryRepository: ProductCategoryRepository,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
     var offerModel: OfferModel? =
@@ -28,11 +30,19 @@ class OfferDetailsViewModel @Inject constructor(
     private val _sellingCountLiveData = LiveEvent<Int>()
     val sellingCountLiveData: LiveData<Int> get() = _sellingCountLiveData
 
+    private val _exclusiveCategoryLiveData = LiveEvent<ProductCategoryModel?>()
+    val exclusiveCategoryLiveData: LiveData<ProductCategoryModel?> get() = _exclusiveCategoryLiveData
+
+    private val _exclusiveProductLiveData = LiveEvent<ProductModel?>()
+    val exclusiveProductLiveData: LiveData<ProductModel?> get() = _exclusiveProductLiveData
+
     init {
         safeLauncher {
             retailerModel = retailerRepository.getCurrentRetailerModel()
         }
         getOfferRelatedTransactions()
+        getProductCategory()
+        getProduct()
     }
 
     private fun getTransactionFilterInstance(): TransactionFilterModel {
@@ -50,6 +60,37 @@ class OfferDetailsViewModel @Inject constructor(
             transactionFilterModel.dateTo = it
         }
         return transactionFilterModel
+    }
+
+    private fun getProduct() {
+        if (offerModel?.productId == null)
+            return
+        showLoading()
+        safeLauncher {
+            val result =
+                productRepository.getProductById(offerModel?.productId ?: "")
+            hideLoading()
+            if (result is StatefulResult.Success)
+                _exclusiveProductLiveData.value = result.data
+            else
+                handleError(result.errorModel)
+        }
+    }
+
+    private fun getProductCategory() {
+        if (offerModel?.productCategoryId == null)
+            return
+        showLoading()
+        safeLauncher {
+            val result =
+                productCategoryRepository
+                    .getProductCategoryById(offerModel?.productCategoryId ?: "")
+            hideLoading()
+            if (result is StatefulResult.Success)
+                _exclusiveCategoryLiveData.value = result.data
+            else
+                handleError(result.errorModel)
+        }
     }
 
     private fun getOfferRelatedTransactions() = safeLauncher {
@@ -97,8 +138,50 @@ class OfferDetailsViewModel @Inject constructor(
         return liveData
     }
 
-    fun claimOffer(valueToClaim: Float): LiveData<Boolean> {
+    fun deleteOfferSubscription(): LiveData<Boolean> {
         val liveData = LiveEvent<Boolean>()
+        if (offerModel?.subscribedOfferModel == null) {
+            showErrorMsg(R.string.something_went_wrong)
+            liveData.value = false
+            return liveData
+        }
+        safeLauncher {
+            showLoading()
+            offerModel!!.subscribedOfferModel!!.apply {
+                claimedOrRemoved = true
+                updatedAt = null
+            }
+            val response =
+                subscribedOfferRepository.createUpdateSubscribedOffer(offerModel!!.subscribedOfferModel!!)
+            hideLoading()
+            if (response is StatefulResult.Success)
+                liveData.value = true
+            else
+                handleError(response.errorModel)
+        }
+        return liveData
+    }
+
+    fun claimOffer(): LiveData<Float> {
+        val liveData = LiveEvent<Float>()
+
+        // valueToClaim Calculation
+        val valueToClaim = if (offerModel?.canRepeat == true) {
+            ((sellingCountLiveData.value ?: 0)
+                    % (offerModel?.neededSellCount ?: 0)) * (offerModel?.valPerRepeat ?: 0f)
+        } else {
+            if ((sellingCountLiveData.value ?: 0) >
+                (offerModel?.neededSellCount ?: 0)
+            ) (offerModel?.valPerRepeat ?: 0f)
+            else 0f
+        }
+
+        // Return if no value to claim
+        if (valueToClaim <= 0f) {
+            liveData.value = 0f
+            return liveData
+        }
+
         safeLauncher {
             showLoading()
 
@@ -143,7 +226,7 @@ class OfferDetailsViewModel @Inject constructor(
                 retailerReport,
                 teamReport
             )
-            liveData.value = true
+            liveData.value = valueToClaim
             hideLoading()
         }
         return liveData
