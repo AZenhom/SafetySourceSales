@@ -239,30 +239,4 @@
         android:layout_marginTop="@dimen/_4sdp"
         app:layout_constraintTop_toBottomOf="@id/lblExpiresAt"/>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnSubscribe"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_16sdp"
-        android:layout_marginBottom="@dimen/_16sdp"
-        android:text="@string/subscribe_to_offer"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:visibility="gone"
-        tools:visibility="visible"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnClaimOrRemove"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_16sdp"
-        android:layout_marginBottom="@dimen/_16sdp"
-        android:text="@string/claim"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:visibility="gone"
-        tools:visibility="visible"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

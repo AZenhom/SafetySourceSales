@@ -30,7 +30,11 @@
             android:screenOrientation="fullSensor"
             tools:replace="screenOrientation" />
         <activity
-            android:name="com.safetysource.admin.ui.offers.create_edit_offer.CreateEditOfferActivity"
+            android:name=".ui.offers.offer_details.OfferDetailsActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.offers.create_edit_offer.CreateEditOfferActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

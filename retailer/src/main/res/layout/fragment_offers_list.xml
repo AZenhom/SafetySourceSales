@@ -66,6 +66,7 @@
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"
                 android:clipChildren="false"
+                android:paddingBottom="@dimen/_16sdp"
                 android:nestedScrollingEnabled="false"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@id/lblSubscribedOffers"

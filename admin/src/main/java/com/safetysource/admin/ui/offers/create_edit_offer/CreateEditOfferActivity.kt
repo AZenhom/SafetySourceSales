@@ -230,15 +230,15 @@ class CreateEditOfferActivity :
         if (chosenImage != null)
             viewModel.uploadOfferImageAndGetUrl(chosenImage!!)
                 .observe(this) { imageUrl ->
-                    createUpdateOffer(text, imageUrl ?: "", claimValue, sellCount, canRepeat)
+                    createUpdateOffer(text, imageUrl ?: "", sellCount, canRepeat, claimValue)
                 }
         else
             createUpdateOffer(
                 text,
                 viewModel.offerModel?.imgUrl ?: "",
-                claimValue,
                 sellCount,
-                canRepeat
+                canRepeat,
+                claimValue
             )
 
     }
@@ -246,11 +246,11 @@ class CreateEditOfferActivity :
     private fun createUpdateOffer(
         text: String,
         imageUrl: String,
-        claimValue: Float,
-        sellCount: Int,
-        canRepeat: Boolean
+        neededSellCount: Int,
+        canRepeat: Boolean,
+        valPerRepeat: Float,
     ) {
-        viewModel.createUpdateOffer(text, imageUrl, sellCount, canRepeat, claimValue)
+        viewModel.createUpdateOffer(text, imageUrl, neededSellCount, canRepeat, valPerRepeat)
             .observe(this) {
                 showSuccessMsg(
                     getString(

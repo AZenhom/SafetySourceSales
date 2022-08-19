@@ -26,7 +26,7 @@ class OfferDetailsViewModel @Inject constructor(
     var offerModel: OfferModel? =
         savedStateHandle[OfferDetailsActivity.OFFER_MODEL]
 
-    private var retailerModel: RetailerModel? = null
+    private lateinit var retailerModel: RetailerModel
 
     private val _sellingCountLiveData = MutableLiveData<Int>()
     val sellingCountLiveData: LiveData<Int> get() = _sellingCountLiveData
@@ -39,15 +39,18 @@ class OfferDetailsViewModel @Inject constructor(
 
     init {
         safeLauncher {
-            retailerModel = retailerRepository.getCurrentRetailerModel()
+            retailerModel = retailerRepository.getCurrentRetailerModel() ?: return@safeLauncher
+            getOfferRelatedTransactions()
+            getProductCategory()
+            getProduct()
         }
-        getOfferRelatedTransactions()
-        getProductCategory()
-        getProduct()
     }
 
     private fun getTransactionFilterInstance(): TransactionFilterModel {
         val transactionFilterModel = TransactionFilterModel()
+        retailerModel.let {
+            transactionFilterModel.retailer = it
+        }
         offerModel?.productId?.let {
             transactionFilterModel.product = ProductModel(id = it)
         }
@@ -66,11 +69,9 @@ class OfferDetailsViewModel @Inject constructor(
     private fun getProduct() {
         if (offerModel?.productId == null)
             return
-        showLoading()
         safeLauncher {
             val result =
                 productRepository.getProductById(offerModel?.productId ?: "")
-            hideLoading()
             if (result is StatefulResult.Success)
                 _exclusiveProductLiveData.value = result.data
             else
@@ -81,12 +82,10 @@ class OfferDetailsViewModel @Inject constructor(
     private fun getProductCategory() {
         if (offerModel?.productCategoryId == null)
             return
-        showLoading()
         safeLauncher {
             val result =
                 productCategoryRepository
                     .getProductCategoryById(offerModel?.productCategoryId ?: "")
-            hideLoading()
             if (result is StatefulResult.Success)
                 _exclusiveCategoryLiveData.value = result.data
             else
@@ -124,8 +123,8 @@ class OfferDetailsViewModel @Inject constructor(
             val subscribedOfferModel = SubscribedOfferModel(
                 id = subscribedOfferRepository.getNewSubscribedOfferId(),
                 offerId = offerModel?.id,
-                retailerId = retailerModel?.id,
-                teamId = retailerModel?.teamId,
+                retailerId = retailerModel.id,
+                teamId = retailerModel.teamId,
                 claimedOrRemoved = false,
             )
             val response =
@@ -165,14 +164,13 @@ class OfferDetailsViewModel @Inject constructor(
     }
 
     fun claimOffer(): LiveData<Float> {
-        val liveData = LiveEvent<Float>()
-
+        val liveData = MutableLiveData<Float>()
         // valueToClaim Calculation
         val valueToClaim = if (offerModel?.canRepeat == true) {
             ((sellingCountLiveData.value ?: 0)
-                    % (offerModel?.neededSellCount ?: 0)) * (offerModel?.valPerRepeat ?: 0f)
+                    / (offerModel?.neededSellCount ?: 0)) * (offerModel?.valPerRepeat ?: 0f)
         } else {
-            if ((sellingCountLiveData.value ?: 0) >
+            if ((sellingCountLiveData.value ?: 0) >=
                 (offerModel?.neededSellCount ?: 0)
             ) (offerModel?.valPerRepeat ?: 0f)
             else 0f
@@ -187,9 +185,9 @@ class OfferDetailsViewModel @Inject constructor(
         safeLauncher {
             showLoading()
 
-            val teamReport = reportsRepository.getTeamReportById(retailerModel?.teamId ?: "").data
+            val teamReport = reportsRepository.getTeamReportById(retailerModel.teamId ?: "").data
             val retailerReport =
-                reportsRepository.getRetailerReportById(retailerModel?.id ?: "").data
+                reportsRepository.getRetailerReportById(retailerModel.id ?: "").data
 
             if (teamReport == null || retailerReport == null || offerModel?.subscribedOfferModel == null) {
                 showErrorMsg(R.string.something_went_wrong)
@@ -205,8 +203,8 @@ class OfferDetailsViewModel @Inject constructor(
             val transactionModel = TransactionModel(
                 id = transactionsRepository.getNewTransactionId(),
                 type = TransactionType.OFFER_CLAIM,
-                retailerId = retailerModel?.id,
-                teamId = retailerModel?.teamId,
+                retailerId = retailerModel.id,
+                teamId = retailerModel.teamId,
                 productId = offerModel?.productId,
                 categoryId = offerModel?.productCategoryId,
                 commissionAppliedOrRemoved = valueToClaim,

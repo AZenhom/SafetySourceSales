@@ -83,13 +83,13 @@ class CreateEditOfferViewModel @Inject constructor(
             showLoading()
             val offer = OfferModel(
                 id = offerId,
-                imgUrl = imageUrl,
                 text = text,
-                productCategoryId = selectedCategoryLiveData.value?.id,
-                productId = selectedProductLiveData.value?.id,
+                imgUrl = imageUrl,
                 neededSellCount = neededSellCount,
                 canRepeat = canRepeat,
                 valPerRepeat = valPerRepeat,
+                productCategoryId = selectedCategoryLiveData.value?.id,
+                productId = selectedProductLiveData.value?.id,
                 startsAt = startsAt,
                 expiresAt = expiresAt,
             )

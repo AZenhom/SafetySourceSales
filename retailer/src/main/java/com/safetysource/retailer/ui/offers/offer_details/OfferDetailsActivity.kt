@@ -89,7 +89,7 @@ class OfferDetailsActivity : BaseActivity<ActivityOfferDetailsBinding, OfferDeta
                 // Claim Value
                 tvClaimValue.text = "${it.valPerRepeat} ${getString(R.string.egyptian_pound)}"
                 // Expires At
-                tvExpiresAt.text = it.expiresAt?.time?.getDateText("EE, d MMM yyyy, HH:mm")
+                tvExpiresAt.text = it.expiresAt?.time?.getDateText("EE, d MMM yyyy, hh:mm aa")
             }
         }
     }
