@@ -84,8 +84,10 @@ class CreateEditOfferActivity :
                 switchCanRepeat.isChecked = it.canRepeat == true
 
                 // Disabling date views if in edit mode (Non Changeable)
-                cvStartsAt.isEnabled = false
-                cvExpiresAt.isEnabled = false
+                cvStartsAt.strokeColor = resources.getColor(R.color.red, null)
+                cvExpiresAt.strokeColor = resources.getColor(R.color.red, null)
+                clStartsAt.isEnabled = false
+                clExpiresAt.isEnabled = false
             }
             tvStartsAt.text = viewModel.startsAt.time.getDateText("EE, d MMM yyyy")
             tvExpiresAt.text = viewModel.expiresAt.time.getDateText("EE, d MMM yyyy")
@@ -203,11 +205,11 @@ class CreateEditOfferActivity :
         // Claim Value
         val claimValue = try {
             binding.etOfferClaimValue.text.toString().trim()
-                .convertArabicNumbersIfExist().getDigit().toFloat()
+                .convertArabicNumbersIfExist().getDigit().toInt()
         } catch (e: Exception) {
-            e.printStackTrace(); -1.0f
+            e.printStackTrace(); -1
         }
-        if (claimValue <= 0.0f) {
+        if (claimValue <= 0) {
             showErrorMsg(getString(R.string.invalid_claim_value))
             return
         }
@@ -226,6 +228,12 @@ class CreateEditOfferActivity :
 
         // Can Repeat
         val canRepeat = binding.switchCanRepeat.isChecked
+
+        // Dates
+        if (viewModel.startsAt.after(viewModel.expiresAt)) {
+            showErrorMsg(getString(R.string.invalid_start_and_expiration_dates))
+            return
+        }
 
         if (chosenImage != null)
             viewModel.uploadOfferImageAndGetUrl(chosenImage!!)
@@ -248,7 +256,7 @@ class CreateEditOfferActivity :
         imageUrl: String,
         neededSellCount: Int,
         canRepeat: Boolean,
-        valPerRepeat: Float,
+        valPerRepeat: Int,
     ) {
         viewModel.createUpdateOffer(text, imageUrl, neededSellCount, canRepeat, valPerRepeat)
             .observe(this) {

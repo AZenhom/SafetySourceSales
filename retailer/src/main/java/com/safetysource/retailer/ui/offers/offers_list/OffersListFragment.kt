@@ -30,14 +30,14 @@ class OffersListFragment :
     }
 
     private fun initViews() {
-        subscribedOffersAdapter = OffersAdapters {
+        subscribedOffersAdapter = OffersAdapters(onItemClicked = {
             startActivity(OfferDetailsActivity.getIntent(requireContext(), it))
-        }
+        })
         binding.rvSubscribedOffers.adapter = subscribedOffersAdapter
 
-        availableOffersAdapter = OffersAdapters {
+        availableOffersAdapter = OffersAdapters(onItemClicked = {
             startActivity(OfferDetailsActivity.getIntent(requireContext(), it))
-        }
+        })
         binding.rvAvailableOffers.adapter = availableOffersAdapter
     }
 

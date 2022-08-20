@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.activityViewModels
 import com.safetysource.admin.R
 import com.safetysource.admin.databinding.FragmentOffersListModeBinding
+import com.safetysource.admin.ui.offers.create_edit_offer.CreateEditOfferActivity
 import com.safetysource.admin.ui.offers.offer_details.OfferDetailsActivity
 import com.safetysource.core.base.BaseFragment
 import com.safetysource.core.ui.adapters.OffersAdapters
@@ -52,6 +53,7 @@ class OffersListFragment :
     private fun initViews() {
         offersAdapters = OffersAdapters(
             onItemClicked = { startActivity(OfferDetailsActivity.getIntent(requireContext(), it)) },
+            onEditClicked = { startActivity(CreateEditOfferActivity.getIntent(requireContext(), it)) }
         )
         with(binding) {
             rvOffers.adapter = offersAdapters

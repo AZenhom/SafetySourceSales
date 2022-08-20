@@ -163,22 +163,22 @@ class OfferDetailsViewModel @Inject constructor(
         return liveData
     }
 
-    fun claimOffer(): LiveData<Float> {
-        val liveData = MutableLiveData<Float>()
+    fun claimOffer(): LiveData<Int> {
+        val liveData = MutableLiveData<Int>()
         // valueToClaim Calculation
         val valueToClaim = if (offerModel?.canRepeat == true) {
             ((sellingCountLiveData.value ?: 0)
-                    / (offerModel?.neededSellCount ?: 0)) * (offerModel?.valPerRepeat ?: 0f)
+                    / (offerModel?.neededSellCount ?: 0)) * (offerModel?.valPerRepeat ?: 0)
         } else {
             if ((sellingCountLiveData.value ?: 0) >=
                 (offerModel?.neededSellCount ?: 0)
-            ) (offerModel?.valPerRepeat ?: 0f)
-            else 0f
+            ) (offerModel?.valPerRepeat ?: 0)
+            else 0
         }
 
         // Return if no value to claim
-        if (valueToClaim <= 0f) {
-            liveData.value = 0f
+        if (valueToClaim <= 0) {
+            liveData.value = 0
             return liveData
         }
 
@@ -207,7 +207,7 @@ class OfferDetailsViewModel @Inject constructor(
                 teamId = retailerModel.teamId,
                 productId = offerModel?.productId,
                 categoryId = offerModel?.productCategoryId,
-                commissionAppliedOrRemoved = valueToClaim,
+                commissionAppliedOrRemoved = valueToClaim.toFloat(),
                 offerId = offerModel?.id
             )
 

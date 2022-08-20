@@ -13,7 +13,7 @@ data class OfferModel(
     var productId: String? = null,
     val neededSellCount: Int? = null,
     val canRepeat: Boolean? = null,
-    val valPerRepeat: Float? = null,
+    val valPerRepeat: Int? = null,
     var startsAt: Date? = null,
     var expiresAt: Date? = null,
     @ServerTimestamp

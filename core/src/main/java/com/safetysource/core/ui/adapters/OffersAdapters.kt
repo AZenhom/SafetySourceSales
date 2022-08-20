@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.safetysource.core.R
 import com.safetysource.core.databinding.ItemOfferBinding
+import com.safetysource.core.ui.setIsVisible
 import com.safetysource.core.utils.getDateText
 import com.safetysource.data.model.OfferModel
 import com.squareup.picasso.Picasso
@@ -15,6 +16,7 @@ import com.squareup.picasso.Picasso
 @SuppressLint("SetTextI18n")
 class OffersAdapters constructor(
     private val onItemClicked: ((offerModel: OfferModel) -> Unit)? = null,
+    private val onEditClicked: ((offerModel: OfferModel) -> Unit)? = null,
 ) : ListAdapter<OfferModel, OffersAdapters.ItemViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -47,9 +49,15 @@ class OffersAdapters constructor(
                 val expiryDate = item.expiresAt?.time?.getDateText("dd-MM-yyyy")
                 tvDate.text = "$startDate ${tvDate.context.getString(R.string.to)} $expiryDate"
 
+                // Edit Icon
+                ivEdit.setIsVisible(onEditClicked != null)
+
                 // Click Listeners
                 rootView.setOnClickListener {
                     onItemClicked?.invoke(item)
+                }
+                ivEdit.setOnClickListener {
+                    onEditClicked?.invoke(item)
                 }
 
             }
@@ -68,8 +76,15 @@ class OffersAdapters constructor(
                 oldItem: OfferModel,
                 newItem: OfferModel
             ): Boolean = oldItem.id == newItem.id &&
-                    oldItem.text == newItem.text &&
                     oldItem.imgUrl == newItem.imgUrl &&
+                    oldItem.text == newItem.text &&
+                    oldItem.productCategoryId == newItem.productCategoryId &&
+                    oldItem.productId == newItem.productId &&
+                    oldItem.neededSellCount == newItem.neededSellCount &&
+                    oldItem.canRepeat == newItem.canRepeat &&
+                    oldItem.valPerRepeat == newItem.valPerRepeat &&
+                    oldItem.startsAt == newItem.startsAt &&
+                    oldItem.expiresAt == newItem.expiresAt &&
                     oldItem.updatedAt == newItem.updatedAt
         }
     }

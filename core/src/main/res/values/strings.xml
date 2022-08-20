@@ -185,4 +185,5 @@
     <string name="remove_offer">Remove offer</string>
     <string name="offer_subscription_deleted_successfully">Offer subscription deleted successfully</string>
     <string name="subscribe_to_offer">Subscribe to Offer</string>
+    <string name="invalid_start_and_expiration_dates">Invalid start and expiration dates</string>
 </resources>

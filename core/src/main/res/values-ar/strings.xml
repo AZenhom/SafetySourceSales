@@ -157,7 +157,7 @@
     <string name="can_repeat">تكرار الإستفادة</string>
     <string name="needed_sell_count">عدد البيع</string>
     <string name="starts_at">يبدأ في</string>
-    <string name="expires_at">ينتهس في</string>
+    <string name="expires_at">ينتهي في</string>
     <string name="text_field_cannot_be_empty">لا يمكن ترك حقل النص فارغًا</string>
     <string name="invalid_claim_value">قيمة عرض غير صالحة</string>
     <string name="invalid_sell_count">قيمة عدد البيع المطلوب غير صالحة</string>
@@ -184,4 +184,5 @@
     <string name="remove_offer">حذف العرض</string>
     <string name="offer_subscription_deleted_successfully">تم حذف اشتراك العرض بنجاح</string>
     <string name="subscribe_to_offer">اشترك في العرض</string>
+    <string name="invalid_start_and_expiration_dates">تواريخ البدء و الانتهاء غير صالحة</string>
 </resources>
