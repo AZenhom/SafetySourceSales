@@ -185,4 +185,6 @@
     <string name="offer_subscription_deleted_successfully">تم حذف اشتراك العرض بنجاح</string>
     <string name="subscribe_to_offer">اشترك في العرض</string>
     <string name="invalid_start_and_expiration_dates">تواريخ البدء و الانتهاء غير صالحة</string>
+    <string name="retailer_can_only_sell">"يستطيع بائع التجزئة بيع/إلغاء المنتجات الآتية: "</string>
+    <string name="allowed_products">المنتجات المسموحة</string>
 </resources>

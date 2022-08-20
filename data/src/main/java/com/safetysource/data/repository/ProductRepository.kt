@@ -65,6 +65,7 @@ class ProductRepository @Inject constructor(
         return try {
             val documents =
                 fireStoreDB.collection(Constants.COLLECTION_PRODUCT)
+                    .orderBy(ProductModel.CATEGORY_ID, Query.Direction.ASCENDING)
                     .orderBy(Constants.UPDATED_AT, Query.Direction.DESCENDING)
                     .get().await()
             val products = documents.toObjects(ProductModel::class.java)

@@ -9,6 +9,7 @@ import com.safetysource.core.R
 import com.safetysource.core.base.BaseActivity
 import com.safetysource.core.ui.adapters.TransactionsAdapter
 import com.safetysource.core.ui.dialogs.InfoDialog
+import com.safetysource.core.ui.makeVisible
 import com.safetysource.core.utils.toString
 import com.safetysource.data.model.RetailerModel
 import com.safetysource.data.model.TeamModel
@@ -42,6 +43,7 @@ class RetailerDetailsActivity :
     override fun onActivityCreated() {
         initViews()
         getData()
+        initObservers()
     }
 
     private fun getData() {
@@ -122,6 +124,19 @@ class RetailerDetailsActivity :
                 getData()
             } else
                 showErrorMsg(getString(R.string.something_went_wrong))
+        }
+    }
+
+    private fun initObservers() {
+        viewModel.productsLiveData.observe(this) { productsList ->
+            if (productsList.isEmpty())
+                return@observe
+            val restrictedProductsText = productsList.mapNotNull { it.name }.joinToString { it }
+            with(binding) {
+                lblRestrictedProducts.makeVisible()
+                tvRestrictedProductsSummary.makeVisible()
+                tvRestrictedProductsSummary.text = restrictedProductsText
+            }
         }
     }
 }

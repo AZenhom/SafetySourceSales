@@ -67,6 +67,8 @@ class CreateEditRetailerActivity :
             toolbar.setNavigationOnClickListener { onBackPressed() }
 
             if (isEditMode) {
+                etRetailerPhone.isClickable = false
+                etRetailerPhone.isFocusable = false
                 etRetailerPhone.inputType = InputType.TYPE_NULL
                 lblCountry.makeGone()
                 countryPicker.makeGone()
@@ -77,6 +79,8 @@ class CreateEditRetailerActivity :
 
             // Team Name (Not changeable in both cases)
             etRetailerTeam.inputType = InputType.TYPE_NULL
+            etRetailerTeam.isClickable = false
+            etRetailerTeam.isFocusable = false
             etRetailerTeam.setText(viewModel.teamModel?.name)
 
             // Phone No
@@ -90,26 +94,13 @@ class CreateEditRetailerActivity :
         }
     }
 
-    private fun updateRetailer() {
-        viewModel.updateRetailer().observe(this) {
-            showSuccessMsg(getString(R.string.retailer_updated_successfully))
-            finish()
-        }
-    }
-
-    private fun validateAndRegister() {
+    private fun validateName(): String? {
         val retailerName = binding.etRetailerName.text.toString().trim()
         if (retailerName.isEmpty()) {
             showErrorMsg(getString(R.string.name_field_cannot_be_empty))
-            return
+            return null
         }
-
-        val phoneNo = validatePhoneNumber() ?: return
-
-        viewModel.createNewRetailer(phoneNo, phoneNo, retailerName).observe(this) {
-            showSuccessMsg(getString(R.string.retailer_registered_successfully))
-            finish()
-        }
+        return retailerName
     }
 
     private fun validatePhoneNumber(): String? {
@@ -122,5 +113,22 @@ class CreateEditRetailerActivity :
             return null
         }
         return "+" + phoneNumberObject?.countryCode.toString() + phoneNumberObject?.nationalNumber.toString()
+    }
+
+    private fun updateRetailer() {
+        val retailerName = validateName() ?: return
+        viewModel.updateRetailer(retailerName).observe(this) {
+            showSuccessMsg(getString(R.string.retailer_updated_successfully))
+            finish()
+        }
+    }
+
+    private fun validateAndRegister() {
+        val retailerName = validateName() ?: return
+        val phoneNo = validatePhoneNumber() ?: return
+        viewModel.createNewRetailer(phoneNo, phoneNo, retailerName).observe(this) {
+            showSuccessMsg(getString(R.string.retailer_registered_successfully))
+            finish()
+        }
     }
 }

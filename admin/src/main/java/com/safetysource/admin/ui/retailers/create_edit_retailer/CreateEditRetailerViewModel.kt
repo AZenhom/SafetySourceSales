@@ -31,6 +31,10 @@ class CreateEditRetailerViewModel @Inject constructor(
     private val _productsLiveData = LiveEvent<List<ProductModel>>()
     val productsLiveData: LiveData<List<ProductModel>> get() = _productsLiveData
 
+    init {
+        getAllProducts()
+    }
+
     fun createNewRetailer(
         phoneNumber: String,
         contactNumber: String,
@@ -73,13 +77,14 @@ class CreateEditRetailerViewModel @Inject constructor(
         return liveData
     }
 
-    fun updateRetailer(): LiveData<Boolean> {
+    fun updateRetailer(name: String): LiveData<Boolean> {
         val liveData = LiveEvent<Boolean>()
         safeLauncher {
             if (retailerToEdit == null) {
                 showErrorMsg(R.string.something_went_wrong)
                 return@safeLauncher
             }
+            retailerToEdit.name = name
             showLoading()
             val result = retailerRepository.createUpdateRetailer(retailerToEdit)
             if (result is StatefulResult.Success)
@@ -91,11 +96,15 @@ class CreateEditRetailerViewModel @Inject constructor(
         return liveData
     }
 
-    private suspend fun getProducts() {
-        val result = productRepository.getAllProducts()
-        if (result is StatefulResult.Success)
-            _productsLiveData.value = result.data ?: listOf()
-        else
-            handleError(result.errorModel)
+    private fun getAllProducts() {
+        showLoading()
+        safeLauncher {
+            val result = productRepository.getAllProducts()
+            hideLoading()
+            if (result is StatefulResult.Success)
+                _productsLiveData.value = result.data ?: emptyList()
+            else
+                handleError(result.errorModel)
+        }
     }
 }

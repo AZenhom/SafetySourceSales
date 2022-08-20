@@ -144,6 +144,37 @@
                 app:layout_constraintTop_toTopOf="@id/lblTotalRedeemed"
                 app:layout_constraintBottom_toBottomOf="@id/lblTotalRedeemed"/>
 
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/lblRestrictedProducts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:gravity="center"
+                android:text="@string/allowed_products"
+                android:textColor="@color/colorSecondary"
+                android:textSize="@dimen/_13sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTotalRedeemed"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvRestrictedProductsSummary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="viewStart"
+                tools:text="@string/retailer_can_only_sell"
+                android:textColor="@color/grey_dark"
+                android:textSize="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:layout_marginHorizontal="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                app:layout_constraintTop_toBottomOf="@id/lblRestrictedProducts"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/lblTransactions"
@@ -157,7 +188,7 @@
                 android:textColor="@color/colorSecondary"
                 android:textSize="@dimen/_13sdp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvTotalRedeemed" />
+                app:layout_constraintTop_toBottomOf="@id/tvRestrictedProductsSummary" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvFilterSummary"
@@ -168,7 +199,7 @@
                 android:textColor="@color/grey_dark"
                 android:textSize="@dimen/_10sdp"
                 android:fontFamily="@font/poppins_semi_bold"
-                android:paddingHorizontal="@dimen/_8sdp"
+                android:layout_marginHorizontal="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_8sdp"
                 app:layout_constraintTop_toBottomOf="@id/lblTransactions"/>
 
@@ -197,6 +228,7 @@
         app:tint="@color/white"
         app:fabSize="normal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="ContentDescription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

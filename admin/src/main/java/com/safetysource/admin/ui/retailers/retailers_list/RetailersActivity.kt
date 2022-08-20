@@ -50,7 +50,13 @@ class RetailersActivity : BaseActivity<ActivityRetailersBinding, RetailersViewMo
                     )
                 )
             },
-            onEditClicked = {}
+            onEditClicked = {
+                startActivity(
+                    CreateEditRetailerActivity.getIntent(
+                        this, viewModel.teamModel ?: return@RetailersAdapter, it
+                    )
+                )
+            }
         )
         with(binding) {
             tvTeamName.text = viewModel.teamModel?.name

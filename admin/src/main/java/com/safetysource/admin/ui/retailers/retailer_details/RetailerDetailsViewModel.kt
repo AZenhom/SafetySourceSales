@@ -1,6 +1,7 @@
 package com.safetysource.admin.ui.retailers.retailer_details
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import com.hadilq.liveevent.LiveEvent
 import com.safetysource.core.base.BaseViewModel
@@ -26,8 +27,27 @@ class RetailerDetailsViewModel @Inject constructor(
     val retailerModel: RetailerModel? =
         savedStateHandle[RetailerDetailsActivity.RETAILER_MODEL]
 
+    private val _productsLiveData = MutableLiveData<List<ProductModel>>()
+    val productsLiveData: LiveData<List<ProductModel>> get() = _productsLiveData
+
     val transactionFilterModel =
         TransactionFilterModel(retailer = retailerModel, dateFrom = null, dateTo = null)
+
+    init {
+        getRestrictedProducts()
+    }
+
+    private fun getRestrictedProducts() {
+        showLoading()
+        safeLauncher {
+            val products = (retailerModel?.allowedProductIds ?: emptyList())
+                .map { async { productRepository.getProductById(it) } }
+                .map { it.await() }.filterIsInstance<StatefulResult.Success<ProductModel>>()
+                .mapNotNull { it.data }
+            _productsLiveData.value = products
+            hideLoading()
+        }
+    }
 
     fun getRetailerReport(): LiveData<RetailerReportModel?> {
         showLoading()
