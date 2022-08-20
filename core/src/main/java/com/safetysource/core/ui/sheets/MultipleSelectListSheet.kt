@@ -10,15 +10,15 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.safetysource.core.R
 import com.safetysource.core.databinding.SheetSelectListBinding
 import com.safetysource.core.ui.adapters.SelectListAdapter
+import com.safetysource.core.ui.makeVisible
 import com.safetysource.data.model.Filterable
 
-class SelectListSheet<T : Filterable> constructor(
-    private val anyItemObjectIfApplicable: T? = null, // Used if the list logic contains a neutral (any) option
+class MultipleSelectListSheet<T : Filterable> constructor(
     private val itemsList: MutableList<T> = mutableListOf(),
-    private val selectedItem: T? = null,
+    private val selectedItems: MutableList<T> = mutableListOf(),
     private val sheetTitle: String? = null,
     private val sheetSubTitle: String? = null,
-    private val onSelect: (T?) -> Unit,
+    private val onSelect: (MutableList<T?>) -> Unit,
 ) : BottomSheetDialogFragment() {
 
     private lateinit var binding: SheetSelectListBinding
@@ -27,8 +27,7 @@ class SelectListSheet<T : Filterable> constructor(
 
     init {
         setStyle(STYLE_NORMAL, R.style.AppBottomSheetDialogTheme)
-
-        anyItemObjectIfApplicable?.let { itemsList.add(0, it) }
+        isCancelable = false
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -40,18 +39,23 @@ class SelectListSheet<T : Filterable> constructor(
         binding = SheetSelectListBinding.inflate(inflater, container, false)
 
         val decoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
-        val preSelectedItems = if (selectedItem == null) emptyList() else listOf(selectedItem)
-        adapter = SelectListAdapter(preSelectedItems) {
-            onSelect.invoke(if (it == anyItemObjectIfApplicable) null else it as T)
-            dismiss()
+        adapter = SelectListAdapter(selectedItems) {
+            if (selectedItems.contains(it))
+                selectedItems.remove(it)
+            else
+                selectedItems.add(it as T)
         }
-        adapter.submitList(itemsList as List<Filterable>?)
+        adapter.submitList(itemsList as List<Filterable>)
 
         with(binding) {
             rvItems.adapter = adapter
             rvItems.addItemDecoration(decoration)
             tvSheetTitle.text = sheetTitle
             tvSheetSubTitle.text = sheetSubTitle
+            btnSubmit.makeVisible()
+            btnSubmit.setOnClickListener {
+                onSelect.invoke(selectedItems.toMutableList())
+            }
             return root
         }
     }

@@ -10,7 +10,7 @@ import com.safetysource.core.databinding.ItemSelectListBinding
 import com.safetysource.data.model.Filterable
 
 class SelectListAdapter constructor(
-    private val selectedItemModel: Filterable? = null,
+    private val selectedItemModels: List<Filterable>? = null,
     private val onSelect: (Filterable) -> Unit,
 ) : ListAdapter<Filterable, SelectListAdapter.ItemHolder>(Differentiator) {
 
@@ -49,7 +49,7 @@ class SelectListAdapter constructor(
 
         holder.binding.tvName.text = item.getFilterableName()
         holder.binding.ivCheck.visibility =
-            if (item.getFilterableId() == selectedItemModel?.getFilterableId()) View.VISIBLE else View.GONE
+            if (selectedItemModels?.find { item.getFilterableId() == it.getFilterableId() } != null) View.VISIBLE else View.GONE
         holder.itemView.setOnClickListener { onSelect.invoke(item) }
     }
 
