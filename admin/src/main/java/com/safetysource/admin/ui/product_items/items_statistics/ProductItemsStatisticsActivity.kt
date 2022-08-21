@@ -153,15 +153,17 @@ class ProductItemsStatisticsActivity :
     }
 
     private fun searchSerial(serial: String) {
-        viewModel.getProductItemBySerial(serial).observe(this) { productItem ->
-            if (productItem == null)
+        viewModel.getProductItemBySerial(serial).observe(this) { pair ->
+            if (pair.second == null)
                 showAddProductItemDialog(serial)
+            else if (pair.first == null)
+                showErrorMsg(getString(R.string.serial_not_associated_with_any_product))
             else
                 startActivity(
                     ProductItemDetailsActivity.getIntent(
                         this,
-                        viewModel.productModel ?: return@observe,
-                        productItem
+                        pair.first!!,
+                        pair.second!!
                     )
                 )
         }
@@ -196,10 +198,14 @@ class ProductItemsStatisticsActivity :
             if (serials.isEmpty())
                 showErrorMsg(getString(R.string.all_serials_exist))
             else {
-                var dialogMessage = getString(R.string.serials_to_be_registered, serials.size.toString())
+                var dialogMessage =
+                    getString(R.string.serials_to_be_registered, serials.size.toString())
                 if (results.isNotEmpty()) {
                     dialogMessage += getLocalizedComma(this)
-                    dialogMessage += getString(R.string.serials_to_be_ignored, results.size.toString())
+                    dialogMessage += getString(
+                        R.string.serials_to_be_ignored,
+                        results.size.toString()
+                    )
                 }
                 showAddProductItemsDialog(dialogMessage, serials)
             }

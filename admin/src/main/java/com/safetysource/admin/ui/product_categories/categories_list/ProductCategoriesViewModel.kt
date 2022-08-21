@@ -20,8 +20,6 @@ class ProductCategoriesViewModel @Inject constructor(
     private val productRepository: ProductRepository,
 ) : BaseViewModel() {
 
-    var productModel: ProductModel? = null
-
     fun getProductCategories(): LiveData<List<ProductCategoryModel>> {
         showLoading()
         val liveData = LiveEvent<List<ProductCategoryModel>>()
@@ -36,18 +34,20 @@ class ProductCategoriesViewModel @Inject constructor(
         return liveData
     }
 
-    fun getProductItemBySerial(serial: String): LiveData<ProductItemModel?> {
-        val liveData = LiveEvent<ProductItemModel?>()
+    fun getProductItemBySerial(serial: String): LiveData<Pair<ProductModel?, ProductItemModel?>> {
+        val liveData = LiveEvent<Pair<ProductModel?, ProductItemModel?>>()
         safeLauncher {
+            var pair = Pair<ProductModel?, ProductItemModel?>(null, null)
             val result =
                 productItemRepository.getProductItemBySerial(serial)
             if (result is StatefulResult.Success) {
                 if (result.data != null) {
-                    productModel =
+                    val productModel =
                         productRepository.getProductById(result.data!!.productId ?: "").data
+                    pair = Pair(productModel, result.data)
                 }
                 hideLoading()
-                liveData.value = result.data
+                liveData.value = pair
             } else
                 handleError(result.errorModel)
         }

@@ -83,15 +83,15 @@ class ProductCategoriesFragment :
     }
 
     private fun searchSerial(serial: String) {
-        viewModel.getProductItemBySerial(serial).observe(this) { productItem ->
-            if (productItem == null)
+        viewModel.getProductItemBySerial(serial).observe(this) { pair ->
+            if (pair.first == null || pair.second == null)
                 showErrorMsg(getString(R.string.serial_not_associated_with_any_product))
             else
                 startActivity(
                     ProductItemDetailsActivity.getIntent(
                         requireContext(),
-                        viewModel.productModel ?: return@observe,
-                        productItem
+                        pair.first!!,
+                        pair.second!!
                     )
                 )
         }

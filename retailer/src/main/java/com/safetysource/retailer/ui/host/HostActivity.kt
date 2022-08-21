@@ -32,11 +32,16 @@ class HostActivity : BaseActivity<ActivityHostBinding, HostViewModel>() {
         initViews()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.updateCurrentRetailerModel()
+    }
+
     private fun initObservers() {
         viewModel.onLogOutLiveData.observe(this) {
             val intent = SplashActivity.getIntent(this)
-            intent.addFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-            intent.addFlags( Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
             finish()
         }

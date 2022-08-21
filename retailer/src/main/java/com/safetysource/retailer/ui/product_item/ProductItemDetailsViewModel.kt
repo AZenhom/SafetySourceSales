@@ -1,6 +1,7 @@
 package com.safetysource.retailer.ui.product_item
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import com.hadilq.liveevent.LiveEvent
 import com.safetysource.core.R
@@ -24,14 +25,18 @@ class ProductItemDetailsViewModel @Inject constructor(
 
     val productItemModel: ProductItemModel? =
         savedStateHandle[ProductItemDetailsActivity.PRODUCT_ITEM_MODEL]
-
-    var isEligibleForUnsell: Boolean = false
+    private val _allowedAndCanUnsellLiveData = MutableLiveData<Pair<Boolean, Boolean>>()
+    val allowedAndCanUnsellLiveData: LiveData<Pair<Boolean, Boolean>> get() = _allowedAndCanUnsellLiveData
 
     init {
         safeLauncher {
-            isEligibleForUnsell =
+            val allowedProducts = retailerRepository.getCurrentRetailerModel()?.allowedProductIds
+            val isProductAllowed =
+                allowedProducts.isNullOrEmpty() || allowedProducts.find { it == productItemModel?.productId } != null
+            val isEligibleForUnsell =
                 productItemModel?.lastSoldByRetailerId != null
                         && productItemModel.lastSoldByRetailerId == userRepository.getUserId()
+            _allowedAndCanUnsellLiveData.value = Pair(isProductAllowed, isEligibleForUnsell)
         }
     }
 

@@ -39,6 +39,7 @@ class ProductItemDetailsActivity :
     override fun onActivityCreated() {
         initViews()
         getProductDetails()
+        initObservers()
     }
 
     private fun initViews() {
@@ -86,10 +87,12 @@ class ProductItemDetailsActivity :
             tvProductName.text = productModel!!.name
 
             // Price
-            tvWholesomePrice.text = "${productModel!!.wholesalePrice} ${getString(R.string.egyptian_pound)}"
+            tvWholesomePrice.text =
+                "${productModel!!.wholesalePrice} ${getString(R.string.egyptian_pound)}"
 
             // Commission
-            tvCommission.text = "${productModel!!.commissionValue} ${getString(R.string.egyptian_pound)}"
+            tvCommission.text =
+                "${productModel!!.commissionValue} ${getString(R.string.egyptian_pound)}"
 
             // Product Item Status
             tvProductItemStatus.text = when (viewModel.productItemModel?.state) {
@@ -101,12 +104,19 @@ class ProductItemDetailsActivity :
 
             // Serial
             tvSerial.text = viewModel.productItemModel?.serial
+        }
+    }
 
-            // Sell-UnSell Status
-            if (viewModel.productItemModel?.state == ProductItemState.SOLD && viewModel.isEligibleForUnsell)
-                btnUnsell.makeVisible()
+    private fun initObservers() {
+        viewModel.allowedAndCanUnsellLiveData.observe(this) {
+            val isAllowed = it.first
+            if (!isAllowed) // If product is not allowed for retailer don't show either buttons
+                return@observe
+            val isEligibleForUnsell = it.second
+            if (viewModel.productItemModel?.state == ProductItemState.SOLD && isEligibleForUnsell)
+                binding.btnUnsell.makeVisible()
             if (viewModel.productItemModel?.state == ProductItemState.NOT_SOLD_YET)
-                btnSell.makeVisible()
+                binding.btnSell.makeVisible()
         }
     }
 }

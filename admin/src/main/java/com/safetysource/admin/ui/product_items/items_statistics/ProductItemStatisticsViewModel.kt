@@ -9,12 +9,14 @@ import com.safetysource.data.model.ProductItemState
 import com.safetysource.data.model.ProductModel
 import com.safetysource.data.model.response.StatefulResult
 import com.safetysource.data.repository.ProductItemRepository
+import com.safetysource.data.repository.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class ProductItemStatisticsViewModel @Inject constructor(
     private val productItemRepository: ProductItemRepository,
+    private val productRepository: ProductRepository,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
@@ -61,16 +63,21 @@ class ProductItemStatisticsViewModel @Inject constructor(
         return liveData
     }
 
-    fun getProductItemBySerial(serial: String): LiveData<ProductItemModel?> {
-        showLoading()
-        val liveData = LiveEvent<ProductItemModel?>()
+    fun getProductItemBySerial(serial: String): LiveData<Pair<ProductModel?, ProductItemModel?>> {
+        val liveData = LiveEvent<Pair<ProductModel?, ProductItemModel?>>()
         safeLauncher {
+            var pair = Pair<ProductModel?, ProductItemModel?>(null, null)
             val result =
                 productItemRepository.getProductItemBySerial(serial)
-            hideLoading()
-            if (result is StatefulResult.Success)
-                liveData.value = result.data
-            else
+            if (result is StatefulResult.Success) {
+                if (result.data != null) {
+                    val productModel =
+                        productRepository.getProductById(result.data!!.productId ?: "").data
+                    pair = Pair(productModel, result.data)
+                }
+                hideLoading()
+                liveData.value = pair
+            } else
                 handleError(result.errorModel)
         }
         return liveData
