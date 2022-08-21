@@ -11,8 +11,10 @@ import com.safetysource.admin.databinding.ActivityCreateEditRetailerBinding
 import com.safetysource.core.R
 import com.safetysource.core.base.BaseActivity
 import com.safetysource.core.ui.makeGone
+import com.safetysource.core.ui.sheets.MultipleSelectListSheet
 import com.safetysource.core.utils.PhoneNumberUtils
 import com.safetysource.core.utils.PhoneNumberUtils.PhoneNumberUtils.isNull
+import com.safetysource.data.model.ProductModel
 import com.safetysource.data.model.RetailerModel
 import com.safetysource.data.model.TeamModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,6 +40,11 @@ class CreateEditRetailerActivity :
     override val viewModel: CreateEditRetailerViewModel by viewModels()
     override val binding by viewBinding(ActivityCreateEditRetailerBinding::inflate)
 
+    private var productsList: List<ProductModel> = emptyList()
+    private var restrictedProductsList: List<ProductModel> = emptyList()
+
+    private lateinit var anyText: String
+
     private val phoneTextWatcher: TextWatcher by lazy {
         object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -58,7 +65,9 @@ class CreateEditRetailerActivity :
     }
 
     override fun onActivityCreated() {
+        anyText = getString(R.string.any)
         initViews()
+        initObservers()
     }
 
     private fun initViews() {
@@ -86,10 +95,33 @@ class CreateEditRetailerActivity :
             // Phone No
             etRetailerPhone.addTextChangedListener(phoneTextWatcher)
 
-            // Submit
-            btnSubmit.setOnClickListener {
-                if (isEditMode) updateRetailer()
-                else validateAndRegister()
+            // Allowed Products
+            binding.tvProduct.text = anyText
+            clProduct.setOnClickListener {
+                MultipleSelectListSheet(
+                    itemsList = productsList.toMutableList(),
+                    selectedItems = restrictedProductsList.toMutableList(),
+                    sheetTitle = getString(R.string.products),
+                    sheetSubTitle = getString(R.string.please_pick_set_of_products)
+                ) { viewModel.setRestrictedProducts(it.filterNotNull()) }
+                    .show(supportFragmentManager, "ProductsSheet")
+
+                // Submit
+                btnSubmit.setOnClickListener {
+                    if (isEditMode) updateRetailer()
+                    else validateAndRegister()
+                }
+            }
+        }
+    }
+
+    private fun initObservers() {
+        with(viewModel) {
+            productsLiveData.observe(this@CreateEditRetailerActivity) { productsList = it }
+            restrictedProductsLiveData.observe(this@CreateEditRetailerActivity) {
+                restrictedProductsList = it
+                binding.tvProduct.text = if (it.isEmpty()) anyText
+                else getString(R.string.n_selections, it.size.toString())
             }
         }
     }

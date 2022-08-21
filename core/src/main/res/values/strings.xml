@@ -140,6 +140,7 @@
     <string name="register_admin">Register an admin</string>
     <string name="please_pick_product_category">Please pick a product category</string>
     <string name="please_pick_product">Please pick a product</string>
+    <string name="please_pick_set_of_products">Please pick a set of products</string>
     <string name="egyptian_pound">EGP</string>
     <string name="language">Language</string>
     <string name="change_language">Change Language</string>
@@ -188,4 +189,5 @@
     <string name="invalid_start_and_expiration_dates">Invalid start and expiration dates</string>
     <string name="retailer_can_only_sell">"Retailer can only sell/unsell the following products: "</string>
     <string name="allowed_products">Allowed Products</string>
+    <string name="n_selections">%1$s Selection(s)</string>
 </resources>

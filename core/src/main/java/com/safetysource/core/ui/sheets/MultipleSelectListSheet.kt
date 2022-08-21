@@ -1,5 +1,6 @@
 package com.safetysource.core.ui.sheets
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,9 +28,9 @@ class MultipleSelectListSheet<T : Filterable> constructor(
 
     init {
         setStyle(STYLE_NORMAL, R.style.AppBottomSheetDialogTheme)
-        isCancelable = false
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Suppress("UNCHECKED_CAST")
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,6 +45,7 @@ class MultipleSelectListSheet<T : Filterable> constructor(
                 selectedItems.remove(it)
             else
                 selectedItems.add(it as T)
+            adapter.notifyDataSetChanged()
         }
         adapter.submitList(itemsList as List<Filterable>)
 
@@ -55,6 +57,7 @@ class MultipleSelectListSheet<T : Filterable> constructor(
             btnSubmit.makeVisible()
             btnSubmit.setOnClickListener {
                 onSelect.invoke(selectedItems.toMutableList())
+                dismiss()
             }
             return root
         }

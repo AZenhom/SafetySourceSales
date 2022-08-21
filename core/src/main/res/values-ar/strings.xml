@@ -139,6 +139,7 @@
     <string name="register_admin">تسجيل Admin جديد</string>
     <string name="please_pick_product_category">الرجاء اختيار فئة منتج</string>
     <string name="please_pick_product">الرجاء اختيار منتج</string>
+    <string name="please_pick_set_of_products">الرجاء اختيار مجموعة المنتجات</string>
     <string name="egyptian_pound">جنيه</string>
     <string name="language">اللغة</string>
     <string name="change_language">تغيير اللغة</string>
@@ -187,4 +188,5 @@
     <string name="invalid_start_and_expiration_dates">تواريخ البدء و الانتهاء غير صالحة</string>
     <string name="retailer_can_only_sell">"يستطيع بائع التجزئة بيع/إلغاء المنتجات الآتية: "</string>
     <string name="allowed_products">المنتجات المسموحة</string>
+    <string name="n_selections">عدد %1$s اختيارات</string>
 </resources>

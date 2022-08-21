@@ -14,6 +14,7 @@ import com.safetysource.data.repository.ProductRepository
 import com.safetysource.data.repository.ReportsRepository
 import com.safetysource.data.repository.RetailerRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,9 +31,12 @@ class CreateEditRetailerViewModel @Inject constructor(
 
     private val _productsLiveData = LiveEvent<List<ProductModel>>()
     val productsLiveData: LiveData<List<ProductModel>> get() = _productsLiveData
+    private val _restrictedProductsLiveData = LiveEvent<List<ProductModel>>()
+    val restrictedProductsLiveData: LiveData<List<ProductModel>> get() = _restrictedProductsLiveData
 
     init {
         getAllProducts()
+        getRestrictedProducts()
     }
 
     fun createNewRetailer(
@@ -51,13 +55,17 @@ class CreateEditRetailerViewModel @Inject constructor(
                 return@safeLauncher
             }
 
+            val restrictedProducts = restrictedProductsLiveData.value ?: emptyList()
             val retailer = RetailerModel(
                 id = retailerRepository.getNewRetailerId(),
                 teamId = teamModel?.id,
                 name = name,
                 phoneNo = phoneNumber,
                 contactNo = contactNumber,
+                allowedProductIds = if (restrictedProducts.isEmpty()) null
+                else restrictedProducts.mapNotNull { it.id }
             )
+
             val retailerCreateResponse = retailerRepository.createUpdateRetailer(retailer)
             if (retailerCreateResponse is StatefulResult.Success) {
                 val retailerReport = RetailerReportModel(
@@ -84,7 +92,10 @@ class CreateEditRetailerViewModel @Inject constructor(
                 showErrorMsg(R.string.something_went_wrong)
                 return@safeLauncher
             }
+            val restrictedProducts = restrictedProductsLiveData.value ?: emptyList()
             retailerToEdit.name = name
+            retailerToEdit.allowedProductIds = if (restrictedProducts.isEmpty()) null
+            else restrictedProducts.mapNotNull { it.id }
             showLoading()
             val result = retailerRepository.createUpdateRetailer(retailerToEdit)
             if (result is StatefulResult.Success)
@@ -106,5 +117,21 @@ class CreateEditRetailerViewModel @Inject constructor(
             else
                 handleError(result.errorModel)
         }
+    }
+
+    private fun getRestrictedProducts() {
+        showLoading()
+        safeLauncher {
+            val products = (retailerToEdit?.allowedProductIds ?: emptyList())
+                .map { async { productRepository.getProductById(it) } }
+                .map { it.await() }.filterIsInstance<StatefulResult.Success<ProductModel>>()
+                .mapNotNull { it.data }
+            _restrictedProductsLiveData.value = products
+            hideLoading()
+        }
+    }
+
+    fun setRestrictedProducts(products: List<ProductModel>) {
+        _restrictedProductsLiveData.value = products
     }
 }
