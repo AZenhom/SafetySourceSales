@@ -50,7 +50,7 @@ class CreateEditAdminActivity :
 
     private fun initViews() {
         with(binding) {
-            toolbar.setNavigationOnClickListener { onBackPressed() }
+            registerToolBarOnBackPressed(toolbar)
 
             // Phone No
             etAdminPhone.addTextChangedListener(phoneTextWatcher)

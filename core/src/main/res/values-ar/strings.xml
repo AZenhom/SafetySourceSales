@@ -178,7 +178,7 @@
     <string name="pieces_count">عدد %1$s قطعة</string>
     <string name="claim_a_value_of">احصل على</string>
     <string name="and">و</string>
-    <string name="claim">حصل مكافئتك %1$s</string>
+    <string name="claim">حصل مكافئتك بقدر %1$s جنيه</string>
     <string name="subscribed_in_offer_successfully">تم الاشترك في العرض بنجاح</string>
     <string name="you_can_claim_after_expiry">يمكنك فقط تحصيل العرض بعد تاريخ انتهاء صلاحيته</string>
     <string name="insufficient_sell_count">عدد عمليات البيع خلال وقت العرض غير كافية</string>

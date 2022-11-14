@@ -49,7 +49,7 @@ class ProductItemDetailsActivity :
                 showUnsellingApprovalDialog(it)
         }
         with(binding) {
-            toolbar.setNavigationOnClickListener { onBackPressed() }
+            registerToolBarOnBackPressed(toolbar)
             rvTransactions.adapter = adapter
             tvFilterSummary.text =
                 viewModel.transactionFilterModel.toString(this@ProductItemDetailsActivity)

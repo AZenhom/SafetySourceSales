@@ -35,6 +35,8 @@ class ProductsListActivity : BaseActivity<ActivityProductsListBinding, ProductsL
 
     private fun initViews() {
         with(binding) {
+            registerToolBarOnBackPressed(toolbar)
+
             val totalMargins = resources.getDimensionPixelSize(com.intuit.sdp.R.dimen._16sdp) * 3
             val leftScreenSize = getScreenWidth(this@ProductsListActivity) - totalMargins
             adapter = ProductAdapter(leftScreenSize / 2,
@@ -55,7 +57,6 @@ class ProductsListActivity : BaseActivity<ActivityProductsListBinding, ProductsL
             )
             rvProducts.adapter = adapter
 
-            toolbar.setNavigationOnClickListener { onBackPressed() }
             fabAdd.setOnClickListener {
                 startActivity(
                     CreateEditProductActivity.getIntent(

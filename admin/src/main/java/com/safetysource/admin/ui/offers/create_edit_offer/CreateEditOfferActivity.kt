@@ -93,7 +93,7 @@ class CreateEditOfferActivity :
             tvExpiresAt.text = viewModel.expiresAt.time.getDateText("EE, d MMM yyyy")
 
             // Click Listeners
-            toolbar.setNavigationOnClickListener { onBackPressed() }
+            registerToolBarOnBackPressed(toolbar)
 
             ivChoosePhoto.setOnClickListener {
                 startImagePicking()

@@ -44,9 +44,7 @@ class ProductItemDetailsActivity :
 
     private fun initViews() {
         with(binding) {
-            toolbar.setNavigationOnClickListener {
-                onBackPressed()
-            }
+            registerToolBarOnBackPressed(toolbar)
             btnSell.setOnClickListener {
                 viewModel.sellUnsellProductItem(productModel ?: return@setOnClickListener, true)
                     .observe(this@ProductItemDetailsActivity) {

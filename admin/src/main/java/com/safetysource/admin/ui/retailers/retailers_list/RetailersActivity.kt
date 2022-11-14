@@ -59,6 +59,7 @@ class RetailersActivity : BaseActivity<ActivityRetailersBinding, RetailersViewMo
             }
         )
         with(binding) {
+            registerToolBarOnBackPressed(toolbar)
             tvTeamName.text = viewModel.teamModel?.name
             tvDueCommission.text =
                 "${viewModel.teamModel?.teamReportModel?.dueCommissionValue} ${getString(R.string.egyptian_pound)}"
@@ -67,7 +68,6 @@ class RetailersActivity : BaseActivity<ActivityRetailersBinding, RetailersViewMo
 
             rvRetailers.adapter = adapter
 
-            toolbar.setNavigationOnClickListener { onBackPressed() }
             fabAdd.setOnClickListener {
                 startActivity(
                     CreateEditRetailerActivity.getIntent(

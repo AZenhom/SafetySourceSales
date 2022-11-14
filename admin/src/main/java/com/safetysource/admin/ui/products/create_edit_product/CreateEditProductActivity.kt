@@ -77,9 +77,7 @@ class CreateEditProductActivity :
                 etCommission.setText(it.commissionValue?.toString())
             }
 
-            toolbar.setNavigationOnClickListener {
-                onBackPressed()
-            }
+            registerToolBarOnBackPressed(toolbar)
             vChooseImage.setOnClickListener {
                 startImagePicking()
             }

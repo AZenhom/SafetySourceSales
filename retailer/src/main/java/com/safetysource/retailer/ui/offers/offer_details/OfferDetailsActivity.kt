@@ -45,7 +45,7 @@ class OfferDetailsActivity : BaseActivity<ActivityOfferDetailsBinding, OfferDeta
     private fun initViews() {
         fillUIWithData()
         with(binding) {
-            toolbar.setNavigationOnClickListener { onBackPressed() }
+            registerToolBarOnBackPressed(toolbar)
             btnSubscribe.setOnClickListener {
                 viewModel.createOfferSubscription().observe(this@OfferDetailsActivity) {
                     showSuccessMsg(getString(R.string.subscribed_in_offer_successfully))
@@ -85,7 +85,8 @@ class OfferDetailsActivity : BaseActivity<ActivityOfferDetailsBinding, OfferDeta
                 // Text
                 tvOfferText.text = it.text
                 // Needed Sell Count
-                tvSellCount.text = getString(R.string.pieces_count, it.neededSellCount.toString())
+                tvNeededSellCount.text =
+                    getString(R.string.pieces_count, it.neededSellCount.toString())
                 // Claim Value
                 tvClaimValue.text = "${it.valPerRepeat} ${getString(R.string.egyptian_pound)}"
                 // Expires At
@@ -103,6 +104,7 @@ class OfferDetailsActivity : BaseActivity<ActivityOfferDetailsBinding, OfferDeta
                             && now.after(it.startsAt) && now.before(it.expiresAt)
                 )
 
+                tvSellCount.setIsVisible(it.subscribedOfferModel != null)
                 btnClaimOrRemove.setIsVisible(it.subscribedOfferModel != null)
                 btnClaimOrRemove.backgroundTintList = if (now.after(it.expiresAt))
                     ColorStateList.valueOf(resources.getColor(R.color.colorPrimary, null))
@@ -114,7 +116,7 @@ class OfferDetailsActivity : BaseActivity<ActivityOfferDetailsBinding, OfferDeta
 
     private fun initObservers() {
         with(viewModel) {
-            // Sold Count on Claim Button
+            // Sold Count
             sellingCountLiveData.observe(this@OfferDetailsActivity) { sold ->
                 val neededSellCount = offerModel?.neededSellCount ?: return@observe
                 val text = if (offerModel?.canRepeat == true) {
@@ -125,7 +127,11 @@ class OfferDetailsActivity : BaseActivity<ActivityOfferDetailsBinding, OfferDeta
                 } else {
                     "${minOf(neededSellCount, sold)}/$neededSellCount"
                 }
-                binding.btnClaimOrRemove.text = getString(R.string.claim, text)
+                binding.tvSellCount.text = text
+            }
+            // Claim value on Claim Button
+            valueToClaimLiveData.observe(this@OfferDetailsActivity) { claimValue ->
+                binding.btnClaimOrRemove.text = getString(R.string.claim, claimValue.toString())
             }
             // Exclusive Category
             exclusiveCategoryLiveData.observe(this@OfferDetailsActivity) {

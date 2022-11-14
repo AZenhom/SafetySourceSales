@@ -6,13 +6,14 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
-import com.safetysource.core.ui.LoaderDialogFragment
+import com.google.android.material.appbar.MaterialToolbar
 import com.safetysource.core.R
+import com.safetysource.core.ui.LoaderDialogFragment
 import es.dmoral.toasty.Toasty
 
 
@@ -55,6 +56,8 @@ abstract class BaseActivity<VB : ViewBinding, VM : BaseViewModel> : AppCompatAct
             else
                 hideLoading()
         }
+
+        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
     }
 
     fun showWarningMsg(msg: String) {
@@ -112,23 +115,23 @@ abstract class BaseActivity<VB : ViewBinding, VM : BaseViewModel> : AppCompatAct
         }
     }
 
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // handle arrow click here
-        if (item.itemId == android.R.id.home) {
-            onBackPressed() // close this activity and return to preview activity (if there is any)
+    protected open val onBackPressedCallback: OnBackPressedCallback =
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (doubleBackToExitPressedOnce)
+                    finish()
+                else {
+                    doubleBackToExitPressedOnce = true
+                    Toasty.info(this@BaseActivity, getString(R.string.click_twice)).show()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        doubleBackToExitPressedOnce = false
+                    }, 2000)
+                }
+            }
         }
-        return super.onOptionsItemSelected(item)
-    }
 
-    override fun onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
-            super.onBackPressed()
-            return
-        }
-        doubleBackToExitPressedOnce = true
-        Toasty.info(this, getString(R.string.click_twice)).show()
-        Handler(Looper.getMainLooper()).postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
+    protected fun registerToolBarOnBackPressed(toolbar: MaterialToolbar) {
+        toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
     }
 
     inline fun <T : ViewBinding> AppCompatActivity.viewBinding(

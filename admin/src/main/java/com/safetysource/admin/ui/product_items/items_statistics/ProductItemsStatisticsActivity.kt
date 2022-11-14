@@ -108,7 +108,7 @@ class ProductItemsStatisticsActivity :
     @SuppressLint("InlinedApi")
     private fun initViews() {
         with(binding) {
-            toolbar.setNavigationOnClickListener { onBackPressed() }
+            registerToolBarOnBackPressed(toolbar)
             btnImportExcel.setOnClickListener {
                 excelFilePermissionLauncher.launch(
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {

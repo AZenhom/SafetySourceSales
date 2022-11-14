@@ -60,6 +60,7 @@ class CreateEditProductCategoryActivity :
 
     private fun initViews() {
         with(binding) {
+            registerToolBarOnBackPressed(toolbar)
 
             // Category to edit data
             viewModel.productCategoryModel?.let {
@@ -73,9 +74,6 @@ class CreateEditProductCategoryActivity :
                 }
             }
 
-            toolbar.setNavigationOnClickListener {
-                onBackPressed()
-            }
             ivChoosePhoto.setOnClickListener {
                 startImagePicking()
             }

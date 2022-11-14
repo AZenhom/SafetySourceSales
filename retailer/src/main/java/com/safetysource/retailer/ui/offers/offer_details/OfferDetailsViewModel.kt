@@ -31,6 +31,9 @@ class OfferDetailsViewModel @Inject constructor(
     private val _sellingCountLiveData = MutableLiveData<Int>()
     val sellingCountLiveData: LiveData<Int> get() = _sellingCountLiveData
 
+    private val _valueToClaimLiveData = MutableLiveData<Float>()
+    val valueToClaimLiveData: LiveData<Float> get() = _valueToClaimLiveData
+
     private val _exclusiveCategoryLiveData = MutableLiveData<ProductCategoryModel?>()
     val exclusiveCategoryLiveData: LiveData<ProductCategoryModel?> get() = _exclusiveCategoryLiveData
 
@@ -113,6 +116,42 @@ class OfferDetailsViewModel @Inject constructor(
             val totalSelling = sellingTransactions.data!!.size - unsellingTransactions.data!!.size
             _sellingCountLiveData.value = totalSelling
         }
+
+        // Getting how much commission value will be subtracted from the offer claim
+        val transactionsList = arrayListOf<TransactionModel>()
+        transactionsList.addAll(sellingTransactions.data ?: emptyList())
+        transactionsList.addAll(unsellingTransactions.data ?: emptyList())
+        transactionsList.sortBy { it.updatedAt }
+
+        val validRepeats = if (offerModel?.canRepeat == true)
+            (sellingCountLiveData.value ?: 0) / (offerModel?.neededSellCount ?: 0)
+        else {
+            if ((sellingCountLiveData.value ?: 0) >= (offerModel?.neededSellCount ?: 0)) 1 else 0
+        }
+        var validSellCount = validRepeats * (offerModel?.neededSellCount ?: 0)
+
+        if (validSellCount == 0) {
+            _valueToClaimLiveData.value = 0F
+            hideLoading()
+            return@safeLauncher
+        }
+        var commissionValue = 0.0F
+        for (transaction in transactionsList) {
+            if (transaction.type == TransactionType.SELLING) {
+                commissionValue += (transaction.commissionAppliedOrRemoved ?: 0F)
+                validSellCount--
+            }
+            if (transaction.type == TransactionType.UNSELLING) {
+                commissionValue -= (transaction.commissionAppliedOrRemoved ?: 0F)
+                validSellCount++
+            }
+            if (validSellCount == 0)
+                break
+        }
+
+        val valueToClaim = validRepeats * (offerModel?.valPerRepeat ?: 0) - commissionValue
+        _valueToClaimLiveData.value = valueToClaim
+
         hideLoading()
     }
 
@@ -163,22 +202,13 @@ class OfferDetailsViewModel @Inject constructor(
         return liveData
     }
 
-    fun claimOffer(): LiveData<Int> {
-        val liveData = MutableLiveData<Int>()
-        // valueToClaim Calculation
-        val valueToClaim = if (offerModel?.canRepeat == true) {
-            ((sellingCountLiveData.value ?: 0)
-                    / (offerModel?.neededSellCount ?: 0)) * (offerModel?.valPerRepeat ?: 0)
-        } else {
-            if ((sellingCountLiveData.value ?: 0) >=
-                (offerModel?.neededSellCount ?: 0)
-            ) (offerModel?.valPerRepeat ?: 0)
-            else 0
-        }
+    fun claimOffer(): LiveData<Float> {
+        val liveData = MutableLiveData<Float>()
 
         // Return if no value to claim
-        if (valueToClaim <= 0) {
-            liveData.value = 0
+        val netValueToClaim = valueToClaimLiveData.value ?: 0F
+        if (netValueToClaim <= 0F) {
+            liveData.value = 0F
             return liveData
         }
 
@@ -207,17 +237,17 @@ class OfferDetailsViewModel @Inject constructor(
                 teamId = retailerModel.teamId,
                 productId = offerModel?.productId,
                 categoryId = offerModel?.productCategoryId,
-                commissionAppliedOrRemoved = valueToClaim.toFloat(),
+                commissionAppliedOrRemoved = netValueToClaim,
                 offerId = offerModel?.id
             )
 
             teamReport.dueCommissionValue =
-                (teamReport.dueCommissionValue ?: 0f) + valueToClaim
+                (teamReport.dueCommissionValue ?: 0f) + netValueToClaim
             teamReport.updatedAt = null
 
 
             retailerReport.dueCommissionValue =
-                (retailerReport.dueCommissionValue ?: 0f) + valueToClaim
+                (retailerReport.dueCommissionValue ?: 0f) + netValueToClaim
             retailerReport.updatedAt = null
 
             subscribedOfferRepository.claimSubscribedOffer(
@@ -226,7 +256,7 @@ class OfferDetailsViewModel @Inject constructor(
                 retailerReport,
                 teamReport
             )
-            liveData.value = valueToClaim
+            liveData.value = netValueToClaim
             hideLoading()
         }
         return liveData

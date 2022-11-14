@@ -3,6 +3,7 @@ package com.safetysource.admin.ui.transactions.transactions_filter
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import com.safetysource.admin.databinding.ActivityTransactionsFilterBinding
 import com.safetysource.core.R
@@ -45,6 +46,7 @@ class TransactionsFilterActivity :
     private fun initViews() {
         val anyText = getString(R.string.any)
         with(binding) {
+            registerToolBarOnBackPressed(toolbar)
             // TextViews text initialization
             viewModel.transactionFilterModel.let {
                 tvCategory.text = it?.category?.name ?: anyText
@@ -54,8 +56,6 @@ class TransactionsFilterActivity :
             }
 
             // Click Listeners
-            toolbar.setNavigationOnClickListener { onBackPressed() }
-
             clCategory.setOnClickListener {
                 SelectListSheet(
                     itemsList = categoriesList.toMutableList(),
@@ -132,8 +132,11 @@ class TransactionsFilterActivity :
         }
     }
 
-    override fun onBackPressed() {
-        setResult(RESULT_OK, viewModel.getFilterResult())
-        super.onBackPressed()
-    }
+    override val onBackPressedCallback: OnBackPressedCallback =
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                setResult(RESULT_OK, viewModel.getFilterResult())
+                finish()
+            }
+        }
 }

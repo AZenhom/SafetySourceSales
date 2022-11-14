@@ -48,10 +48,35 @@
         app:strokeColor="@color/colorSecondary"
         app:strokeWidth="2dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivOfferImage"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivOfferImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvSellCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingBottom="@dimen/_4sdp"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:gravity="center"
+                tools:text="(2) + 4/8"
+                android:textColor="@color/green"
+                android:background="@color/black_dim"
+                android:textSize="@dimen/_13sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
     </com.google.android.material.card.MaterialCardView>
 
@@ -83,7 +108,7 @@
         app:layout_constraintTop_toBottomOf="@id/lblOfferText"/>
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/lblSellCount"
+        android:id="@+id/lblNeededSellCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_16sdp"
@@ -97,7 +122,7 @@
         app:layout_constraintTop_toBottomOf="@id/tvOfferText" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvSellCount"
+        android:id="@+id/tvNeededSellCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="viewStart"
@@ -106,8 +131,8 @@
         android:textSize="@dimen/_10sdp"
         android:fontFamily="@font/poppins_semi_bold"
         android:layout_marginTop="@dimen/_4sdp"
-        app:layout_constraintTop_toBottomOf="@id/lblSellCount"
-        app:layout_constraintStart_toStartOf="@id/lblSellCount"/>
+        app:layout_constraintTop_toBottomOf="@id/lblNeededSellCount"
+        app:layout_constraintStart_toStartOf="@id/lblNeededSellCount"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/lblAnd"
@@ -119,7 +144,7 @@
         android:text="@string/and"
         android:textColor="@color/colorSecondary"
         android:textSize="@dimen/_13sdp"
-        app:layout_constraintStart_toEndOf="@id/lblSellCount"
+        app:layout_constraintStart_toEndOf="@id/lblNeededSellCount"
         app:layout_constraintEnd_toStartOf="@id/lblClaimValue"
         app:layout_constraintTop_toBottomOf="@id/tvOfferText" />
 

@@ -34,7 +34,7 @@ class OfferDetailsActivity : BaseActivity<ActivityOfferDetailsBinding, OfferDeta
     }
 
     private fun initViews() {
-        binding.toolbar.setNavigationOnClickListener { onBackPressed() }
+        registerToolBarOnBackPressed(binding.toolbar)
         fillUIWithData()
     }
 
@@ -49,18 +49,14 @@ class OfferDetailsActivity : BaseActivity<ActivityOfferDetailsBinding, OfferDeta
                 // Image
                 Picasso.get()
                     .load(it.imgUrl)
-                    .error(com.safetysource.core.R.drawable.ic_image_placeholder)
+                    .error(R.drawable.ic_image_placeholder)
                     .into(ivOfferImage)
                 // Text
                 tvOfferText.text = it.text
                 // Needed Sell Count
-                tvSellCount.text = getString(
-                    com.safetysource.core.R.string.pieces_count,
-                    it.neededSellCount.toString()
-                )
+                tvSellCount.text = getString(R.string.pieces_count, it.neededSellCount.toString())
                 // Claim Value
-                tvClaimValue.text =
-                    "${it.valPerRepeat} ${getString(com.safetysource.core.R.string.egyptian_pound)}"
+                tvClaimValue.text = "${it.valPerRepeat} ${getString(R.string.egyptian_pound)}"
                 // Expires At
                 tvExpiresAt.text = it.expiresAt?.time?.getDateText("EE, d MMM yyyy, hh:mm aa")
             }

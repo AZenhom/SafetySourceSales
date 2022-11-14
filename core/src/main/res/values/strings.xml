@@ -179,7 +179,7 @@
     <string name="pieces_count">%1$s Pieces</string>
     <string name="claim_a_value_of">claim a value of</string>
     <string name="and"><![CDATA[&]]></string>
-    <string name="claim">Claim %1$s</string>
+    <string name="claim">Claim %1$s EGP</string>
     <string name="subscribed_in_offer_successfully">Subscribed to offer successfully</string>
     <string name="you_can_claim_after_expiry">You can only claim offer after expiration date</string>
     <string name="insufficient_sell_count">Insufficient sell count during the offer time</string>

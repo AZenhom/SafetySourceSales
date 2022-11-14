@@ -73,7 +73,7 @@ class CreateEditRetailerActivity :
     private fun initViews() {
         val isEditMode = viewModel.retailerToEdit != null
         with(binding) {
-            toolbar.setNavigationOnClickListener { onBackPressed() }
+            registerToolBarOnBackPressed(toolbar)
 
             if (isEditMode) {
                 etRetailerPhone.isClickable = false

@@ -57,10 +57,10 @@ class RetailerDetailsActivity :
                 showUnsellingApprovalDialog(it)
         }
         with(binding) {
+            registerToolBarOnBackPressed(toolbar)
             rvTransactions.adapter = adapter
             tvFilterSummary.text =
                 viewModel.transactionFilterModel.toString(this@RetailerDetailsActivity)
-            toolbar.setNavigationOnClickListener { onBackPressed() }
             fabRedeem.setOnClickListener { showRetailerRedeemDialog() }
         }
     }
