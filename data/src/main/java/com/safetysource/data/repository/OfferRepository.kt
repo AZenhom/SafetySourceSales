@@ -62,10 +62,25 @@ class OfferRepository @Inject constructor(
         if (offerModel.id.isNullOrEmpty())
             return StatefulResult.Error(ErrorModel.Unknown)
         return try {
-            val productRef = fireStoreDB
+            val offerRef = fireStoreDB
                 .collection(Constants.COLLECTION_OFFER)
                 .document(offerModel.id)
-            productRef.set(offerModel).await()
+            offerRef.set(offerModel).await()
+            StatefulResult.Success(Unit)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            StatefulResult.Error(ErrorModel.Unknown)
+        }
+    }
+
+    suspend fun deleteOffer(offerModel: OfferModel): StatefulResult<Unit> {
+        if (offerModel.id.isNullOrEmpty())
+            return StatefulResult.Error(ErrorModel.Unknown)
+        return try {
+            val offerRef = fireStoreDB
+                .collection(Constants.COLLECTION_OFFER)
+                .document(offerModel.id)
+            offerRef.delete().await()
             StatefulResult.Success(Unit)
         } catch (e: Exception) {
             e.printStackTrace()

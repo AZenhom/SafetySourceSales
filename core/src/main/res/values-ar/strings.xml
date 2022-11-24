@@ -34,6 +34,7 @@
     <string name="category_rank">ترتيب الفئة</string>
     <string name="category_rank_hint">أدنى تصنيف: ١</string>
     <string name="submit">إرسال</string>
+    <string name="delete">حذف</string>
     <string name="image_picking_cancelled">تم إلغاء انتقاء الصور</string>
     <string name="please_pick_an_image_first">الرجاء اختيار صورة أولا</string>
     <string name="name_field_cannot_be_empty">لا يمكن ترك الاسم فارغًا</string>
@@ -164,6 +165,9 @@
     <string name="invalid_sell_count">قيمة عدد البيع المطلوب غير صالحة</string>
     <string name="offer_created_successfully">تم إنشاء العرض بنجاح</string>
     <string name="offer_updated_successfully">تم تعديل العرض بنجاح</string>
+    <string name="offer_deleted_successfully">تم حذف العرض بنجاح</string>
+    <string name="history_offers_cannot_be_deleted">العروض السابقة لا يمكن حذفها</string>
+    <string name="delete_offer_question">هل أنت متأكد أنك تريد حذف هذا العرض مع كل الاشتراكات الخاصة به</string>
     <string name="to">حتى</string>
     <string name="offers">العروض</string>
     <string name="history">سابقة</string>

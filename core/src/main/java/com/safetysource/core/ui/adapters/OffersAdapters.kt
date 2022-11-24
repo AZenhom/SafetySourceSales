@@ -17,6 +17,7 @@ import com.squareup.picasso.Picasso
 class OffersAdapters constructor(
     private val onItemClicked: ((offerModel: OfferModel) -> Unit)? = null,
     private val onEditClicked: ((offerModel: OfferModel) -> Unit)? = null,
+    private val onDeleteClicked: ((offerModel: OfferModel) -> Unit)? = null,
 ) : ListAdapter<OfferModel, OffersAdapters.ItemViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -49,8 +50,9 @@ class OffersAdapters constructor(
                 val expiryDate = item.expiresAt?.time?.getDateText("dd-MM-yyyy")
                 tvDate.text = "$startDate ${tvDate.context.getString(R.string.to)} $expiryDate"
 
-                // Edit Icon
+                // Edit & Delete Icon
                 ivEdit.setIsVisible(onEditClicked != null)
+                ivDelete.setIsVisible(onDeleteClicked != null)
 
                 // Click Listeners
                 rootView.setOnClickListener {
@@ -58,6 +60,9 @@ class OffersAdapters constructor(
                 }
                 ivEdit.setOnClickListener {
                     onEditClicked?.invoke(item)
+                }
+                ivDelete.setOnClickListener {
+                    onDeleteClicked?.invoke(item)
                 }
 
             }

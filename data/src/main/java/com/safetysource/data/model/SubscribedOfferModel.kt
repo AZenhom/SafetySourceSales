@@ -16,6 +16,7 @@ data class SubscribedOfferModel(
     var updatedAt: Date? = null,
 ) : Serializable {
     companion object {
+        const val OFFER_ID = "offerId"
         const val RETAILER_ID = "retailerId"
         const val CLAIMED_OR_REMOVED = "claimedOrRemoved"
     }

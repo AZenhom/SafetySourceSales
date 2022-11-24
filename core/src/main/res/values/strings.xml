@@ -35,6 +35,7 @@
     <string name="category_rank">Category Rank</string>
     <string name="category_rank_hint">Lowest Rank: 1</string>
     <string name="submit">Submit</string>
+    <string name="delete">Delete</string>
     <string name="image_picking_cancelled">Image Picking Cancelled</string>
     <string name="please_pick_an_image_first">Please pick an image first</string>
     <string name="name_field_cannot_be_empty">Name field can\'t be empty</string>
@@ -165,6 +166,9 @@
     <string name="invalid_sell_count">Invalid Sell Count</string>
     <string name="offer_created_successfully">Offer Created Successfully</string>
     <string name="offer_updated_successfully">Offer Updated Successfully</string>
+    <string name="offer_deleted_successfully">Offer Deleted Successfully</string>
+    <string name="history_offers_cannot_be_deleted">History offers cannot be deleted</string>
+    <string name="delete_offer_question">Are you sure you want to delete this offer and all it\'s subscriptions</string>
     <string name="to">To</string>
     <string name="offers">Offers</string>
     <string name="history">History</string>

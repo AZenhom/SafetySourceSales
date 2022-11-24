@@ -91,4 +91,41 @@ class SubscribedOfferRepository @Inject constructor(
             StatefulResult.Error(ErrorModel.Unknown)
         }
     }
+
+    suspend fun getOfferSubscriptions(offerModel: OfferModel): StatefulResult<List<SubscribedOfferModel>> {
+        if (offerModel.id.isNullOrEmpty())
+            return StatefulResult.Error(ErrorModel.Unknown)
+        return try {
+            val documents =
+                fireStoreDB.collection(Constants.COLLECTION_SUBSCRIBED_OFFER)
+                    .whereEqualTo(SubscribedOfferModel.OFFER_ID, offerModel.id)
+                    .orderBy(Constants.UPDATED_AT, Query.Direction.DESCENDING)
+                    .get().await()
+            StatefulResult.Success(documents.toObjects(SubscribedOfferModel::class.java))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            StatefulResult.Error(ErrorModel.Unknown)
+        }
+    }
+
+    suspend fun deleteSubscribedOffers(subscribedOffers: List<SubscribedOfferModel>): StatefulResult<Unit> {
+        subscribedOffers.forEach { subscribedOffer ->
+            if (subscribedOffer.id.isNullOrEmpty())
+                return StatefulResult.Error(ErrorModel.Unknown)
+        }
+        return try {
+            fireStoreDB.runBatch { batch ->
+                subscribedOffers.forEach { subscribedOffer ->
+                    val subscribedOfferRef = fireStoreDB
+                        .collection(Constants.COLLECTION_SUBSCRIBED_OFFER)
+                        .document(subscribedOffer.id!!)
+                    batch.delete(subscribedOfferRef)
+                }
+            }.await()
+            StatefulResult.Success(Unit)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            StatefulResult.Error(ErrorModel.Unknown)
+        }
+    }
 }

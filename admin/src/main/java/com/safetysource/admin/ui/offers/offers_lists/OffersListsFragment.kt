@@ -46,11 +46,5 @@ class OffersListsFragment :
         }.attach()
         binding.viewPager.isUserInputEnabled = false
         binding.viewPager.offscreenPageLimit = 1
-        /*binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                binding.nScrollView.fullScroll(NestedScrollView.FOCUS_UP)
-                super.onPageSelected(position)
-            }
-        })*/
     }
 }
