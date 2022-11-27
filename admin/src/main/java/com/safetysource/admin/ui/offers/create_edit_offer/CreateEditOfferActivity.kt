@@ -2,13 +2,16 @@ package com.safetysource.admin.ui.offers.create_edit_offer
 
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.lifecycle.LiveData
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.hadilq.liveevent.LiveEvent
 import com.safetysource.admin.databinding.ActivityCreateEditOfferBinding
 import com.safetysource.core.R
 import com.safetysource.core.base.BaseActivity
@@ -127,47 +130,43 @@ class CreateEditOfferActivity :
             }
 
             clStartsAt.setOnClickListener {
-                with(Calendar.getInstance()) {
-                    viewModel.startsAt.let { time = it }
-                    DatePickerDialog(
-                        this@CreateEditOfferActivity,
-                        { _, selectedYear, selectedMonth, selectedDayOfMonth ->
-                            set(Calendar.YEAR, selectedYear)
-                            set(Calendar.MONTH, selectedMonth)
-                            set(Calendar.DAY_OF_MONTH, selectedDayOfMonth)
-                            set(Calendar.HOUR_OF_DAY, 0)
-                            set(Calendar.MINUTE, 0)
-                            set(Calendar.SECOND, 0)
-                            set(Calendar.MILLISECOND, 0)
-                            tvStartsAt.text = time.time.getDateText("EE, d MMM yyyy")
-                            viewModel.startsAt = time
-                        }, get(Calendar.YEAR), get(Calendar.MONTH), get(Calendar.DAY_OF_MONTH)
-                    ).show()
+                pickDateAndTime(viewModel.startsAt).observe(this@CreateEditOfferActivity) {
+                    viewModel.startsAt = it
                 }
             }
 
             clExpiresAt.setOnClickListener {
-                with(Calendar.getInstance()) {
-                    viewModel.expiresAt.let { time = it }
-                    DatePickerDialog(
-                        this@CreateEditOfferActivity,
-                        { _, selectedYear, selectedMonth, selectedDayOfMonth ->
-                            set(Calendar.YEAR, selectedYear)
-                            set(Calendar.MONTH, selectedMonth)
-                            set(Calendar.DAY_OF_MONTH, selectedDayOfMonth)
-                            set(Calendar.HOUR_OF_DAY, 23)
-                            set(Calendar.MINUTE, 59)
-                            set(Calendar.SECOND, 59)
-                            set(Calendar.MILLISECOND, 999)
-                            tvExpiresAt.text = time.time.getDateText("EE, d MMM yyyy")
-                            viewModel.expiresAt = time
-                        }, get(Calendar.YEAR), get(Calendar.MONTH), get(Calendar.DAY_OF_MONTH)
-                    ).show()
+                pickDateAndTime(viewModel.expiresAt).observe(this@CreateEditOfferActivity) {
+                    viewModel.expiresAt = it
                 }
             }
 
             btnSubmit.setOnClickListener { startValidationAndPrepareData() }
         }
+    }
+
+    private fun pickDateAndTime(initial: Date): LiveData<Date> {
+        val liveData = LiveEvent<Date>()
+        with(Calendar.getInstance()) {
+            time = initial
+            DatePickerDialog(
+                this@CreateEditOfferActivity,
+                { _, selectedYear, selectedMonth, selectedDayOfMonth ->
+                    set(Calendar.YEAR, selectedYear)
+                    set(Calendar.MONTH, selectedMonth)
+                    set(Calendar.DAY_OF_MONTH, selectedDayOfMonth)
+                    TimePickerDialog(
+                        this@CreateEditOfferActivity,
+                        { _, selectedHour, selectedMinute ->
+                            set(Calendar.HOUR_OF_DAY, selectedHour)
+                            set(Calendar.MINUTE, selectedMinute)
+                            liveData.value = time
+                        }, get(Calendar.HOUR_OF_DAY), get(Calendar.MINUTE), false
+                    ).show()
+                }, get(Calendar.YEAR), get(Calendar.MONTH), get(Calendar.DAY_OF_MONTH)
+            ).show()
+        }
+        return liveData
     }
 
     private fun startImagePicking() {
