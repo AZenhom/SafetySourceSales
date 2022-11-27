@@ -15,6 +15,7 @@ class EditTextDialog constructor(
     private val confirmText: String? = context.getString(R.string.confirm),
     private val cancelText: String? = context.getString(R.string.cancel),
     private val editTextHint: String? = null,
+    private val editTextInputStyle: Int? = null,
     private val onConfirm: ((text: String) -> Unit)? = null,
     private val onCancel: (() -> Unit)? = null,
     private val isCancelable: Boolean? = false,
@@ -48,6 +49,8 @@ class EditTextDialog constructor(
             tvMessage.text = message
 
             etText.hint = editTextHint
+            if (editTextInputStyle != null)
+                etText.inputType = editTextInputStyle
 
             if (confirmText == null)
                 btnConfirm.visibility = View.GONE

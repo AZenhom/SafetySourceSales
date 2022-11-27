@@ -96,34 +96,41 @@ class RetailerDetailsViewModel @Inject constructor(
         return liveData
     }
 
-    fun redeemRetailerCommission(): LiveData<Boolean> {
+    fun redeemRetailerCommission(valueToRedeem: Int): LiveData<Boolean> {
         showLoading()
         val liveData = LiveEvent<Boolean>()
         safeLauncher {
-            val retailerReport =
-                reportsRepository.getRetailerReportById(retailerModel?.id ?: "").data
-            if (retailerReport == null) {
+
+            val response1 =
+                async { reportsRepository.getRetailerReportById(retailerModel?.id ?: "").data }
+            val response2 =
+                async { reportsRepository.getTeamReportById(retailerModel?.teamId ?: "").data }
+            val retailerReport = response1.await()
+            val teamReport = response2.await()
+
+            if (retailerReport == null
+                || teamReport == null
+                || valueToRedeem.toFloat() > (retailerReport.dueCommissionValue ?: 0f)
+                || valueToRedeem.toFloat() > (teamReport.dueCommissionValue ?: 0f)
+            ) {
                 liveData.value = false
                 hideLoading()
             }
             retailerReport!!.totalRedeemed =
-                (retailerReport.totalRedeemed ?: 0f) + (retailerReport.dueCommissionValue ?: 0f)
-            retailerReport.dueCommissionValue = 0f
+                (retailerReport.totalRedeemed ?: 0f) + valueToRedeem.toFloat()
+            retailerReport.dueCommissionValue =
+                (retailerReport.totalRedeemed ?: 0f) - valueToRedeem.toFloat()
             retailerReport.updatedAt = null
 
-            val teamReport =
-                reportsRepository.getTeamReportById(retailerModel?.teamId ?: "").data
-            if (teamReport == null) {
-                liveData.value = false
-                hideLoading()
-            }
             teamReport!!.totalRedeemed =
-                (teamReport.totalRedeemed ?: 0f) + (teamReport.dueCommissionValue ?: 0f)
-            teamReport.dueCommissionValue = 0f
+                (teamReport.totalRedeemed ?: 0f) + valueToRedeem.toFloat()
+            teamReport.dueCommissionValue =
+                (teamReport.totalRedeemed ?: 0f) - valueToRedeem.toFloat()
             teamReport.updatedAt = null
 
-            reportsRepository.createUpdateRetailerReport(retailerReport)
-            reportsRepository.createUpdateTeamReport(teamReport)
+            val result1 = async { reportsRepository.createUpdateRetailerReport(retailerReport) }
+            val result2 = async { reportsRepository.createUpdateTeamReport(teamReport) }
+            result1.await(); result2.await()
 
             liveData.value = true
             hideLoading()

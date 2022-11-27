@@ -113,7 +113,7 @@
     <string name="due_commission">العمولة المستحقة</string>
     <string name="total_redeemed">مجموع المستحقات المصروفة</string>
     <string name="redeem">صرف و تسوية المستحقات</string>
-    <string name="redeem_commission_question">هل أنت متأكد من أنك تريد أن يقوم بائع التجزئة باسترداد جميع العمولات المستحقة</string>
+    <string name="redeem_commission_question">كم تحديدًا تريد لبائع التجزئة ان يسترده من عمولاته المستحقة</string>
     <string name="commission_redeemed_successfully">تم استرداد و تسوية العمولة بنجاح</string>
     <string name="something_went_wrong">حدث خطأ ما</string>
     <string name="retailer_name">اسم بائع التجزئة</string>

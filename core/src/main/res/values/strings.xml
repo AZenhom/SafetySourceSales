@@ -114,7 +114,7 @@
     <string name="due_commission">Due Commissions</string>
     <string name="total_redeemed">Total Redeemed</string>
     <string name="redeem">Redeem</string>
-    <string name="redeem_commission_question">Are you sure you want this retailer to redeem all the due commissions</string>
+    <string name="redeem_commission_question">How much do you want this retailer to redeem from his/her due commissions</string>
     <string name="commission_redeemed_successfully">Commission redeemed successfully</string>
     <string name="something_went_wrong">Something went wrong</string>
     <string name="retailer_name">Retailer Name</string>
