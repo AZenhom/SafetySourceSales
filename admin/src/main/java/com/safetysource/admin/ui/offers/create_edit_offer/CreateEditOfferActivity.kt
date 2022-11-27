@@ -132,12 +132,14 @@ class CreateEditOfferActivity :
             clStartsAt.setOnClickListener {
                 pickDateAndTime(viewModel.startsAt).observe(this@CreateEditOfferActivity) {
                     viewModel.startsAt = it
+                    tvStartsAt.text = it.time.getDateText("EE, d MMM yyyy, hh:mm aa")
                 }
             }
 
             clExpiresAt.setOnClickListener {
                 pickDateAndTime(viewModel.expiresAt).observe(this@CreateEditOfferActivity) {
                     viewModel.expiresAt = it
+                    tvExpiresAt.text = it.time.getDateText("EE, d MMM yyyy, hh:mm aa")
                 }
             }
 
