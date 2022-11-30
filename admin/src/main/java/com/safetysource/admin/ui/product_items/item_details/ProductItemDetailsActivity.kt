@@ -44,10 +44,12 @@ class ProductItemDetailsActivity :
     }
 
     private fun initViews() {
-        adapter = TransactionsAdapter {
-            if (it.type == TransactionType.UNSELLING && it.isUnsellingApproved == false)
-                showUnsellingApprovalDialog(it)
-        }
+        adapter = TransactionsAdapter(
+            onItemClicked = {
+                if (it.type == TransactionType.UNSELLING && it.isUnsellingApproved == false)
+                    showUnsellingApprovalDialog(it)
+            }
+        )
         with(binding) {
             registerToolBarOnBackPressed(toolbar)
             rvTransactions.adapter = adapter

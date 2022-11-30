@@ -9,12 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.safetysource.core.R
 import com.safetysource.core.databinding.ItemTransactionBinding
 import com.safetysource.core.utils.getDateText
+import com.safetysource.data.model.OfferSerial
 import com.safetysource.data.model.TransactionModel
 import com.safetysource.data.model.TransactionType
 
 @SuppressLint("SetTextI18n")
 class TransactionsAdapter constructor(
     private val onItemClicked: ((transaction: TransactionModel) -> Unit)? = null,
+    private val onMultipleSerialsClicked: ((serials: List<OfferSerial>) -> Unit)? = null,
 ) : ListAdapter<TransactionModel, TransactionsAdapter.ItemViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -43,7 +45,13 @@ class TransactionsAdapter constructor(
                 tvProductName.text = item.productModel?.name
 
                 // Serial
-                tvSerial.text = item.serial
+                if (!item.offerSerials.isNullOrEmpty()) {
+                    tvSerial.text = tvSerial.context.getString(R.string.click_to_view_serials)
+                    tvSerial.setOnClickListener { onMultipleSerialsClicked?.invoke(item.offerSerials!!) }
+                } else {
+                    tvSerial.text = item.serial
+                    tvSerial.setOnClickListener(null)
+                }
 
                 // Admin Action Required
                 tvAdminActionRequired.text =
@@ -75,7 +83,7 @@ class TransactionsAdapter constructor(
                 )
 
                 // Last Updated
-                tvLastUpdated.text = item.updatedAt?.time?.getDateText("EE, d MMM yyyy")
+                tvLastUpdated.text = item.updatedAt?.time?.getDateText("EE, d MMM yyyy, hh:mm aa")
 
                 // Click Listeners
                 rootView.setOnClickListener {

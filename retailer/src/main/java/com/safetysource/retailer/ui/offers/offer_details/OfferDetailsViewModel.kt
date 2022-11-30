@@ -40,6 +40,8 @@ class OfferDetailsViewModel @Inject constructor(
     private val _exclusiveProductLiveData = MutableLiveData<ProductModel?>()
     val exclusiveProductLiveData: LiveData<ProductModel?> get() = _exclusiveProductLiveData
 
+    private var validSerials: ArrayList<OfferSerial> = arrayListOf()
+
     init {
         safeLauncher {
             retailerModel = retailerRepository.getCurrentRetailerModel() ?: return@safeLauncher
@@ -136,6 +138,7 @@ class OfferDetailsViewModel @Inject constructor(
             return@safeLauncher
         }
         var commissionValue = 0.0F
+        validSerials.clear()
         for (transaction in transactionsList) {
             if (transaction.type == TransactionType.SELLING) {
                 commissionValue += (transaction.commissionAppliedOrRemoved ?: 0F)
@@ -145,6 +148,12 @@ class OfferDetailsViewModel @Inject constructor(
                 commissionValue -= (transaction.commissionAppliedOrRemoved ?: 0F)
                 validSellCount++
             }
+            val offerSerial = OfferSerial(
+                transactionId = transaction.id,
+                serial = transaction.serial,
+                transactionType = transaction.type
+            )
+            validSerials.add(offerSerial)
             if (validSellCount == 0)
                 break
         }
@@ -235,8 +244,9 @@ class OfferDetailsViewModel @Inject constructor(
                 type = TransactionType.OFFER_CLAIM,
                 retailerId = retailerModel.id,
                 teamId = retailerModel.teamId,
-                productId = offerModel?.productId,
                 categoryId = offerModel?.productCategoryId,
+                productId = offerModel?.productId,
+                offerSerials = validSerials,
                 commissionAppliedOrRemoved = netValueToClaim,
                 offerId = offerModel?.id
             )

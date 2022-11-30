@@ -14,11 +14,11 @@ import com.safetysource.data.model.OfferModel
 import com.squareup.picasso.Picasso
 
 @SuppressLint("SetTextI18n")
-class OffersAdapters constructor(
+class OffersAdapter constructor(
     private val onItemClicked: ((offerModel: OfferModel) -> Unit)? = null,
     private val onEditClicked: ((offerModel: OfferModel) -> Unit)? = null,
     private val onDeleteClicked: ((offerModel: OfferModel) -> Unit)? = null,
-) : ListAdapter<OfferModel, OffersAdapters.ItemViewHolder>(DIFF_CALLBACK) {
+) : ListAdapter<OfferModel, OffersAdapter.ItemViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val binding =

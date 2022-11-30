@@ -2,7 +2,7 @@ package com.safetysource.retailer.ui.offers.offers_list
 
 import androidx.fragment.app.viewModels
 import com.safetysource.core.base.BaseFragment
-import com.safetysource.core.ui.adapters.OffersAdapters
+import com.safetysource.core.ui.adapters.OffersAdapter
 import com.safetysource.core.ui.setIsVisible
 import com.safetysource.retailer.R
 import com.safetysource.retailer.databinding.FragmentOffersListBinding
@@ -16,8 +16,8 @@ class OffersListFragment :
     override val viewModel: OffersListViewModel by viewModels()
     override val binding by viewBinding(FragmentOffersListBinding::bind)
 
-    private lateinit var subscribedOffersAdapter: OffersAdapters
-    private lateinit var availableOffersAdapter: OffersAdapters
+    private lateinit var subscribedOffersAdapter: OffersAdapter
+    private lateinit var availableOffersAdapter: OffersAdapter
 
     override fun onViewCreated() {
         initViews()
@@ -30,12 +30,12 @@ class OffersListFragment :
     }
 
     private fun initViews() {
-        subscribedOffersAdapter = OffersAdapters(onItemClicked = {
+        subscribedOffersAdapter = OffersAdapter(onItemClicked = {
             startActivity(OfferDetailsActivity.getIntent(requireContext(), it))
         })
         binding.rvSubscribedOffers.adapter = subscribedOffersAdapter
 
-        availableOffersAdapter = OffersAdapters(onItemClicked = {
+        availableOffersAdapter = OffersAdapter(onItemClicked = {
             startActivity(OfferDetailsActivity.getIntent(requireContext(), it))
         })
         binding.rvAvailableOffers.adapter = availableOffersAdapter

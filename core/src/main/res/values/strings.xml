@@ -86,6 +86,9 @@
     <string name="not_sold_yet">NOT SOLD YET</string>
     <string name="pending_unselling">PENDING UNSELLING</string>
     <string name="serial">Serial</string>
+    <string name="click_to_view_serials"><u>Click to view multiple serials</u></string>
+    <string name="offer_serials">Offer Serials</string>
+    <string name="click_the_serial_to_view_product_item">Click the serial to view product item</string>
     <string name="retailer">Retailer</string>
     <string name="product">Product</string>
     <string name="commission_applied">Commission Applied</string>

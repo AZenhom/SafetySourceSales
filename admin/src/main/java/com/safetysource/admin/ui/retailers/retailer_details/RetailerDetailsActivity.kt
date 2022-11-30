@@ -6,19 +6,18 @@ import android.content.Intent
 import android.text.InputType
 import androidx.activity.viewModels
 import com.safetysource.admin.databinding.ActivityRetailerDetailsBinding
+import com.safetysource.admin.ui.product_items.item_details.ProductItemDetailsActivity
 import com.safetysource.core.R
 import com.safetysource.core.base.BaseActivity
 import com.safetysource.core.ui.adapters.TransactionsAdapter
 import com.safetysource.core.ui.dialogs.EditTextDialog
 import com.safetysource.core.ui.dialogs.InfoDialog
 import com.safetysource.core.ui.makeVisible
+import com.safetysource.core.ui.sheets.OfferSerialsSheet
 import com.safetysource.core.utils.convertArabicNumbersIfExist
 import com.safetysource.core.utils.getDigit
 import com.safetysource.core.utils.toString
-import com.safetysource.data.model.RetailerModel
-import com.safetysource.data.model.TeamModel
-import com.safetysource.data.model.TransactionModel
-import com.safetysource.data.model.TransactionType
+import com.safetysource.data.model.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -56,16 +55,34 @@ class RetailerDetailsActivity :
     }
 
     private fun initViews() {
-        adapter = TransactionsAdapter {
-            if (it.type == TransactionType.UNSELLING && it.isUnsellingApproved == false)
-                showUnsellingApprovalDialog(it)
-        }
+        adapter = TransactionsAdapter(
+            onItemClicked = {
+                if (it.type == TransactionType.UNSELLING && it.isUnsellingApproved == false)
+                    showUnsellingApprovalDialog(it)
+            },
+            onMultipleSerialsClicked = { showOfferSerialsSheet(it) }
+        )
         with(binding) {
             registerToolBarOnBackPressed(toolbar)
             rvTransactions.adapter = adapter
             tvFilterSummary.text =
                 viewModel.transactionFilterModel.toString(this@RetailerDetailsActivity)
             fabRedeem.setOnClickListener { getRetailerReport(true) }
+        }
+    }
+
+    private fun showOfferSerialsSheet(offerSerials: List<OfferSerial>) {
+        OfferSerialsSheet(offerSerials) { offerSerial ->
+            viewModel.getProductItemBySerial(offerSerial.serial ?: return@OfferSerialsSheet)
+                .observe(this) { productItem ->
+                    productItem?.let {
+                        ProductItemDetailsActivity.getIntent(
+                            this,
+                            it.first ?: return@observe,
+                            it.second ?: return@observe
+                        )
+                    }
+                }
         }
     }
 

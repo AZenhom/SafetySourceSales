@@ -169,4 +169,24 @@ class RetailerDetailsViewModel @Inject constructor(
         }
         return liveData
     }
+
+    fun getProductItemBySerial(serial: String): LiveData<Pair<ProductModel?, ProductItemModel?>> {
+        val liveData = LiveEvent<Pair<ProductModel?, ProductItemModel?>>()
+        safeLauncher {
+            var pair = Pair<ProductModel?, ProductItemModel?>(null, null)
+            val result =
+                productItemRepository.getProductItemBySerial(serial)
+            if (result is StatefulResult.Success) {
+                if (result.data != null) {
+                    val productModel =
+                        productRepository.getProductById(result.data!!.productId ?: "").data
+                    pair = Pair(productModel, result.data)
+                }
+                hideLoading()
+                liveData.value = pair
+            } else
+                handleError(result.errorModel)
+        }
+        return liveData
+    }
 }

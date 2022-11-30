@@ -3,6 +3,7 @@ package com.safetysource.retailer.ui.transactions
 import androidx.lifecycle.LiveData
 import com.hadilq.liveevent.LiveEvent
 import com.safetysource.core.base.BaseViewModel
+import com.safetysource.data.model.ProductItemModel
 import com.safetysource.data.model.ProductModel
 import com.safetysource.data.model.TransactionFilterModel
 import com.safetysource.data.model.TransactionModel
@@ -16,6 +17,7 @@ import javax.inject.Inject
 class TransactionsViewModel @Inject constructor(
     private val transactionsRepository: TransactionsRepository,
     private val productRepository: ProductRepository,
+    private val productItemRepository: ProductItemRepository,
     private val teamRepository: TeamRepository,
     private val retailerRepository: RetailerRepository,
 ) : BaseViewModel() {
@@ -61,6 +63,21 @@ class TransactionsViewModel @Inject constructor(
                 liveData.value = transactions
                 hideLoading()
             } else
+                handleError(result.errorModel)
+        }
+        return liveData
+    }
+
+    fun getProductItemBySerial(serial: String): LiveData<ProductItemModel?> {
+        showLoading()
+        val liveData = LiveEvent<ProductItemModel?>()
+        safeLauncher {
+            val result =
+                productItemRepository.getProductItemBySerial(serial)
+            hideLoading()
+            if (result is StatefulResult.Success)
+                liveData.value = result.data
+            else
                 handleError(result.errorModel)
         }
         return liveData

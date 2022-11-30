@@ -85,6 +85,9 @@
     <string name="not_sold_yet">لم يباع بعد</string>
     <string name="pending_unselling">في انتظار الموافقة على إلغاء البيع</string>
     <string name="serial">سيريال</string>
+    <string name="click_to_view_serials"><u>اضغط لعرض سيريالات متعددة</u></string>
+    <string name="offer_serials">سيريالات العرض</string>
+    <string name="click_the_serial_to_view_product_item">اضغط السيريال لعرض تفاصيل المنتج</string>
     <string name="retailer">بائع تجزئة</string>
     <string name="product">المنتج</string>
     <string name="commission_applied">العمولة المطبقة</string>

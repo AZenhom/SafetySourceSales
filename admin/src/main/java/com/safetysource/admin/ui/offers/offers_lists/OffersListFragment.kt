@@ -7,10 +7,9 @@ import com.safetysource.admin.databinding.FragmentOffersListModeBinding
 import com.safetysource.admin.ui.offers.create_edit_offer.CreateEditOfferActivity
 import com.safetysource.admin.ui.offers.offer_details.OfferDetailsActivity
 import com.safetysource.core.base.BaseFragment
-import com.safetysource.core.ui.adapters.OffersAdapters
+import com.safetysource.core.ui.adapters.OffersAdapter
 import com.safetysource.core.ui.dialogs.InfoDialog
 import com.safetysource.data.model.OfferModel
-import com.safetysource.data.model.TransactionModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
@@ -44,7 +43,7 @@ class OffersListFragment :
     override val binding by viewBinding(FragmentOffersListModeBinding::bind)
 
     private lateinit var fragmentMode: OffersFragmentMode
-    private lateinit var offersAdapters: OffersAdapters
+    private lateinit var offersAdapter: OffersAdapter
 
     override fun onViewCreated() {
         fragmentMode = (arguments?.getSerializable(FRAGMENT_MODE) as OffersFragmentMode?)
@@ -54,7 +53,7 @@ class OffersListFragment :
     }
 
     private fun initViews() {
-        offersAdapters = OffersAdapters(
+        offersAdapter = OffersAdapter(
             onItemClicked = { startActivity(OfferDetailsActivity.getIntent(requireContext(), it)) },
             onEditClicked = {
                 startActivity(CreateEditOfferActivity.getIntent(requireContext(), it))
@@ -66,7 +65,7 @@ class OffersListFragment :
             }
         )
         with(binding) {
-            rvOffers.adapter = offersAdapters
+            rvOffers.adapter = offersAdapter
         }
     }
 
@@ -88,7 +87,7 @@ class OffersListFragment :
     }
 
     private fun submitOffersList(offersList: List<OfferModel>) {
-        offersAdapters.submitList(offersList)
+        offersAdapter.submitList(offersList)
     }
 
     private fun deleteOffer(offerModel: OfferModel) {

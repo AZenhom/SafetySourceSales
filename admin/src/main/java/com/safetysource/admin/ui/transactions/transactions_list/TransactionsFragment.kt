@@ -5,11 +5,14 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import com.safetysource.admin.R
 import com.safetysource.admin.databinding.FragmentTransactionsBinding
+import com.safetysource.admin.ui.product_items.item_details.ProductItemDetailsActivity
 import com.safetysource.admin.ui.transactions.transactions_filter.TransactionsFilterActivity
 import com.safetysource.core.base.BaseFragment
 import com.safetysource.core.ui.dialogs.InfoDialog
 import com.safetysource.core.ui.adapters.TransactionsAdapter
+import com.safetysource.core.ui.sheets.OfferSerialsSheet
 import com.safetysource.core.utils.toString
+import com.safetysource.data.model.OfferSerial
 import com.safetysource.data.model.TransactionFilterModel
 import com.safetysource.data.model.TransactionModel
 import com.safetysource.data.model.TransactionType
@@ -48,11 +51,29 @@ class TransactionsFragment :
                 )
             )
         }
-        adapter = TransactionsAdapter {
-            if (it.type == TransactionType.UNSELLING && it.isUnsellingApproved == false)
-                showUnsellingApprovalDialog(it)
-        }
+        adapter = TransactionsAdapter(
+            onItemClicked = {
+                if (it.type == TransactionType.UNSELLING && it.isUnsellingApproved == false)
+                    showUnsellingApprovalDialog(it)
+            },
+            onMultipleSerialsClicked = { showOfferSerialsSheet(it) }
+        )
         binding.rvTransactions.adapter = adapter
+    }
+
+    private fun showOfferSerialsSheet(offerSerials: List<OfferSerial>) {
+        OfferSerialsSheet(offerSerials) { offerSerial ->
+            viewModel.getProductItemBySerial(offerSerial.serial ?: return@OfferSerialsSheet)
+                .observe(viewLifecycleOwner) { productItem ->
+                    productItem?.let {
+                        ProductItemDetailsActivity.getIntent(
+                            requireContext(),
+                            it.first ?: return@observe,
+                            it.second ?: return@observe
+                        )
+                    }
+                }
+        }
     }
 
     private fun showUnsellingApprovalDialog(transactionModel: TransactionModel) {
