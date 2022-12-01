@@ -96,7 +96,7 @@ class RetailerDetailsViewModel @Inject constructor(
         return liveData
     }
 
-    fun redeemRetailerCommission(valueToRedeem: Int): LiveData<Boolean> {
+    fun redeemRetailerCommission(valueToRedeem: Float): LiveData<Boolean> {
         showLoading()
         val liveData = LiveEvent<Boolean>()
         safeLauncher {
@@ -105,30 +105,22 @@ class RetailerDetailsViewModel @Inject constructor(
                 async { reportsRepository.getRetailerReportById(retailerModel?.id ?: "").data }
             val response2 =
                 async { reportsRepository.getTeamReportById(retailerModel?.teamId ?: "").data }
-            val retailerReport = response1.await()
+            val retReport = response1.await()
             val teamReport = response2.await()
 
-            if (retailerReport == null
-                || teamReport == null
-                || valueToRedeem.toFloat() > (retailerReport.dueCommissionValue ?: 0f)
-                || valueToRedeem.toFloat() > (teamReport.dueCommissionValue ?: 0f)
-            ) {
+            if (retReport == null || teamReport == null) {
                 liveData.value = false
                 hideLoading()
             }
-            retailerReport!!.totalRedeemed =
-                (retailerReport.totalRedeemed ?: 0f) + valueToRedeem.toFloat()
-            retailerReport.dueCommissionValue =
-                (retailerReport.totalRedeemed ?: 0f) - valueToRedeem.toFloat()
-            retailerReport.updatedAt = null
+            retReport!!.totalRedeemed = (retReport.totalRedeemed ?: 0f) + valueToRedeem
+            retReport.dueCommissionValue = (retReport.dueCommissionValue ?: 0f) - valueToRedeem
+            retReport.updatedAt = null
 
-            teamReport!!.totalRedeemed =
-                (teamReport.totalRedeemed ?: 0f) + valueToRedeem.toFloat()
-            teamReport.dueCommissionValue =
-                (teamReport.totalRedeemed ?: 0f) - valueToRedeem.toFloat()
+            teamReport!!.totalRedeemed = (teamReport.totalRedeemed ?: 0f) + valueToRedeem
+            teamReport.dueCommissionValue = (teamReport.dueCommissionValue ?: 0f) - valueToRedeem
             teamReport.updatedAt = null
 
-            val result1 = async { reportsRepository.createUpdateRetailerReport(retailerReport) }
+            val result1 = async { reportsRepository.createUpdateRetailerReport(retReport) }
             val result2 = async { reportsRepository.createUpdateTeamReport(teamReport) }
             result1.await(); result2.await()
 

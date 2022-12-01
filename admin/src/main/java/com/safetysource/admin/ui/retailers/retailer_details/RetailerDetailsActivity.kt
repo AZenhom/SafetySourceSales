@@ -19,6 +19,7 @@ import com.safetysource.core.utils.getDigit
 import com.safetysource.core.utils.toString
 import com.safetysource.data.model.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.absoluteValue
 
 @AndroidEntryPoint
 class RetailerDetailsActivity :
@@ -135,7 +136,7 @@ class RetailerDetailsActivity :
                 tvTotalRedeemed.text =
                     "${it?.totalRedeemed} ${getString(R.string.egyptian_pound)}"
                 if (proceedToRedeemDialog)
-                    showRetailerRedeemDialog(it?.dueCommissionValue?.toInt() ?: 0)
+                    showRetailerRedeemDialog(it?.dueCommissionValue?.toInt()?.absoluteValue ?: 0)
             }
         }
     }
@@ -154,7 +155,7 @@ class RetailerDetailsActivity :
     }
 
     private fun redeemCommissions(valueToRedeem: Int) {
-        viewModel.redeemRetailerCommission(valueToRedeem).observe(this) {
+        viewModel.redeemRetailerCommission(valueToRedeem.toFloat()).observe(this) {
             if (it) {
                 showSuccessMsg(getString(R.string.commission_redeemed_successfully))
                 getData()

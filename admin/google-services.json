@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "148067041025-lhc2cqgqqdug23fkir2mlm0mgrt8ph2o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.safetysource.admin",
+            "certificate_hash": "8bfcf256f7c782b8dc320729ad6cb40039fd696d"
+          }
+        },
+        {
           "client_id": "148067041025-4e6p85ac96ol3iustsntn0k1d29u2s0a.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -50,6 +58,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "148067041025-95p48u89uvpeck4c93dbj6lfj8fpitn4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.safetysource.retailer",
+            "certificate_hash": "8bfcf256f7c782b8dc320729ad6cb40039fd696d"
+          }
+        },
         {
           "client_id": "148067041025-arvq3hgglon846rkhkelahb4r5918fp3.apps.googleusercontent.com",
           "client_type": 1,

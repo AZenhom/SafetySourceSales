@@ -37,7 +37,7 @@ class RetailersActivity : BaseActivity<ActivityRetailersBinding, RetailersViewMo
 
     override fun onResume() {
         super.onResume()
-        getRetailers()
+        getData()
     }
 
     @SuppressLint("SetTextI18n")
@@ -79,7 +79,16 @@ class RetailersActivity : BaseActivity<ActivityRetailersBinding, RetailersViewMo
     }
 
     @SuppressLint("SetTextI18n")
-    private fun getRetailers() {
+    private fun getData() {
+        // Team Details
+        viewModel.getTeamReport().observe(this) { teamReportModel ->
+            binding.tvDueCommission.text =
+                "${teamReportModel?.dueCommissionValue} ${getString(R.string.egyptian_pound)}"
+            binding.tvTotalRedeemed.text =
+                "${teamReportModel?.totalRedeemed} ${getString(R.string.egyptian_pound)}"
+
+        }
+        // Team Retailers
         adapter.submitList(emptyList())
         viewModel.getRetailers().observe(this) {
             adapter.submitList(it)

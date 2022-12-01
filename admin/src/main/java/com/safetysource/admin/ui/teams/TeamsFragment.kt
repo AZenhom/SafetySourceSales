@@ -19,6 +19,10 @@ class TeamsFragment :
 
     override fun onViewCreated() {
         initViews()
+    }
+
+    override fun onResume() {
+        super.onResume()
         getTeams()
     }
 
