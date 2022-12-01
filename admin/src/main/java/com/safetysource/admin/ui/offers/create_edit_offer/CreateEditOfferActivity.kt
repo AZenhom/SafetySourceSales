@@ -92,8 +92,8 @@ class CreateEditOfferActivity :
                 clStartsAt.isEnabled = false
                 clExpiresAt.isEnabled = false
             }
-            tvStartsAt.text = viewModel.startsAt.time.getDateText("EE, d MMM yyyy")
-            tvExpiresAt.text = viewModel.expiresAt.time.getDateText("EE, d MMM yyyy")
+            tvStartsAt.text = viewModel.startsAt.time.getDateText("EE, d MMM yyyy, hh:mm aa")
+            tvExpiresAt.text = viewModel.expiresAt.time.getDateText("EE, d MMM yyyy, hh:mm aa")
 
             // Click Listeners
             registerToolBarOnBackPressed(toolbar)
