@@ -9,12 +9,13 @@ data class TeamModel(
     val id: String? = null,
     val name: String? = null,
     @ServerTimestamp
-    val created: Date? = null,
+    val createdAt: Date? = null,
 
     @get:Exclude
     var teamReportModel: TeamReportModel? = null
 ) : Serializable {
     companion object {
         const val NAME = "name"
+        const val TEAM_LESS = "TEAMLESS"
     }
 }

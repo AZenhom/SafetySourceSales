@@ -81,7 +81,7 @@ class RetailersViewModel @Inject constructor(
         val liveData = LiveEvent<Boolean>()
         safeLauncher {
             showLoading()
-            retailerModel.teamId = null
+            retailerModel.teamId = TeamModel.TEAM_LESS
             val response = retailerRepository.createUpdateRetailer(retailerModel)
             hideLoading()
             if (response is StatefulResult.Success) {
