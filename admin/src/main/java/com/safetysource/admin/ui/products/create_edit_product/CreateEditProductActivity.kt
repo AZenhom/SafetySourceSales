@@ -67,6 +67,7 @@ class CreateEditProductActivity :
             lblProductPrice.text = getString(R.string.product_price_in_currency)
 
             viewModel.productModel?.let {
+                tvTitle.text = getString(R.string.edit_product)
                 if (!it.imgUrl.isNullOrEmpty())
                     Picasso.get()
                         .load(it.imgUrl)

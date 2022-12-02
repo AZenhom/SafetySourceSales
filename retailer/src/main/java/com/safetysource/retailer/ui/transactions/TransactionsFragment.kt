@@ -35,9 +35,11 @@ class TransactionsFragment :
         OfferSerialsSheet(offerSerials) { offerSerial ->
             viewModel.getProductItemBySerial(offerSerial.serial ?: return@OfferSerialsSheet)
                 .observe(viewLifecycleOwner) { productItem ->
-                    productItem?.let { ProductItemDetailsActivity.getIntent(requireContext(), it) }
+                    productItem?.let {
+                        startActivity(ProductItemDetailsActivity.getIntent(requireContext(), it))
+                    }
                 }
-        }
+        }.show(parentFragmentManager, "OfferSerialsSheet")
     }
 
     private fun getTransactions() {

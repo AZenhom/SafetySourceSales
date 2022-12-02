@@ -42,6 +42,7 @@
     <string name="product_category_created_successfully">تم إنشاء فئة المنتج بنجاح</string>
     <string name="product_category_updated_successfully">تم تحديث فئة المنتج بنجاح</string>
     <string name="create_product">إنشاء منتج جديد</string>
+    <string name="edit_product">تعديل منتج موجود</string>
     <string name="product_image">صورة المنتج</string>
     <string name="product_name">اسم المنتج</string>
     <string name="product_name_hint">مثال: Cisco MikroTik hAP</string>
@@ -85,7 +86,7 @@
     <string name="not_sold_yet">لم يباع بعد</string>
     <string name="pending_unselling">في انتظار الموافقة على إلغاء البيع</string>
     <string name="serial">سيريال</string>
-    <string name="click_to_view_serials"><u>اضغط لعرض سيريالات متعددة</u></string>
+    <string name="click_to_view_serials">اضغط لعرض سيريالات متعددة</string>
     <string name="offer_serials">سيريالات العرض</string>
     <string name="click_the_serial_to_view_product_item">اضغط السيريال لعرض تفاصيل المنتج</string>
     <string name="retailer">بائع تجزئة</string>

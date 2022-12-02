@@ -77,14 +77,16 @@ class RetailerDetailsActivity :
             viewModel.getProductItemBySerial(offerSerial.serial ?: return@OfferSerialsSheet)
                 .observe(this) { productItem ->
                     productItem?.let {
-                        ProductItemDetailsActivity.getIntent(
-                            this,
-                            it.first ?: return@observe,
-                            it.second ?: return@observe
+                        startActivity(
+                            ProductItemDetailsActivity.getIntent(
+                                this,
+                                it.first ?: return@observe,
+                                it.second ?: return@observe
+                            )
                         )
                     }
                 }
-        }
+        }.show(supportFragmentManager, "OfferSerialsSheet")
     }
 
     private fun showUnsellingApprovalDialog(transactionModel: TransactionModel) {

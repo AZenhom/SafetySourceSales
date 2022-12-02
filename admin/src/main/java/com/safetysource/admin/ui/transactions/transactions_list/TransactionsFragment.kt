@@ -66,14 +66,16 @@ class TransactionsFragment :
             viewModel.getProductItemBySerial(offerSerial.serial ?: return@OfferSerialsSheet)
                 .observe(viewLifecycleOwner) { productItem ->
                     productItem?.let {
-                        ProductItemDetailsActivity.getIntent(
-                            requireContext(),
-                            it.first ?: return@observe,
-                            it.second ?: return@observe
+                        startActivity(
+                            ProductItemDetailsActivity.getIntent(
+                                requireContext(),
+                                it.first ?: return@observe,
+                                it.second ?: return@observe
+                            )
                         )
                     }
                 }
-        }
+        }.show(parentFragmentManager, "OfferSerialsSheet")
     }
 
     private fun showUnsellingApprovalDialog(transactionModel: TransactionModel) {

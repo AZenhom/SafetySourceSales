@@ -43,6 +43,7 @@
     <string name="product_category_created_successfully">Product category created successfully</string>
     <string name="product_category_updated_successfully">Product category updated successfully</string>
     <string name="create_product">Create New Product</string>
+    <string name="edit_product">Edit Product</string>
     <string name="product_image">Product Image</string>
     <string name="product_name">Product Name</string>
     <string name="product_name_hint">Ex: Cisco MikroTik hAP</string>
@@ -86,7 +87,7 @@
     <string name="not_sold_yet">NOT SOLD YET</string>
     <string name="pending_unselling">PENDING UNSELLING</string>
     <string name="serial">Serial</string>
-    <string name="click_to_view_serials"><u>Click to view multiple serials</u></string>
+    <string name="click_to_view_serials">Click to view multiple serials</string>
     <string name="offer_serials">Offer Serials</string>
     <string name="click_the_serial_to_view_product_item">Click the serial to view product item</string>
     <string name="retailer">Retailer</string>

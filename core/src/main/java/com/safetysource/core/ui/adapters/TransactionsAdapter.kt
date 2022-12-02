@@ -1,6 +1,8 @@
 package com.safetysource.core.ui.adapters
 
 import android.annotation.SuppressLint
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -46,7 +48,10 @@ class TransactionsAdapter constructor(
 
                 // Serial
                 if (!item.offerSerials.isNullOrEmpty()) {
-                    tvSerial.text = tvSerial.context.getString(R.string.click_to_view_serials)
+                    val spannableString =
+                        SpannableString(tvSerial.context.getString(R.string.click_to_view_serials))
+                    spannableString.setSpan(UnderlineSpan(), 0, spannableString.length, 0)
+                    tvSerial.text = spannableString
                     tvSerial.setOnClickListener { onMultipleSerialsClicked?.invoke(item.offerSerials!!) }
                 } else {
                     tvSerial.text = item.serial
