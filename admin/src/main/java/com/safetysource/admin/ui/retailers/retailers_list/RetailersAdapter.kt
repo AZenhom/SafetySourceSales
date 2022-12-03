@@ -6,11 +6,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.safetysource.admin.databinding.ItemRetailerBinding
+import com.safetysource.core.ui.setIsVisible
 import com.safetysource.data.model.RetailerModel
 
 class RetailersAdapter constructor(
     private val onItemClicked: ((transaction: RetailerModel) -> Unit)? = null,
     private val onEditClicked: ((transaction: RetailerModel) -> Unit)? = null,
+    private val onRemoveClicked: ((transaction: RetailerModel) -> Unit)? = null,
 ) : ListAdapter<RetailerModel, RetailersAdapter.ItemViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -35,9 +37,15 @@ class RetailersAdapter constructor(
                 // Retailer Contact No
                 tvPhoneNo.text = item.contactNo
 
+                // Remove Retailer from Team
+                ivRemove.setIsVisible(onRemoveClicked != null)
+
                 // Click Listeners
                 ivEdit.setOnClickListener {
                     onEditClicked?.invoke(item)
+                }
+                ivRemove.setOnClickListener {
+                    onRemoveClicked?.invoke(item)
                 }
                 clRootView.setOnClickListener {
                     onItemClicked?.invoke(item)

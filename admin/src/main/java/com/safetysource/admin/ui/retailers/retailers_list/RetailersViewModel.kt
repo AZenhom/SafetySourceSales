@@ -10,6 +10,7 @@ import com.safetysource.data.model.response.StatefulResult
 import com.safetysource.data.repository.ReportsRepository
 import com.safetysource.data.repository.RetailerRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,7 +34,7 @@ class RetailersViewModel @Inject constructor(
         return liveData
     }
 
-    fun getRetailers(): LiveData<List<RetailerModel>> {
+    fun getTeamRetailers(): LiveData<List<RetailerModel>> {
         showLoading()
         val liveData = LiveEvent<List<RetailerModel>>()
         safeLauncher {
@@ -47,48 +48,79 @@ class RetailersViewModel @Inject constructor(
         return liveData
     }
 
-    fun addExistingRetailerToTeam(phoneNumber: String): LiveData<Boolean> {
-        val liveData = LiveEvent<Boolean>()
+    fun getTeamLessRetailers(): LiveData<List<RetailerModel>> {
+        showLoading()
+        val liveData = LiveEvent<List<RetailerModel>>()
         safeLauncher {
-            showLoading()
-
-            val searchResponse = retailerRepository.getRetailerByPhoneNumber(phoneNumber)
-            if (searchResponse !is StatefulResult.Success || searchResponse.data == null) {
-                showErrorMsg(R.string.retailer_with_phone_already_registered)
-                hideLoading()
-                return@safeLauncher
-            } else if (searchResponse.data?.teamId != null) {
-                showErrorMsg(R.string.retailer_with_phone_does_not_exist)
-                hideLoading()
-                return@safeLauncher
-            }
-
-            val retailer = searchResponse.data!!
-            retailer.teamId = teamModel?.id
-
-            val result = retailerRepository.createUpdateRetailer(retailer)
+            val result = retailerRepository.getTeamLessRetailers()
             hideLoading()
-            if (result is StatefulResult.Success) {
-                liveData.value = true
-                showSuccessMsg(R.string.retailer_added_to_team_successfully)
-            } else
+            if (result is StatefulResult.Success)
+                liveData.value = result.data ?: listOf()
+            else
                 handleError(result.errorModel)
         }
         return liveData
     }
 
-    fun removeRetailerFromTeam(retailerModel: RetailerModel): LiveData<Boolean> {
+    fun addExistingRetailerToTeam(retailer: RetailerModel): LiveData<Boolean> {
         val liveData = LiveEvent<Boolean>()
         safeLauncher {
             showLoading()
-            retailerModel.teamId = TeamModel.TEAM_LESS
-            val response = retailerRepository.createUpdateRetailer(retailerModel)
-            hideLoading()
-            if (response is StatefulResult.Success) {
+
+            val teamReport = reportsRepository.getTeamReportById(teamModel?.id ?: "").data
+            val retailerReport = reportsRepository.getRetailerReportById(retailer.id ?: "").data
+            if (teamReport == null || retailerReport == null) {
+                showErrorMsg(R.string.something_went_wrong)
+                hideLoading()
+                return@safeLauncher
+            }
+            retailer.teamId = teamModel?.id
+            teamReport.dueCommissionValue =
+                (teamReport.dueCommissionValue ?: 0f) + (retailerReport.dueCommissionValue ?: 0f)
+            teamReport.totalRedeemed =
+                (teamReport.totalRedeemed ?: 0f) + (retailerReport.totalRedeemed ?: 0f)
+            teamReport.updatedAt = null
+
+            val result1 = async { retailerRepository.createUpdateRetailer(retailer) }
+            val result2 = async { reportsRepository.createUpdateTeamReport(teamReport) }
+
+            if (result1.await() is StatefulResult.Success && result2.await() is StatefulResult.Success) {
                 liveData.value = true
-                getRetailers()
+                showSuccessMsg(R.string.retailer_added_to_team_successfully)
             } else
-                handleError(response.errorModel)
+                showErrorMsg(R.string.something_went_wrong)
+            hideLoading()
+        }
+        return liveData
+    }
+
+    fun removeRetailerFromTeam(retailer: RetailerModel): LiveData<Boolean> {
+        val liveData = LiveEvent<Boolean>()
+        safeLauncher {
+            showLoading()
+            val teamReport = reportsRepository.getTeamReportById(teamModel?.id ?: "").data
+            val retailerReport = reportsRepository.getRetailerReportById(retailer.id ?: "").data
+            if (teamReport == null || retailerReport == null) {
+                showErrorMsg(R.string.something_went_wrong)
+                hideLoading()
+                return@safeLauncher
+            }
+            retailer.teamId = TeamModel.TEAM_LESS
+            teamReport.dueCommissionValue =
+                (teamReport.dueCommissionValue ?: 0f) - (retailerReport.dueCommissionValue ?: 0f)
+            teamReport.totalRedeemed =
+                (teamReport.totalRedeemed ?: 0f) - (retailerReport.totalRedeemed ?: 0f)
+            teamReport.updatedAt = null
+
+            val result1 = async { retailerRepository.createUpdateRetailer(retailer) }
+            val result2 = async { reportsRepository.createUpdateTeamReport(teamReport) }
+
+            if (result1.await() is StatefulResult.Success && result2.await() is StatefulResult.Success) {
+                liveData.value = true
+                showSuccessMsg(R.string.retailer_removed_from_team_successfully)
+            } else
+                showErrorMsg(R.string.something_went_wrong)
+            hideLoading()
         }
         return liveData
     }

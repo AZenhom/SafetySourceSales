@@ -128,6 +128,11 @@
     <string name="retailer_registered_successfully">Retailer Account Registered Successfully</string>
     <string name="retailer_updated_successfully">Retailer Account Updated Successfully</string>
     <string name="retailer_added_to_team_successfully">Retailer Added to Team Successfully</string>
+    <string name="retailer_removed_from_team_successfully">Retailer Removed from Team Successfully</string>
+    <string name="retailer_already_in_team">Retailer is already in a team</string>
+    <string name="add_retailer_to_team">Add a retailer to this team</string>
+    <string name="new_retailer">New Retailer</string>
+    <string name="existing_retailer">Existing Retailer</string>
     <string name="admin_registered_successfully">Admin Account Registered Successfully</string>
     <string name="scan_cancelled">Scan Cancelled</string>
     <string name="serial_not_associated_with_any_product">Serial is not associated with any product</string>
@@ -198,4 +203,5 @@
     <string name="retailer_can_only_sell">"Retailer can only sell/unsell the following products: "</string>
     <string name="allowed_products">Allowed Products</string>
     <string name="n_selections">%1$s Selection(s)</string>
+    <string name="select_teamless_retailer">Select a team-less retailer to add to this team</string>
 </resources>

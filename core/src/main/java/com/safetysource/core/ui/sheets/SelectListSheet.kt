@@ -21,6 +21,10 @@ class SelectListSheet<T : Filterable> constructor(
     private val onSelect: (T?) -> Unit,
 ) : BottomSheetDialogFragment() {
 
+    companion object {
+        const val TAG = "SelectListSheet"
+    }
+
     private lateinit var binding: SheetSelectListBinding
 
     private lateinit var adapter: SelectListAdapter

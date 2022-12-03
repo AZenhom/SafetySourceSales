@@ -127,6 +127,12 @@
     <string name="retailer_registered_successfully">تم تسجيل حساب بائع التجزئة بنجاح</string>
     <string name="retailer_updated_successfully">تم تعديل بيانات حساب بائع التجزئة بنجاح</string>
     <string name="retailer_added_to_team_successfully">تم إضافة بائع التجزئة للفريق بنجاح</string>
+    <string name="retailer_removed_from_team_successfully">تم ازالة بائع التجزئة من الفريق بنجاح</string>
+    <string name="retailer_already_in_team">بائع التجزئة بالفعل مضاف الى فريق</string>
+    <string name="add_retailer_to_team">أضف بائع تجزئة الى هذا الفريق</string>
+    <string name="new_retailer">بائع جديد</string>
+    <string name="existing_retailer">بائع حالي</string>
+    <string name="select_teamless_retailer">اختر واحد من بائعي التجزئة بلا فريق لإضافته لهذا الفريق</string>
     <string name="admin_registered_successfully">تم تسجيل حساب ال Admin بنجاح</string>
     <string name="scan_cancelled">تم إلغاء المسح</string>
     <string name="serial_not_associated_with_any_product">السيريال غير مرتبط بأي منتج</string>

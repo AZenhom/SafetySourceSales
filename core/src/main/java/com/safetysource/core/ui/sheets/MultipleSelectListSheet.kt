@@ -22,6 +22,10 @@ class MultipleSelectListSheet<T : Filterable> constructor(
     private val onSelect: (MutableList<T?>) -> Unit,
 ) : BottomSheetDialogFragment() {
 
+    companion object {
+        const val TAG = "MultipleSelectListSheet"
+    }
+
     private lateinit var binding: SheetSelectListBinding
 
     private lateinit var adapter: SelectListAdapter

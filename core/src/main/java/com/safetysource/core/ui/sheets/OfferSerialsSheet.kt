@@ -17,6 +17,10 @@ class OfferSerialsSheet constructor(
     private val onSelect: (OfferSerial) -> Unit,
 ) : BottomSheetDialogFragment() {
 
+    companion object {
+        const val TAG = "OfferSerialsSheet"
+    }
+
     init {
         setStyle(STYLE_NORMAL, R.style.AppBottomSheetDialogTheme)
     }

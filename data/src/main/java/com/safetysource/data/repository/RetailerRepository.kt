@@ -6,6 +6,7 @@ import com.safetysource.data.Constants
 import com.safetysource.data.base.BaseRepository
 import com.safetysource.data.cache.UserDataStore
 import com.safetysource.data.model.RetailerModel
+import com.safetysource.data.model.TeamModel
 import com.safetysource.data.model.response.ErrorModel
 import com.safetysource.data.model.response.StatefulResult
 import kotlinx.coroutines.tasks.await
@@ -42,6 +43,21 @@ class RetailerRepository @Inject constructor(
                     .whereEqualTo(RetailerModel.PHONE_NUMBER, phoneNumber)
                     .get().await().firstOrNull()
             StatefulResult.Success(document?.toObject(RetailerModel::class.java))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            StatefulResult.Error(ErrorModel.Unknown)
+        }
+    }
+
+    suspend fun getTeamLessRetailers(): StatefulResult<List<RetailerModel>> {
+        return try {
+            val documents =
+                fireStoreDB.collection(Constants.COLLECTION_RETAILER)
+                    .whereEqualTo(RetailerModel.TEAM_ID, TeamModel.TEAM_LESS)
+                    .orderBy(Constants.CREATED_AT, Query.Direction.DESCENDING)
+                    .get().await()
+            val products = documents.toObjects(RetailerModel::class.java)
+            StatefulResult.Success(products)
         } catch (e: Exception) {
             e.printStackTrace()
             StatefulResult.Error(ErrorModel.Unknown)
