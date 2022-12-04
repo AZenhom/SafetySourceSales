@@ -203,4 +203,5 @@
     <string name="retailer_can_only_sell">"يستطيع بائع التجزئة بيع/إلغاء المنتجات الآتية: "</string>
     <string name="allowed_products">المنتجات المسموحة</string>
     <string name="n_selections">عدد %1$s اختيارات</string>
+    <string name="delete_retailer_question">هل أنت متأكد انك تريد حذف بيانات هذا البائع كليًا</string>
 </resources>

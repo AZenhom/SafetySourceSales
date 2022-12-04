@@ -104,13 +104,13 @@ class CreateEditRetailerActivity :
                     sheetTitle = getString(R.string.products),
                     sheetSubTitle = getString(R.string.please_pick_set_of_products)
                 ) { viewModel.setRestrictedProducts(it.filterNotNull()) }
-                    .show(supportFragmentManager, "ProductsSheet")
+                    .show(supportFragmentManager, MultipleSelectListSheet.TAG)
+            }
 
-                // Submit
-                btnSubmit.setOnClickListener {
-                    if (isEditMode) updateRetailer()
-                    else validateAndRegister()
-                }
+            // Submit
+            btnSubmit.setOnClickListener {
+                if (isEditMode) updateRetailer()
+                else validateAndRegister()
             }
         }
     }

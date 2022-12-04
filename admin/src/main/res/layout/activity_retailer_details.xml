@@ -24,6 +24,15 @@
             android:textColor="@color/white"
             android:textSize="@dimen/_12sdp" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivDelete"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:padding="@dimen/_7sdp"
+            android:src="@drawable/ic_delete_round"
+            android:layout_gravity="end"
+            android:background="?attr/selectableItemBackground"/>
+
     </com.google.android.material.appbar.MaterialToolbar>
 
     <androidx.appcompat.widget.AppCompatImageView

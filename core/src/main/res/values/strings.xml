@@ -204,4 +204,5 @@
     <string name="allowed_products">Allowed Products</string>
     <string name="n_selections">%1$s Selection(s)</string>
     <string name="select_teamless_retailer">Select a team-less retailer to add to this team</string>
+    <string name="delete_retailer_question">Are you sure you want to delete all this retailer data entirely</string>
 </resources>

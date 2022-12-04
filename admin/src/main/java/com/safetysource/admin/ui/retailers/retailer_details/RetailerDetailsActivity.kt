@@ -69,6 +69,7 @@ class RetailerDetailsActivity :
             tvFilterSummary.text =
                 viewModel.transactionFilterModel.toString(this@RetailerDetailsActivity)
             fabRedeem.setOnClickListener { getRetailerReport(true) }
+            ivDelete.setOnClickListener { showDeleteRetailerDialog() }
         }
     }
 
@@ -126,6 +127,22 @@ class RetailerDetailsActivity :
             isCancelable = true
         )
         editTextDialog.show(supportFragmentManager, EditTextDialog.TAG)
+    }
+
+    private fun showDeleteRetailerDialog() {
+        var infoDialog: InfoDialog? = null
+        infoDialog = InfoDialog(
+            context = this,
+            imageRes = R.drawable.warning,
+            message = getString(R.string.delete_retailer_question),
+            confirmText = getString(R.string.delete),
+            onConfirm = {
+                infoDialog?.dismiss()
+                viewModel.deleteRetailer().observe(this) { if (it) finish() }
+            },
+            isCancelable = true
+        )
+        infoDialog.show(supportFragmentManager, InfoDialog.TAG)
     }
 
     @SuppressLint("SetTextI18n")

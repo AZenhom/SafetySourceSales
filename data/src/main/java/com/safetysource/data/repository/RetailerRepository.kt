@@ -5,8 +5,7 @@ import com.google.firebase.firestore.Query
 import com.safetysource.data.Constants
 import com.safetysource.data.base.BaseRepository
 import com.safetysource.data.cache.UserDataStore
-import com.safetysource.data.model.RetailerModel
-import com.safetysource.data.model.TeamModel
+import com.safetysource.data.model.*
 import com.safetysource.data.model.response.ErrorModel
 import com.safetysource.data.model.response.StatefulResult
 import kotlinx.coroutines.tasks.await
@@ -88,6 +87,43 @@ class RetailerRepository @Inject constructor(
                 .document(retailerModel.id)
             retailerRef.set(retailerModel).await()
             StatefulResult.Success(retailerRef.get().await().toObject(RetailerModel::class.java))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            StatefulResult.Error(ErrorModel.Unknown)
+        }
+    }
+
+    suspend fun deleteRetailer(
+        retailerModel: RetailerModel,
+        retailerReportModel: RetailerReportModel,
+        teamReportModel: TeamReportModel
+    ): StatefulResult<Unit> {
+        if (retailerModel.id.isNullOrEmpty()
+            || retailerReportModel.retailerId.isNullOrEmpty()
+            || teamReportModel.teamId.isNullOrEmpty()
+        )
+            return StatefulResult.Error(ErrorModel.Unknown)
+        return try {
+            fireStoreDB.runBatch {
+                // Retailer
+                val retailerRef = fireStoreDB
+                    .collection(Constants.COLLECTION_RETAILER)
+                    .document(retailerModel.id)
+                it.delete(retailerRef)
+
+                // Retailer Report
+                val retailerReportRef = fireStoreDB
+                    .collection(Constants.COLLECTION_RETAILER_REPORT)
+                    .document(retailerReportModel.retailerId!!)
+                it.delete(retailerReportRef)
+
+                // Team Report
+                val teamReportRef = fireStoreDB
+                    .collection(Constants.COLLECTION_TEAM_REPORT)
+                    .document(teamReportModel.teamId!!)
+                it.set(teamReportRef, teamReportModel)
+            }.await()
+            StatefulResult.Success(Unit)
         } catch (e: Exception) {
             e.printStackTrace()
             StatefulResult.Error(ErrorModel.Unknown)

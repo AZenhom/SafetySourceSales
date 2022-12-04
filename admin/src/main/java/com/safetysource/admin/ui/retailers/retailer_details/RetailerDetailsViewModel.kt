@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import com.hadilq.liveevent.LiveEvent
+import com.safetysource.core.R
 import com.safetysource.core.base.BaseViewModel
 import com.safetysource.data.model.*
 import com.safetysource.data.model.response.StatefulResult
@@ -19,6 +20,7 @@ class RetailerDetailsViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val productItemRepository: ProductItemRepository,
     private val productRepository: ProductRepository,
+    private val retailerRepository: RetailerRepository,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
@@ -177,6 +179,35 @@ class RetailerDetailsViewModel @Inject constructor(
                 hideLoading()
                 liveData.value = pair
             } else
+                handleError(result.errorModel)
+        }
+        return liveData
+    }
+
+    fun deleteRetailer(): LiveData<Boolean> {
+        val liveData = LiveEvent<Boolean>()
+        safeLauncher {
+            showLoading()
+            val teamReport = reportsRepository.getTeamReportById(teamModel?.id ?: "").data
+            val retailerReport =
+                reportsRepository.getRetailerReportById(retailerModel?.id ?: "").data
+            if (teamReport == null || retailerReport == null) {
+                showErrorMsg(R.string.something_went_wrong)
+                hideLoading()
+                return@safeLauncher
+            }
+            teamReport.dueCommissionValue =
+                (teamReport.dueCommissionValue ?: 0f) - (retailerReport.dueCommissionValue ?: 0f)
+            teamReport.totalRedeemed =
+                (teamReport.totalRedeemed ?: 0f) - (retailerReport.totalRedeemed ?: 0f)
+            teamReport.updatedAt = null
+
+            val result =
+                retailerRepository.deleteRetailer(retailerModel!!, retailerReport, teamReport)
+            hideLoading()
+            if (result is StatefulResult.Success)
+                liveData.value = true
+            else
                 handleError(result.errorModel)
         }
         return liveData
