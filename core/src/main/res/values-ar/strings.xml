@@ -65,6 +65,7 @@
     <string name="product_item_details">تفاصيل وحدة المنتج</string>
     <string name="retailer_details">تفاصيل بائع التجزئة</string>
     <string name="register_retailer">تسجيل بائع تجزئة</string>
+    <string name="update_retailer_details">تعديل بيانات بائع تجزئة</string>
     <string name="retailer_with_phone_already_registered">يوجد بائع تجزئة بنفس رقم الهاتف بالفعل</string>
     <string name="retailer_with_phone_does_not_exist">لا يوجد بائع تجزئة بنفس رقم الهاتف</string>
     <string name="admin_with_phone_already_registered">يوجد Admin تجزئة بنفس رقم الهاتف بالفعل</string>
@@ -204,4 +205,5 @@
     <string name="allowed_products">المنتجات المسموحة</string>
     <string name="n_selections">عدد %1$s اختيارات</string>
     <string name="delete_retailer_question">هل أنت متأكد انك تريد حذف بيانات هذا البائع كليًا</string>
+    <string name="retailer_image">Retailer Image</string>
 </resources>

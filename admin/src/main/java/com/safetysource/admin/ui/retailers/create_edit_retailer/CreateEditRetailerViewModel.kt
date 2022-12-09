@@ -1,5 +1,6 @@
 package com.safetysource.admin.ui.retailers.create_edit_retailer
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import com.hadilq.liveevent.LiveEvent
@@ -29,6 +30,9 @@ class CreateEditRetailerViewModel @Inject constructor(
     val retailerToEdit: RetailerModel? =
         savedStateHandle[CreateEditRetailerActivity.RETAILER_TO_EDIT]
 
+    private var retailerId: String = if (retailerToEdit != null) retailerToEdit.id ?: ""
+    else retailerRepository.getNewRetailerId()
+
     private val _productsLiveData = LiveEvent<List<ProductModel>>()
     val productsLiveData: LiveData<List<ProductModel>> get() = _productsLiveData
     private val _restrictedProductsLiveData = LiveEvent<List<ProductModel>>()
@@ -39,10 +43,26 @@ class CreateEditRetailerViewModel @Inject constructor(
         getRestrictedProducts()
     }
 
+    fun uploadProductImageAndGetUrl(fileUri: Uri): LiveData<String?> {
+        val liveData = LiveEvent<String?>()
+        safeLauncher {
+            showLoading()
+            val result =
+                retailerRepository.uploadRetailerImageAndGetUrl(retailerId, fileUri)
+            hideLoading()
+            if (result is StatefulResult.Success) {
+                liveData.value = result.data
+            } else
+                handleError(result.errorModel)
+        }
+        return liveData
+    }
+
     fun createNewRetailer(
         phoneNumber: String,
         contactNumber: String,
         name: String,
+        imgUrl: String? = null
     ): LiveData<Boolean> {
         val liveData = LiveEvent<Boolean>()
         safeLauncher {
@@ -62,6 +82,7 @@ class CreateEditRetailerViewModel @Inject constructor(
                 name = name,
                 phoneNo = phoneNumber,
                 contactNo = contactNumber,
+                imgUrl = imgUrl,
                 allowedProductIds = if (restrictedProducts.isEmpty()) null
                 else restrictedProducts.mapNotNull { it.id }
             )
@@ -85,7 +106,7 @@ class CreateEditRetailerViewModel @Inject constructor(
         return liveData
     }
 
-    fun updateRetailer(name: String): LiveData<Boolean> {
+    fun updateRetailer(name: String, imgUrl: String? = retailerToEdit?.imgUrl): LiveData<Boolean> {
         val liveData = LiveEvent<Boolean>()
         safeLauncher {
             if (retailerToEdit == null) {
@@ -94,6 +115,7 @@ class CreateEditRetailerViewModel @Inject constructor(
             }
             val restrictedProducts = restrictedProductsLiveData.value ?: emptyList()
             retailerToEdit.name = name
+            retailerToEdit.imgUrl = imgUrl
             retailerToEdit.allowedProductIds = if (restrictedProducts.isEmpty()) null
             else restrictedProducts.mapNotNull { it.id }
             showLoading()

@@ -1,12 +1,17 @@
 package com.safetysource.admin.ui.retailers.create_edit_retailer
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.text.Editable
 import android.text.InputFilter
 import android.text.InputType
 import android.text.TextWatcher
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import com.github.dhaval2404.imagepicker.ImagePicker
 import com.safetysource.admin.databinding.ActivityCreateEditRetailerBinding
 import com.safetysource.core.R
 import com.safetysource.core.base.BaseActivity
@@ -17,6 +22,7 @@ import com.safetysource.core.utils.PhoneNumberUtils.PhoneNumberUtils.isNull
 import com.safetysource.data.model.ProductModel
 import com.safetysource.data.model.RetailerModel
 import com.safetysource.data.model.TeamModel
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -44,6 +50,26 @@ class CreateEditRetailerActivity :
     private var restrictedProductsList: List<ProductModel> = emptyList()
 
     private lateinit var anyText: String
+
+    private var chosenImage: Uri? = null
+
+    private val startForImagePickingResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            val resultCode = result.resultCode
+            val data = result.data
+            when (resultCode) {
+                Activity.RESULT_OK -> {
+                    chosenImage = data?.data!!
+                    binding.ivRetailerImage.setImageURI(chosenImage)
+                }
+                ImagePicker.RESULT_ERROR -> {
+                    showErrorMsg(ImagePicker.getError(data))
+                }
+                else -> {
+                    showWarningMsg(getString(R.string.image_picking_cancelled))
+                }
+            }
+        }
 
     private val phoneTextWatcher: TextWatcher by lazy {
         object : TextWatcher {
@@ -76,14 +102,21 @@ class CreateEditRetailerActivity :
             registerToolBarOnBackPressed(toolbar)
 
             if (isEditMode) {
+                tvTitle.text = getString(R.string.update_retailer_details)
                 etRetailerPhone.isClickable = false
                 etRetailerPhone.isFocusable = false
                 etRetailerPhone.inputType = InputType.TYPE_NULL
                 lblCountry.makeGone()
                 countryPicker.makeGone()
-
-                etRetailerName.setText(viewModel.retailerToEdit?.name)
-                etRetailerPhone.setText(viewModel.retailerToEdit?.phoneNo)
+                viewModel.retailerToEdit?.let { retailer ->
+                    etRetailerName.setText(retailer.name)
+                    etRetailerPhone.setText(retailer.phoneNo)
+                    if (!retailer.imgUrl.isNullOrEmpty())
+                        Picasso.get()
+                            .load(retailer.imgUrl)
+                            .error(R.drawable.ic_image_placeholder)
+                            .into(ivRetailerImage)
+                }
             }
 
             // Team Name (Not changeable in both cases)
@@ -107,7 +140,10 @@ class CreateEditRetailerActivity :
                     .show(supportFragmentManager, MultipleSelectListSheet.TAG)
             }
 
-            // Submit
+            // Click Listeners
+            vChooseImage.setOnClickListener {
+                startImagePicking()
+            }
             btnSubmit.setOnClickListener {
                 if (isEditMode) updateRetailer()
                 else validateAndRegister()
@@ -123,6 +159,12 @@ class CreateEditRetailerActivity :
                 binding.tvProduct.text = if (it.isEmpty()) anyText
                 else getString(R.string.n_selections, it.size.toString())
             }
+        }
+    }
+
+    private fun startImagePicking() {
+        ImagePicker.with(this).crop(1f, 1f).compress(1024).createIntent {
+            startForImagePickingResult.launch(it)
         }
     }
 
@@ -149,18 +191,34 @@ class CreateEditRetailerActivity :
 
     private fun updateRetailer() {
         val retailerName = validateName() ?: return
-        viewModel.updateRetailer(retailerName).observe(this) {
-            showSuccessMsg(getString(R.string.retailer_updated_successfully))
-            finish()
-        }
+        if (chosenImage != null)
+            viewModel.uploadProductImageAndGetUrl(chosenImage!!).observe(this) {
+                viewModel.updateRetailer(retailerName, it).observe(this) {
+                    showSuccessMsg(getString(R.string.retailer_updated_successfully))
+                    finish()
+                }
+            }
+        else
+            viewModel.updateRetailer(retailerName).observe(this) {
+                showSuccessMsg(getString(R.string.retailer_updated_successfully))
+                finish()
+            }
     }
 
     private fun validateAndRegister() {
         val retailerName = validateName() ?: return
         val phoneNo = validatePhoneNumber() ?: return
-        viewModel.createNewRetailer(phoneNo, phoneNo, retailerName).observe(this) {
-            showSuccessMsg(getString(R.string.retailer_registered_successfully))
-            finish()
-        }
+        if (chosenImage != null)
+            viewModel.uploadProductImageAndGetUrl(chosenImage!!).observe(this) {
+                viewModel.createNewRetailer(phoneNo, phoneNo, retailerName, it).observe(this) {
+                    showSuccessMsg(getString(R.string.retailer_registered_successfully))
+                    finish()
+                }
+            }
+        else
+            viewModel.createNewRetailer(phoneNo, phoneNo, retailerName).observe(this) {
+                showSuccessMsg(getString(R.string.retailer_registered_successfully))
+                finish()
+            }
     }
 }

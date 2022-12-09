@@ -1,7 +1,10 @@
 package com.safetysource.data.repository
 
+import android.net.Uri
+import androidx.core.net.toFile
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.storage.FirebaseStorage
 import com.safetysource.data.Constants
 import com.safetysource.data.base.BaseRepository
 import com.safetysource.data.cache.UserDataStore
@@ -14,6 +17,7 @@ import javax.inject.Inject
 class RetailerRepository @Inject constructor(
     private val userDataStore: UserDataStore,
     private val fireStoreDB: FirebaseFirestore,
+    private val firebaseStorage: FirebaseStorage
 ) : BaseRepository() {
 
     fun getNewRetailerId(): String {
@@ -21,6 +25,26 @@ class RetailerRepository @Inject constructor(
             .collection(Constants.COLLECTION_RETAILER)
             .document()
             .id
+    }
+
+    suspend fun uploadRetailerImageAndGetUrl(
+        retailerId: String,
+        fileUri: Uri
+    ): StatefulResult<String> {
+        val extension = fileUri.toFile().extension
+        if (retailerId.isEmpty() || extension.isEmpty())
+            return StatefulResult.Error(ErrorModel.Unknown)
+        return try {
+            val downloadUrl = firebaseStorage.reference
+                .child(Constants.FOLDER_RETAILER_PROFILE)
+                .child("$retailerId.$extension")
+                .putFile(fileUri).await()
+                .storage.downloadUrl.await().toString()
+            StatefulResult.Success(downloadUrl)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            StatefulResult.Error(ErrorModel.Unknown)
+        }
     }
 
     suspend fun getRetailerById(retailerId: String): StatefulResult<RetailerModel> {

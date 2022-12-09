@@ -17,6 +17,7 @@ class Constants {
         const val COLLECTION_SUBSCRIBED_OFFER = BuildConfig.COLLECTION_SUBSCRIBED_OFFER
 
         // Firebase Storage Folders
+        const val FOLDER_RETAILER_PROFILE = BuildConfig.FOLDER_RETAILER_PROFILE
         const val FOLDER_PRODUCT_CATEGORIES = BuildConfig.FOLDER_PRODUCT_CATEGORIES
         const val FOLDER_PRODUCTS = BuildConfig.FOLDER_PRODUCTS
         const val FOLDER_OFFERS = BuildConfig.FOLDER_OFFERS

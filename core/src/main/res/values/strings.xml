@@ -66,6 +66,7 @@
     <string name="product_item_details">Product Item Details</string>
     <string name="retailer_details">Retailer Details</string>
     <string name="register_retailer">Register a retailer</string>
+    <string name="update_retailer_details">Update retailer details</string>
     <string name="retailer_with_phone_already_registered">Retailer with same phone number already exists</string>
     <string name="retailer_with_phone_does_not_exist">Retailer with provided phone number doesn\'t exists</string>
     <string name="admin_with_phone_already_registered">Admin with same phone number already exists</string>
@@ -205,4 +206,5 @@
     <string name="n_selections">%1$s Selection(s)</string>
     <string name="select_teamless_retailer">Select a team-less retailer to add to this team</string>
     <string name="delete_retailer_question">Are you sure you want to delete all this retailer data entirely</string>
+    <string name="retailer_image">Retailer Image</string>
 </resources>

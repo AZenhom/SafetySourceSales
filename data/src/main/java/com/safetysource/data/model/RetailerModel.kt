@@ -11,6 +11,7 @@ data class RetailerModel(
     var name: String? = null,
     val phoneNo: String? = null,
     val contactNo: String? = null,
+    var imgUrl: String? = null,
     var allowedProductIds: List<String>? = null,
     @ServerTimestamp
     val createdAt: Date? = null,
