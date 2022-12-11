@@ -132,6 +132,38 @@ class RetailerDetailsViewModel @Inject constructor(
         return liveData
     }
 
+    fun deductRetailerCommission(valueToDeduct: Float): LiveData<Boolean> {
+        showLoading()
+        val liveData = LiveEvent<Boolean>()
+        safeLauncher {
+
+            val response1 =
+                async { reportsRepository.getRetailerReportById(retailerModel?.id ?: "").data }
+            val response2 =
+                async { reportsRepository.getTeamReportById(retailerModel?.teamId ?: "").data }
+            val retReport = response1.await()
+            val teamReport = response2.await()
+
+            if (retReport == null || teamReport == null) {
+                liveData.value = false
+                hideLoading()
+            }
+            retReport!!.dueCommissionValue = (retReport.dueCommissionValue ?: 0f) - valueToDeduct
+            retReport.updatedAt = null
+
+            teamReport!!.dueCommissionValue = (teamReport.dueCommissionValue ?: 0f) - valueToDeduct
+            teamReport.updatedAt = null
+
+            val result1 = async { reportsRepository.createUpdateRetailerReport(retReport) }
+            val result2 = async { reportsRepository.createUpdateTeamReport(teamReport) }
+            result1.await(); result2.await()
+
+            liveData.value = true
+            hideLoading()
+        }
+        return liveData
+    }
+
     fun approveUnsellTransaction(transactionModel: TransactionModel): LiveData<Boolean> {
         showLoading()
         val liveData = LiveEvent<Boolean>()

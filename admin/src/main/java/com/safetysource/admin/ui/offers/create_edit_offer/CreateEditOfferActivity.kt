@@ -211,7 +211,7 @@ class CreateEditOfferActivity :
             e.printStackTrace(); -1
         }
         if (claimValue <= 0) {
-            showErrorMsg(getString(R.string.invalid_claim_value))
+            showErrorMsg(getString(R.string.invalid_value))
             return
         }
 
@@ -223,7 +223,7 @@ class CreateEditOfferActivity :
             e.printStackTrace(); -1
         }
         if (sellCount <= 0) {
-            showErrorMsg(getString(R.string.invalid_claim_value))
+            showErrorMsg(getString(R.string.invalid_value))
             return
         }
 

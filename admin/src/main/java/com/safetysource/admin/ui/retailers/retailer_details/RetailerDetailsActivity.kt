@@ -40,6 +40,12 @@ class RetailerDetailsActivity :
             }
     }
 
+    enum class GetReportAction {
+        NO_ACTION,
+        REDEEM,
+        DEDUCT
+    }
+
     override val viewModel: RetailerDetailsViewModel by viewModels()
     override val binding by viewBinding(ActivityRetailerDetailsBinding::inflate)
 
@@ -53,7 +59,7 @@ class RetailerDetailsActivity :
 
     private fun getData() {
         getTransactions()
-        getRetailerReport()
+        getRetailerReport(GetReportAction.NO_ACTION)
     }
 
     private fun initViews() {
@@ -75,7 +81,8 @@ class RetailerDetailsActivity :
             rvTransactions.adapter = adapter
             tvFilterSummary.text =
                 viewModel.transactionFilterModel.toString(this@RetailerDetailsActivity)
-            fabRedeem.setOnClickListener { getRetailerReport(true) }
+            fabRedeem.setOnClickListener { getRetailerReport(GetReportAction.REDEEM) }
+            fabDeduct.setOnClickListener { getRetailerReport(GetReportAction.DEDUCT) }
             ivDelete.setOnClickListener { showDeleteRetailerDialog() }
         }
     }
@@ -126,10 +133,36 @@ class RetailerDetailsActivity :
                     e.printStackTrace(); -1
                 }
                 if (claimValue <= 0) {
-                    showErrorMsg(getString(R.string.invalid_claim_value))
+                    showErrorMsg(getString(R.string.invalid_value))
                     return@EditTextDialog
                 }
                 redeemCommissions(claimValue)
+            },
+            isCancelable = true
+        )
+        editTextDialog.show(supportFragmentManager, EditTextDialog.TAG)
+    }
+
+    private fun showRetailerDeductDialog(valueToRedeem: Int) {
+        var editTextDialog: EditTextDialog? = null
+        editTextDialog = EditTextDialog(
+            context = this,
+            message = getString(R.string.deduct_commission_question),
+            editTextHint = valueToRedeem.toString(),
+            editTextInputStyle = InputType.TYPE_CLASS_NUMBER,
+            confirmText = getString(R.string.deduct),
+            onConfirm = {
+                editTextDialog?.dismiss()
+                val deductValue = try {
+                    it.convertArabicNumbersIfExist().getDigit().toInt()
+                } catch (e: Exception) {
+                    e.printStackTrace(); -1
+                }
+                if (deductValue <= 0) {
+                    showErrorMsg(getString(R.string.invalid_value))
+                    return@EditTextDialog
+                }
+                deductCommissions(deductValue)
             },
             isCancelable = true
         )
@@ -153,15 +186,24 @@ class RetailerDetailsActivity :
     }
 
     @SuppressLint("SetTextI18n")
-    private fun getRetailerReport(proceedToRedeemDialog: Boolean = false) {
+    private fun getRetailerReport(getReportAction: GetReportAction) {
         viewModel.getRetailerReport().observe(this) {
             with(binding) {
                 tvDueCommission.text =
                     "${it?.dueCommissionValue} ${getString(R.string.egyptian_pound)}"
                 tvTotalRedeemed.text =
                     "${it?.totalRedeemed} ${getString(R.string.egyptian_pound)}"
-                if (proceedToRedeemDialog)
-                    showRetailerRedeemDialog(it?.dueCommissionValue?.toInt()?.absoluteValue ?: 0)
+                when (getReportAction) {
+                    GetReportAction.REDEEM -> showRetailerRedeemDialog(
+                        it?.dueCommissionValue?.toInt()?.absoluteValue ?: 0
+                    )
+                    GetReportAction.DEDUCT -> showRetailerDeductDialog(
+                        it?.dueCommissionValue?.toInt()?.absoluteValue ?: 0
+                    )
+                    else -> {
+                        return@observe
+                    }
+                }
             }
         }
     }
@@ -183,6 +225,16 @@ class RetailerDetailsActivity :
         viewModel.redeemRetailerCommission(valueToRedeem.toFloat()).observe(this) {
             if (it) {
                 showSuccessMsg(getString(R.string.commission_redeemed_successfully))
+                getData()
+            } else
+                showErrorMsg(getString(R.string.something_went_wrong))
+        }
+    }
+
+    private fun deductCommissions(valueToDeduct: Int) {
+        viewModel.deductRetailerCommission(valueToDeduct.toFloat()).observe(this) {
+            if (it) {
+                showSuccessMsg(getString(R.string.commission_deducted_successfully))
                 getData()
             } else
                 showErrorMsg(getString(R.string.something_went_wrong))

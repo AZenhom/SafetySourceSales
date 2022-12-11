@@ -119,8 +119,11 @@
     <string name="due_commission">Due Commissions</string>
     <string name="total_redeemed">Total Redeemed</string>
     <string name="redeem">Redeem</string>
+    <string name="deduct">Deduct</string>
     <string name="redeem_commission_question">How much do you want this retailer to redeem from his/her due commissions</string>
+    <string name="deduct_commission_question">How much do you want to deduct from this retailer commissions</string>
     <string name="commission_redeemed_successfully">Commission redeemed successfully</string>
+    <string name="commission_deducted_successfully">Commission deducted successfully</string>
     <string name="something_went_wrong">Something went wrong</string>
     <string name="retailer_name">Retailer Name</string>
     <string name="retailer_name_hint">Please enter your retailer name</string>
@@ -172,7 +175,7 @@
     <string name="starts_at">Starts At</string>
     <string name="expires_at">Expires At</string>
     <string name="text_field_cannot_be_empty">Text field can\'t be empty</string>
-    <string name="invalid_claim_value">Invalid Claim Value</string>
+    <string name="invalid_value">Invalid Value</string>
     <string name="invalid_sell_count">Invalid Sell Count</string>
     <string name="offer_created_successfully">Offer Created Successfully</string>
     <string name="offer_updated_successfully">Offer Updated Successfully</string>

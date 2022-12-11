@@ -118,8 +118,11 @@
     <string name="due_commission">العمولة المستحقة</string>
     <string name="total_redeemed">مجموع المستحقات المصروفة</string>
     <string name="redeem">صرف و تسوية المستحقات</string>
+    <string name="deduct">خصم</string>
     <string name="redeem_commission_question">كم تحديدًا تريد لبائع التجزئة ان يسترده من عمولاته المستحقة</string>
+    <string name="deduct_commission_question">كم تحديدًا تريد ان تخصم لبائع التجزئة من عمولاته المستحقة</string>
     <string name="commission_redeemed_successfully">تم استرداد و تسوية العمولة بنجاح</string>
+    <string name="commission_deducted_successfully">تم خصم العمولة بنجاح</string>
     <string name="something_went_wrong">حدث خطأ ما</string>
     <string name="retailer_name">اسم بائع التجزئة</string>
     <string name="retailer_name_hint">الرجاء إدخال اسم بائع التجزئة الخاص بك</string>
@@ -172,7 +175,7 @@
     <string name="starts_at">يبدأ في</string>
     <string name="expires_at">ينتهي في</string>
     <string name="text_field_cannot_be_empty">لا يمكن ترك حقل النص فارغًا</string>
-    <string name="invalid_claim_value">قيمة عرض غير صالحة</string>
+    <string name="invalid_value">قيمة غير صالحة</string>
     <string name="invalid_sell_count">قيمة عدد البيع المطلوب غير صالحة</string>
     <string name="offer_created_successfully">تم إنشاء العرض بنجاح</string>
     <string name="offer_updated_successfully">تم تعديل العرض بنجاح</string>
