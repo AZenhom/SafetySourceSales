@@ -10,6 +10,7 @@ import com.safetysource.retailer.ui.splash.SplashActivity
 import com.safetysource.core.R
 import com.safetysource.core.base.BaseFragment
 import com.safetysource.core.ui.dialogs.InfoDialog
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,7 +29,14 @@ class ProfileFragment :
 
     private fun getProfile() {
         viewModel.getUserProfile().observe(viewLifecycleOwner) {
-            binding.tvRetailerName.text = it?.name
+            with(binding) {
+                tvRetailerName.text = it?.name
+                if (!it?.imgUrl.isNullOrEmpty())
+                    Picasso.get()
+                        .load(it?.imgUrl)
+                        .error(R.drawable.ic_image_placeholder)
+                        .into(ivRetailerImage)
+            }
         }
         viewModel.getRetailerTeam().observe(viewLifecycleOwner) {
             binding.tvTeamName.text = it?.name

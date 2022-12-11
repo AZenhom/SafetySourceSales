@@ -18,6 +18,7 @@ import com.safetysource.core.utils.convertArabicNumbersIfExist
 import com.safetysource.core.utils.getDigit
 import com.safetysource.core.utils.toString
 import com.safetysource.data.model.*
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.absoluteValue
 
@@ -65,6 +66,12 @@ class RetailerDetailsActivity :
         )
         with(binding) {
             registerToolBarOnBackPressed(toolbar)
+            tvRetailerName.text = viewModel.retailerModel?.name
+            if (!viewModel.retailerModel?.imgUrl.isNullOrEmpty())
+                Picasso.get()
+                    .load(viewModel.retailerModel?.imgUrl)
+                    .error(R.drawable.ic_image_placeholder)
+                    .into(ivRetailerImage)
             rvTransactions.adapter = adapter
             tvFilterSummary.text =
                 viewModel.transactionFilterModel.toString(this@RetailerDetailsActivity)
@@ -149,7 +156,6 @@ class RetailerDetailsActivity :
     private fun getRetailerReport(proceedToRedeemDialog: Boolean = false) {
         viewModel.getRetailerReport().observe(this) {
             with(binding) {
-                tvRetailerName.text = viewModel.retailerModel?.name
                 tvDueCommission.text =
                     "${it?.dueCommissionValue} ${getString(R.string.egyptian_pound)}"
                 tvTotalRedeemed.text =
