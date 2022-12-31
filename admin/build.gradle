@@ -39,6 +39,10 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    aaptOptions {
+        cruncherEnabled = false
+    }
     namespace 'com.safetysource.admin'
 }
 
